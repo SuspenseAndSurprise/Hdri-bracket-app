@@ -155,6 +155,8 @@ details.guide[open] summary::before{content:"×"}
 
 /* Lenses + sky map */
 .lenses{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px}
+.modeseg{display:flex}
+.modeseg button{flex:1;font-size:16px!important;height:40px}
 .lenses button{border:1px solid var(--line);border-radius:10px;background:transparent;color:var(--fg);padding:5px 2px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:1px}
 .lenses .l1{font:800 16px/1.1 var(--face);font-stretch:68%;white-space:nowrap}
 .lenses .l2{font-size:12px}
@@ -213,6 +215,15 @@ details.guide[open] summary::before{content:"×"}
 .aebseg{display:flex!important;gap:4px!important;flex:none}
 .aebseg button{flex:0 0 auto!important;min-width:34px!important;width:auto!important;height:30px!important;min-height:30px!important;padding:0 9px!important;font-size:13px!important;border-radius:9px!important}
 .aebhint{margin:4px 0 0;font-size:12px;color:var(--muted)}
+.fastbtn{min-height:32px!important;font-size:15px!important}
+.fastwrap{padding-top:6px}
+.camx{display:flex;flex-direction:column;gap:8px;padding-top:4px}
+.mshift{display:flex;align-items:center;gap:2px}
+.mbtn{border:0;background:transparent;color:inherit;font:700 24px/1 var(--face);width:34px;height:40px;padding:0;cursor:pointer;opacity:.55}
+.mbtn:disabled{opacity:.15;cursor:default}
+.sglens{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:700}
+.sglens input{flex:1;min-width:0;height:40px;border:1px solid var(--line);border-radius:10px;background:var(--panel);color:var(--fg);font:500 15px var(--face);padding:0 10px}
+.wheel .item.off,.strip .item.off{visibility:hidden}
 .setline{margin:0 0 8px;font-size:13px;color:var(--muted)}
 .frame.setc .state{white-space:nowrap}
 .frame.setc>span:nth-child(2){min-width:0}
@@ -589,7 +600,7 @@ body.glass:not(.sun) .toast{background:var(--lg-bar);border-color:var(--lg-edge)
 /* ===== Full liquid glass: lenses, moving light, touch, frost, depth (body.lgfx) ===== */
 :root{--lx:0;--ly:-.4;--sy:0}
 /* depth: the glow moves slower than the content */
-body.lgfx::before{transform:translate3d(0,calc(var(--sy) * -0.12px),0);will-change:transform}
+body.lgfx::before{transform:translate3d(0,max(calc(var(--sy) * -0.12px),-9vmax),0);will-change:transform}   /* capped: the layer overhangs 10vmax, so its edge never shows on long pages */
 /* frost grain inside glass */
 body.lgfx .card,body.lgfx .nowcard,body.lgfx .camcard,body.lgfx .frame,body.lgfx .primary,body.lgfx .tabs{background-image:var(--grain),var(--lg-tint);background-size:var(--gs) var(--gs),auto}
 body.lgfx .top,body.lgfx .bottombar{background-image:none;background-color:var(--lg-bar)}
@@ -822,7 +833,7 @@ body.classic .midline b{font-size:32px}
 .isoseg{display:flex;width:100%}
 .isoseg button{flex:1;min-width:0;padding:0 4px;font-variant-numeric:tabular-nums}
 .isoseg button:disabled{opacity:.3}
-.isotip{margin:6px 0 0;font-size:13px;color:var(--muted)}
+.isotip{margin:6px 0 0;font-size:13px;line-height:1.4;color:var(--muted);min-height:2.8em}   /* two lines reserved: the tip changes with the exposure, the layout below must not jump */
 /* Exposure and Frames fold like Camera: one bar at the bottom, "Fold ▴" bottom right */
 .fcard{padding:0 12px 12px}
 .dfold{border:0;border-top:1px solid var(--line);border-radius:0;min-height:52px;padding:8px 18px;background:transparent}
@@ -988,7 +999,7 @@ body.sun .toast button.strong{background:#fff;color:#000}
 
     <section class="card" aria-label="Camera setup">
       <div class="row">
-        <div><div class="tl"><h2 class="ftitle" id="camTitle" role="button" tabindex="0" aria-label="Fold camera"><span class="no">1</span>Camera</h2><button type="button" class="rst" id="camReset" aria-label="Reset camera to f/8, 5600K, ISO 100" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.4-5.7"/><path d="M4 4v4.5h4.5"/></svg></button></div><p>Mode M · RAW · manual focus. Auto ISO, stabilisation, long-exposure NR, D-Lighting and lens corrections off.</p></div>
+        <div><div class="tl"><h2 class="ftitle" id="camTitle" role="button" tabindex="0" aria-label="Fold camera"><span class="no">1</span>Camera</h2><button type="button" class="rst" id="camReset" aria-label="Reset camera to f/8, 5600K, ISO 100, fastest shutter 1/8000" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.4-5.7"/><path d="M4 4v4.5h4.5"/></svg></button></div><p>Mode M · RAW · manual focus. Auto ISO, stabilisation, long-exposure NR, D-Lighting and lens corrections off.</p></div>
       </div>
       <div class="row">
         <div><h2 class="aph"><svg class="apicon" id="apIcon" viewBox="-16 -16 32 32" aria-hidden="true"></svg>Aperture</h2><p>Set once, keep it for the whole HDRI.</p></div>
@@ -1025,8 +1036,19 @@ body.sun .toast button.strong{background:#fff;color:#000}
         </details>
       </div>
       <div class="row aebrow">
+        <div class="mini"><span>More options</span><button type="button" class="pill fastbtn num" id="camXBtn" aria-expanded="false" aria-controls="camX"></button></div>
+        <div class="camx" id="camX" hidden>
+        <div class="mini"><span>Fastest shutter</span><button type="button" class="pill fastbtn num" id="fastBtn" aria-expanded="false" aria-controls="fastWrap"></button></div>
+        <div class="fastwrap" id="fastWrap" hidden>
+          <div class="wheelrow">
+            <button type="button" class="arrow" id="fDn" aria-label="Faster">‹</button>
+            <div class="wheel"><div class="strip num" id="fWheel" aria-label="Fastest shutter" tabindex="0"></div></div>
+            <button type="button" class="arrow" id="fUp" aria-label="Slower">›</button>
+          </div>
+        </div>
         <div class="mini"><span>Autobracket</span><div class="seg aebseg" id="aebSeg" aria-label="Autobracket frames per press"></div></div>
         <p class="aebhint" id="aebHint" hidden>Set this count and the Exposure EV step on the camera.</p>
+        </div>
       </div>
     </section>
 
@@ -1064,7 +1086,7 @@ body.sun .toast button.strong{background:#fff;color:#000}
         <p class="xhint">Make the darkest important areas clearly visible, not black.</p>
       </div>
       <div class="xviz">
-        <div class="midline"><span>Middle · 0 EV</span><b class="num" id="midVal"></b></div>
+        <div class="midline"><span id="midK">Middle · 0 EV</span><span class="mshift"><button type="button" class="mbtn" id="mDn" aria-label="Middle darker (faster shutter)">‹</button><b class="num" id="midVal"></b><button type="button" class="mbtn" id="mUp" aria-label="Middle brighter (slower shutter)">›</button></span></div>
         <div class="fstep"><button type="button" class="fbtn" id="fLess" aria-label="One frame less at each end">−</button><b class="num" id="fCount"></b><button type="button" class="fbtn" id="fMore" aria-label="One frame more at each end">+</button></div>
         <p class="xcount" id="midCount"></p>
         <div class="track ruler" id="track"><div class="cmark" aria-hidden="true"></div><div class="rulr" id="rl"><div class="rail"></div><div class="span" id="rSpan"></div></div></div>
@@ -1079,8 +1101,10 @@ body.sun .toast button.strong{background:#fff;color:#000}
     <section class="nowcard" id="nowcard">
       <div class="chead"><h2><span class="no">3</span>Angles</h2><button type="button" class="pill" id="lensBtn" aria-expanded="false" aria-controls="lensWrap"></button></div>
       <div class="pwrap" id="lensWrap" style="height:0px;overflow:hidden" inert><div class="lenspanel" id="lensPanel">
-        <p class="lp-note">Full-frame equivalent, camera in portrait. APS-C ≈ ×1.5 (10→15 mm, 16→24 mm) · MFT ≈ ×2</p>
+        <div class="seg modeseg" id="modeSeg" aria-label="What are you shooting?"><button type="button" data-m="hdri">HDRI</button><button type="button" data-m="single">Single shot</button></div>
+        <p class="lp-note" id="lpNote">Full-frame equivalent, camera in portrait. APS-C ≈ ×1.5 (10→15 mm, 16→24 mm) · MFT ≈ ×2</p>
         <div class="lenses" id="lenses"></div>
+        <label class="sglens" id="sgLens" hidden><span>Lens</span><input id="sgLensIn" type="text" maxlength="24" placeholder="optional, e.g. 50 mm" autocomplete="off"></label>
         <p class="rec" id="recLine"></p>
         <details class="guide adjust" id="adjust">
           <summary>Adjust angle pattern</summary>
@@ -1178,7 +1202,7 @@ body.sun .toast button.strong{background:#fff;color:#000}
       </div>
     </section>
     <button type="button" class="ghost" id="setReset" style="display:block;margin:4px auto 0">Reset all settings</button>
-    <p class="vers num" id="vers">HDRI Bracket · <span id="build">2026-10-18 · 09fd95</span></p>
+    <p class="vers num" id="vers">HDRI Bracket · <span id="build">2026-10-18 · 9724c8</span></p>
   </section>
 
   <!-- LOG -->
@@ -1267,8 +1291,11 @@ body.sun .toast button.strong{background:#fff;color:#000}
   var T=["30s","25s","20s","15s","13s","10s","8s","6s","5s","4s","3.2s","2.5s","2s","1.6s","1.3s","1s",
     "0.8s","0.6s","0.5s","0.4s","0.3s","1/4","1/5","1/6","1/8","1/10","1/13","1/15","1/20","1/25","1/30",
     "1/40","1/50","1/60","1/80","1/100","1/125","1/160","1/200","1/250","1/320","1/400","1/500","1/640",
-    "1/800","1/1000","1/1250","1/1600","1/2000","1/2500","1/3200","1/4000","1/5000","1/6400","1/8000"];
-  var MAX=T.length-1;
+    "1/800","1/1000","1/1250","1/1600","1/2000","1/2500","1/3200","1/4000","1/5000","1/6400","1/8000",
+    "1/10000","1/12800","1/16000","1/20000","1/25000","1/32000"];   // past 1/8000: only reachable when Fastest shutter allows it
+  var MAX=T.length-1;   // end of the scale (1/32000): wheels and ruler are drawn on this
+  var I8K=T.indexOf("1/8000"), FMIN=T.indexOf("1/2000");   // default camera limit; slowest choice for Fastest shutter
+  function lim(){ return s.fastI; }   // fastest shutter this camera can actually shoot (index in T)
   var ISO=[100,200,400,800,1600];
   var A=[2,2.2,2.5,2.8,3.2,3.5,4,4.5,5,5.6,6.3,7.1,8,9,10,11,13,14,16,18,20,22];
   var WB=[2500,2800,3200,3600,4000,4400,4800,5200,5600,6000,6500,7000,7500,8000,9000,10000];   // typical camera range
@@ -1293,15 +1320,17 @@ body.sun .toast button.strong{background:#fff;color:#000}
     {id:"15", a:"15 mm", b:"fisheye", p:{around:6, up:0, down:0, zen:true, nad:true}, why:"The classic 6 + up + down."},
     {id:"14", a:"14–16", b:"wide",    p:{around:8, up:0, down:0, zen:true, nad:true}, why:"One level row covers ±50°. Up and down close the poles."},
     {id:"24", a:"24 mm", b:"",        p:{around:10,up:8, down:8, zen:true, nad:true}, why:"Needs tilted rows at ±45°. Slow: only when you need the resolution."},
-    {id:"35", a:"35 mm", b:"",        p:{around:14,up:10,down:10,zen:true, nad:true}, why:"Very slow on set. Only for high-resolution backplates."}
+    {id:"35", a:"35 mm", b:"",        p:{around:14,up:10,down:10,zen:true, nad:true}, why:"Very slow on set. Only for high-resolution backplates."},
+    {id:"single", a:"Single shot", b:"textures, plates", p:{around:1,up:0,down:0,zen:false,nad:false}, why:"One frame, for textures and plates."}
   ];
+  function single(){ return s.lens==="single"; }
   var REFS=[["grey","Grey"],["chrome","Chrome"],["chart","Chart"]];
   var AROUND=[3,4,5,6,8,10,12,14,16], RING=[0,4,6,8,10,12];
   var ROWS=[[90,"Straight up"],[45,"Tilt up 45°"],[0,"Level"],[-45,"Tilt down 45°"],[-90,"Straight down"]];
   
   var KEY="hdri-bracket-v7";
-  var s={ap:A.indexOf(8), wb:WB.indexOf(5600), wbV:2, dark:MAX, light:T.indexOf("1/8"), step:2, done:[],
-         lens:"15", pat:null, ang:{}, cur:null, refs:{}, t0:null, tEnd:null, night:false, sun:false, vibe:true, refract:true, fx:true, tilt:true, glassLvl:null, cardGlass:0, refr:50, frost:80, edge:45, touch:true, glow:true, order:null, countdown:false, clock:true, tab:"shoot", setupOpen:false, camSet:false, sel:null, open:{}, notes:"", loc:null, iso:0, fold:{}, project:"", wbK:null, theme:"glass", anim:"quick", keepOn:true, autoLoc:false, tk:{}, aeb:0, history:[]};
+  var s={ap:A.indexOf(8), wb:WB.indexOf(5600), wbV:2, dark:T.indexOf("1/8000"), light:T.indexOf("1/8"), step:2, done:[],
+         lens:"15", pat:null, ang:{}, cur:null, refs:{}, t0:null, tEnd:null, night:false, sun:false, vibe:true, refract:true, fx:true, tilt:true, glassLvl:null, cardGlass:0, refr:50, frost:80, edge:45, touch:true, glow:true, order:null, countdown:false, clock:true, tab:"shoot", setupOpen:false, camSet:false, sel:null, open:{}, notes:"", loc:null, iso:0, fold:{}, project:"", wbK:null, theme:"glass", anim:"quick", keepOn:true, autoLoc:false, tk:{}, aeb:0, fastI:T.indexOf("1/8000"), lensTxt:"", history:[]};
   var DEF=JSON.parse(JSON.stringify(s));   // factory settings, for the Reset buttons
   try{ var v=JSON.parse(localStorage.getItem(KEY)||"null"); if(v && typeof v.dark==="number") s=Object.assign(s,v); }catch(e){}
   if(v && typeof v.dark==="number" && !v.wbV){ var OLDWB=[2800,3200,3600,4000,4400,4800,5200,5600,6000,6500,7000,7500]; var ok=WB.indexOf(OLDWB[s.wb]); s.wb=ok>=0?ok:WB.indexOf(5600); s.wbV=2; }   // keep the saved Kelvin after the range grew
@@ -1313,6 +1342,9 @@ body.sun .toast button.strong{background:#fff;color:#000}
   if(typeof s.keepOn!=="boolean") s.keepOn=true;
   if(typeof s.autoLoc!=="boolean") s.autoLoc=false;
   if([0,3,5,7,9].indexOf(s.aeb)<0) s.aeb=0;
+  if(v && typeof v.fastI!=="number" && [0,1,2].indexOf(v.fast)>=0) s.fastI=I8K-3*v.fast;   // previous build stored 0/1/2 (1/8000, 1/4000, 1/2000)
+  delete s.fast; s.fastI=Math.max(FMIN,Math.min(MAX,s.fastI)); if(typeof s.lensTxt!=="string") s.lensTxt="";
+  if(s.dark>lim()){ s.dark=lim(); if(s.light>s.dark-3) s.light=s.dark-3; }
   // animation speed: Smooth 600 ms, Quick 250 ms, Off instant (also when the phone asks for reduced motion)
   function animMs(full){ if(matchMedia("(prefers-reduced-motion: reduce)").matches || s.anim==="off") return 0; return s.anim==="smooth"?full:Math.round(full*0.42); }
   if(s.glassLvl==null) s.glassLvl = s.refract===false?0:(s.fx===false?1:2);
@@ -1322,6 +1354,7 @@ body.sun .toast button.strong{background:#fff;color:#000}
   function save(){ try{ localStorage.setItem(KEY,JSON.stringify(s)); storeFull=false; }catch(e){ storeFull=true; } }
   var $=function(id){return document.getElementById(id);};
   var clamp=function(x,a,b){return Math.max(a,Math.min(b,x));};
+  function lensTag(){ return single()?"Single"+(s.lensTxt.trim()?" "+s.lensTxt.trim():""):lensById(s.lens).a; }
   function lensById(id){ return LENSES.filter(function(l){return l.id===id;})[0]||LENSES[1]; }
   function sec(i){ return 30*Math.pow(2,-i/3); }
   function label(i){
@@ -1337,7 +1370,7 @@ body.sun .toast button.strong{background:#fff;color:#000}
   // ---------- exposure ----------
   function bracket(){
     var st=3*s.step, half=Math.ceil((s.dark-s.light)/2/st), ext=half*st, mid=Math.round((s.dark+s.light)/2);
-    if(mid+ext>MAX) mid=MAX-ext;
+    if(mid+ext>lim()) mid=lim()-ext;
     if(mid-ext>s.light) mid=s.light+ext;
     var f=[]; for(var k=half;k>=-half;k--) f.push({i:mid+k*st, ev:-k*s.step});
     return {mid:mid, frames:f};
@@ -1348,7 +1381,22 @@ body.sun .toast button.strong{background:#fff;color:#000}
   function plan(b){
     var f=b.frames.map(function(o){ return {i:o.i, ev:o.ev}; }), N=s.aeb;
     if(!N) return {frames:f, sets:null};
-    var st=3*s.step, n=f.length, tot=Math.ceil(n/N)*N, ex=tot-n, eD=Math.min(ex,Math.floor((MAX-f[0].i)/st)), eB=ex-eD, k, sets=[];
+    var st=3*s.step, n=f.length, tot=Math.ceil(n/N)*N, ex=tot-n, dRoom=Math.floor((lim()-f[0].i)/st), eD=Math.min(ex,dRoom), eB=ex-eD, k, sets=[];
+    if(n<=N){   // one burst: centre it on your middle, moved only as far as the camera's limits and your measured range require
+      var h=(N-1)/2*st, cLo=Math.max(s.dark-h,h), cHi=Math.min(s.light+h,lim()-h);
+      if(cLo<=cHi){
+        var C=clamp(b.mid,cLo,cHi), g=[], q;
+        for(q=(N-1)/2;q>=-(N-1)/2;q--) g.push({i:C+q*st, ev:-q*s.step});
+        var hasD=g.some(function(o){ return o.i===s.dark; }), hasL=g.some(function(o){ return o.i===s.light; });
+        var dCov=Math.min.apply(null,g.filter(function(o){ return o.i>s.dark; }).map(function(o){ return o.i; }).concat([1e9]));
+        var lCov=Math.max.apply(null,g.filter(function(o){ return o.i<s.light; }).map(function(o){ return o.i; }).concat([-1e9]));
+        var nD=0,nB=0; g.forEach(function(o,ix){ o.set=0;
+          var need=(o.i<=s.dark && o.i>=s.light) || (!hasD && o.i===dCov) || (!hasL && o.i===lCov);
+          if(!need){ o.x=1; if(o.i>s.dark) nD++; else nB++; } });
+        g[(N-1)/2].c=1;
+        return {frames:g, sets:[{c:(N-1)/2, ids:g.map(function(o,ix){ return ix; })}], eD:nD, eB:nB, ov:0, big:false};
+      }
+    }
     for(k=0;k<eD;k++) f.unshift({i:f[0].i+st, ev:f[0].ev-s.step, x:1});
     // no room at either end within 1/8000–30s: the last set slides back and overlaps instead of going past 30s
     var room=Math.max(0,Math.floor(f[f.length-1].i/st)), ov=0;
@@ -1359,7 +1407,7 @@ body.sun .toast button.strong{background:#fff;color:#000}
     return {frames:f, sets:sets, eD:eD, eB:eB, ov:ov, big:big};
   }
   function setLine(M){
-    if(M.big) return s.aeb+" × "+s.step+" EV doesn't fit between 1/8000 and 30s: choose a smaller autobracket.";
+    if(M.big) return s.aeb+" × "+s.step+" EV doesn't fit between "+T[lim()]+" and 30s: choose a smaller autobracket.";
     var N=s.aeb, x=function(v,w){ return v?" · "+v+" extra "+w+" frame"+(v>1?"s":""):""; };
     return M.sets.length+" set"+(M.sets.length>1?"s":"")+" of "+N+x(M.eD,"dark")+x(M.eB,"bright")+(M.ov?" · last set overlaps "+M.ov+" frame"+(M.ov>1?"s":""):"");
   }
@@ -1376,6 +1424,7 @@ body.sun .toast button.strong{background:#fff;color:#000}
     return out;
   }
   function angText(a){
+    if(single()) return {v:"Straight ahead", d:"Aim at your subject."};
     if(a.el===90) return {v:"Straight up", d:"Point the lens at the sky."};
     if(a.el===-90) return {v:"Straight down", d:"Move the tripod legs aside if you need a clean ground."};
     var tilt=a.el===0?"level":(a.el>0?"tilt up 45°":"tilt down 45°");
@@ -1393,7 +1442,7 @@ body.sun .toast button.strong{background:#fff;color:#000}
     showToast(msg,null,warn?9000:5000,warn);
   }
   // Anything that throws work away acts at once and offers Undo (only when there was something to lose)
-  var GUARD=["ang","tk","done","sel","cur","tEnd","tAct","t0","pat","lens","dark","light","ap","iso","step","wb","wbK","camSet","refs","notes","loc","project","history"];
+  var GUARD=["ang","tk","done","sel","cur","tEnd","tAct","t0","pat","lens","dark","light","ap","iso","step","wb","wbK","camSet","refs","notes","loc","project","history","fastI"];
   function snap(){ var o={}; GUARD.forEach(function(k){ o[k]=s[k]; }); return JSON.stringify(o); }
   function guarded(msg,lose,fn){ if(!lose){ fn(); return; } var sn=snap(); fn(); undoSnap=sn; showToast(msg,null,6000); }
   // toast: one Undo, or a two-way choice (alt = left, main = right)
@@ -1499,8 +1548,8 @@ body.sun .toast button.strong{background:#fff;color:#000}
   }
 
   // ---------- dials ----------
-  function Wheel(strip, labels, majorEvery, onChange){
-    var cur=-1, quiet=false, items=[], N=labels.length;
+  function Wheel(strip, labels, majorEvery, onChange, loFn, offFn){
+    var cur=-1, quiet=false, items=[], N=labels.length, back=null, lo=function(){ return loFn?loFn():0; };
     labels.forEach(function(l,p){
       var it=document.createElement("div");
       it.className="item"+(majorEvery && p%majorEvery===0?" stop":""); it.textContent=l;
@@ -1517,20 +1566,23 @@ body.sun .toast button.strong{background:#fff;color:#000}
     }
     strip.addEventListener("scroll",function(){
       if(quiet) return;
-      var p=clamp(Math.round(strip.scrollLeft/w()),0,N-1);
+      clearTimeout(back); back=setTimeout(function(){ if(Math.round(strip.scrollLeft/w())<lo()) set(lo(),true); },160);   // past the camera's fastest shutter: spring back
+      var p=clamp(Math.round(strip.scrollLeft/w()),lo(),N-1);
       if(p===cur) return;
       mark(p); buzz(4); onChange(p);
     },{passive:true});
     strip.addEventListener("keydown",function(e){
-      if(e.key==="ArrowLeft"){ e.preventDefault(); set(clamp(cur-1,0,N-1),true); }
+      if(e.key==="ArrowLeft"){ e.preventDefault(); set(clamp(cur-1,lo(),N-1),true); }
       if(e.key==="ArrowRight"){ e.preventDefault(); set(clamp(cur+1,0,N-1),true); }
     });
     window.addEventListener("resize",function(){ var c=cur; cur=-1; set(c,false); });
-    return {set:set, get:function(){return cur;}, snap:function(){ strip.scrollLeft=cur*w(); }};
+    function dim(){ var l=offFn?offFn():lo(); items.forEach(function(it,p){ it.classList.toggle("off",p<l); }); }
+    return {set:set, get:function(){return cur;}, snap:function(){ strip.scrollLeft=cur*w(); }, dim:dim};
   }
-  var SH=T.slice().reverse();
-  var dW=Wheel($("dWheel"),SH,3,function(p){ setDark(MAX-p); });
-  var lW=Wheel($("lWheel"),SH,3,function(p){ setLight(MAX-p); });
+  var SH=T.slice().reverse(), fastOpen=false;
+  var fW=Wheel($("fWheel"),SH.slice(0,MAX-FMIN+1),3,function(p){ setFast(MAX-p); });
+  var dW=Wheel($("dWheel"),SH,3,function(p){ setDark(MAX-p); },function(){ return MAX-lim(); });
+  var lW=Wheel($("lWheel"),SH,3,function(p){ setLight(MAX-p); },function(){ return MAX-lim()+3; },function(){ return MAX-lim(); });
   var aW=Wheel($("aWheel"),A.map(function(a){return "f/"+a;}),3,function(p){ setAp(p); });
   var wW=Wheel($("wWheel"),WB.map(function(k){return k+"K";}),0,function(p){ if(s.wbK && p===nearWB(s.wbK)) return; s.wb=p; s.wbK=null; s.camSet=true; render(); });
   // custom Kelvin: any value 2000–12000 (rounded to 50); the wheel rests on the nearest preset
@@ -1581,9 +1633,9 @@ body.sun .toast button.strong{background:#fff;color:#000}
     document.querySelectorAll(".tabs [data-tab]").forEach(function(b){ var on=b.getAttribute("data-tab")===s.tab; b.setAttribute("aria-selected",on); });
     placeDrop(); drawLook();
     document.querySelectorAll("[data-panel]").forEach(function(p){ p.classList.toggle("on",p.getAttribute("data-panel")===s.tab); });
-    $("xReset").hidden=s.step===DEF.step && s.dark===DEF.dark && s.light===DEF.light;
-    $("camReset").hidden=s.ap===DEF.ap && s.wb===DEF.wb && !s.wbK && s.iso===DEF.iso;
-    aW.set(s.ap,false); wW.set(s.wb,false); dW.set(MAX-s.dark,false); lW.set(MAX-s.light,false);
+    $("xReset").hidden=s.step===DEF.step && s.dark===Math.min(DEF.dark,lim()) && s.light===DEF.light;
+    $("camReset").hidden=s.ap===DEF.ap && s.wb===DEF.wb && !s.wbK && s.iso===DEF.iso && s.fastI===DEF.fastI;
+    aW.set(s.ap,false); wW.set(s.wb,false); dW.dim(); lW.dim(); dW.set(MAX-s.dark,false); lW.set(MAX-s.light,false);
 
     guide($("aOpts"),A_GUIDE,function(g){return g.avoid?"":"f/"+g.f;},function(g){return A[s.ap]===g.f;},function(g){ setAp(A.indexOf(g.f)); },$("aGuide"));
     guide($("wOpts"),W_GUIDE,function(g){return g.k?g.k+"K":"";},function(g){return !s.wbK && WB[s.wb]===g.k;},function(g){ s.wb=WB.indexOf(g.k); s.wbK=null; s.camSet=true; render(); },$("wGuide"));
@@ -1606,6 +1658,7 @@ body.sun .toast button.strong{background:#fff;color:#000}
     // lens
     var lb=$("lenses"); lb.innerHTML="";
     LENSES.forEach(function(l){
+      if(l.id==="single") return;   // Single shot is a mode (switch above), not a lens
       var b=document.createElement("button"); b.type="button"; b.setAttribute("aria-pressed",s.lens===l.id);
       b.innerHTML='<span class="l1"></span><span class="l2"></span>';
       b.querySelector(".l1").textContent=l.a; b.querySelector(".l2").textContent=l.b||" ";
@@ -1615,7 +1668,11 @@ body.sun .toast button.strong{background:#fff;color:#000}
     var L=lensById(s.lens), rp=L.p, rt=rp.around+rp.up+rp.down+(rp.zen?1:0)+(rp.nad?1:0);
     var parts=[rp.around+" level"]; if(rp.up) parts.push(rp.up+" tilted up"); if(rp.down) parts.push(rp.down+" tilted down");
     if(rp.zen) parts.push("up"); if(rp.nad) parts.push("down");
-    $("recLine").innerHTML="Recommended: <b>"+rt+" angles</b> ("+parts.join(" · ")+"). "+L.why;
+    if(single()) $("recLine").textContent="One frame, for textures and plates. The lens only goes into the report.";
+    else $("recLine").innerHTML="Recommended: <b>"+rt+" angles</b> ("+parts.join(" · ")+"). "+L.why;
+    $("sgLens").hidden=!single(); $("lpNote").hidden=single(); $("adjust").hidden=single(); lb.hidden=single();
+    [].forEach.call($("modeSeg").children,function(bt){ bt.setAttribute("aria-pressed",(bt.getAttribute("data-m")==="single")===single()); });
+    if(document.activeElement!==$("sgLensIn")) $("sgLensIn").value=s.lensTxt;
     drawAdjust();
 
     // angles
@@ -1628,7 +1685,7 @@ body.sun .toast button.strong{background:#fff;color:#000}
 
     // exposure
     var b=bracket(), f=b.frames, n=f.length, stops=(f[0].i-f[n-1].i)/3;
-    $("midVal").textContent=label(b.mid);
+    $("midVal").textContent=label(b.mid); $("mDn").disabled=!shiftOk(1); $("mUp").disabled=!shiftOk(-1);
     // how far the symmetric bracket reaches past the measured ends (it can't stop exactly on both with whole steps)
     var ovD=Math.max(0,(f[0].i-s.dark)/3), ovB=Math.max(0,(s.light-f[n-1].i)/3), fx=function(v){ return (Math.round(v*10)/10).toString(); };
     var parts=[]; if(ovD>=0.05) parts.push("+"+fx(ovD)+" EV dark"); if(ovB>=0.05) parts.push("+"+fx(ovB)+" EV bright");
@@ -1643,7 +1700,7 @@ body.sun .toast button.strong{background:#fff;color:#000}
     $("fSum").textContent=ff?s.done.length+"/"+n+" ticked":"";
     $("xChev").textContent=xf?"▾":"Fold ▴"; $("fChev").textContent=ff?"▾":"Fold ▴";
     $("fCount").textContent=n+" frames · "+fx(stops)+" EV";
-    var st3=3*s.step; $("fLess").disabled=n<=3; $("fMore").disabled=f[0].i-f[n-1].i+2*st3>MAX;
+    var st3=3*s.step; $("fLess").disabled=n<=3; $("fMore").disabled=f[0].i-f[n-1].i+2*st3>lim();
     $("midCount").appendChild(document.createTextNode(label(f[0].i)+" → "+label(f[n-1].i)));
     var cv=document.createElement("span"); cv.className="cov"; cv.textContent="Covers your range "+(cov==="matches your range"?"exactly":cov); $("midCount").appendChild(cv);
 
@@ -1769,6 +1826,9 @@ body.sun .toast button.strong{background:#fff;color:#000}
     $("setLine").hidden=!M.sets; if(M.sets) $("setLine").textContent=setLine(M);
     $("cdToggle").hidden=!!M.sets;
     $("aebHint").hidden=!s.aeb;
+    $("camXBtn").textContent=T[s.fastI]+" · AEB "+(s.aeb||"off")+" "+(s.camX?"▴":"▾"); $("camXBtn").setAttribute("aria-expanded",!!s.camX); $("camX").hidden=!s.camX;
+    $("fastBtn").textContent=T[s.fastI]+" "+(fastOpen?"▴":"▾"); $("fastBtn").setAttribute("aria-expanded",fastOpen); $("fastWrap").hidden=!fastOpen;
+    if(fastOpen) fW.set(MAX-s.fastI,false);
     var as=$("aebSeg"); as.innerHTML="";
     [["Off",0],["3",3],["5",5],["7",7],["9",9]].forEach(function(o){ var bt=document.createElement("button"); bt.type="button"; bt.textContent=o[0]; bt.setAttribute("aria-pressed",s.aeb===o[1]);
       bt.onclick=function(){ if(s.aeb===o[1]) return; guarded("Autobracket changed: ticks cleared",s.done.length>0,function(){ s.aeb=o[1]; s.done=[]; timing=null; s.camSet=true; render(); }); }; as.appendChild(bt); });
@@ -1778,6 +1838,9 @@ body.sun .toast button.strong{background:#fff;color:#000}
     var fl=$("frames"); fl.innerHTML="";
     var next=-1; for(var k=0;k<n;k++){ if(s.done.indexOf(k)<0){ next=k; break; } }
     var curSet=-1; if(M.sets) for(var q=0;q<M.sets.length;q++){ if(!M.sets[q].ids.every(function(i){ return s.done.indexOf(i)>=0; })){ curSet=q; break; } }
+    // with sets on, the big number is the centre you set on the camera (one number, no second "middle")
+    if(M.sets){ var ks=curSet>=0?curSet:M.sets.length-1; $("midK").textContent=M.sets.length>1?"Set "+(ks+1)+" centre":"Centre"; $("midVal").textContent=label(f[M.sets[ks].c].i); }
+    else $("midK").textContent="Middle · 0 EV";
     function tickSet(g,on){ g.ids.forEach(function(i){ var p=s.done.indexOf(i); if(on && p<0) s.done.push(i); if(!on && p>=0) s.done.splice(p,1); }); }
     if(M.sets) M.sets.forEach(function(g,q){
       var c=f[g.c], done=g.ids.every(function(i){ return s.done.indexOf(i)>=0; }), li=document.createElement("li");
@@ -1818,7 +1881,7 @@ body.sun .toast button.strong{background:#fff;color:#000}
     // Angle card: tap it = Angle done · next. Skip = skip this angle. Both act at once with Undo.
     var allShot=s.done.length===n, pr=$("primary");
     $("actions").hidden=s.tab!=="shoot";
-    $("lensBtn").textContent="Lens "+lensById(s.lens).a+" · "+list.length+" angles "+(lensOpen?"▴":"▾");
+    $("lensBtn").textContent=(single()?"Single"+(s.lensTxt.trim()?" · "+s.lensTxt.trim():""):"Lens "+lensById(s.lens).a+" · "+list.length+" angles")+" "+(lensOpen?"▴":"▾");
     $("lensBtn").setAttribute("aria-expanded",lensOpen); var lw=$("lensWrap"); if(!lw._raf){ lw.style.height=lensOpen?"":"0px"; lw.style.overflow=lensOpen?"":"hidden"; lw.inert=!lensOpen; }
     var cdb=$("cdToggle"); cdb.textContent="⏱ Countdown "+(s.countdown?"on":"off"); cdb.setAttribute("aria-pressed",!!s.countdown);
     wbTone(); drawAp();
@@ -1855,7 +1918,7 @@ body.sun .toast button.strong{background:#fff;color:#000}
       : "Too many frames or too long for autobracket. Shoot this one by hand.";
     var nextAp=A.filter(function(a){ return a>A[s.ap] && (a===11||a===16); })[0];
     var w=[];
-    if(s.dark===MAX) w.push("Darkest frame is at 1/8000. If it still clips, "+(nextAp?"go to f/"+nextAp:"add an ND filter (don't go past f/16)")+" and check the range again.");
+    if(s.dark===lim()) w.push("Darkest frame is at "+T[lim()]+(s.fastI!==I8K?", your camera's fastest":"")+". If it still clips, "+(nextAp?"go to f/"+nextAp:"add an ND filter (don't go past f/16)")+" and check the range again.");
     $("warn").textContent=w.join(" ");
 
     last={list:list, nd:nd, nsk:nsk, f:f, b:b, M:M, cur:cur};
@@ -1945,14 +2008,14 @@ body.sun .toast button.strong{background:#fff;color:#000}
     var vis=function(v){ var sx=W/2+x(v)-x(rView); return sx>=edge && sx<=W-edge; };
     if(!anim || rView==null || !vis(lo) || !vis(hi)) rView=(lo+hi)/2;   // sets add frames on one side: centre on what is actually drawn
     rl.style.transform="translateX("+(W/2-x(rView)).toFixed(1)+"px)"; rPrevMid=b.mid;
-    var cm=tr.querySelector(".cmark"); cm.classList.toggle("anim",anim); cm.style.left=(W/2+x(b.mid)-x(rView)).toFixed(1)+"px";
+    var cm=tr.querySelector(".cmark"); cm.classList.toggle("anim",anim); cm.style.left=(W/2+x(b.mid)-x(rView)).toFixed(1)+"px"; cm.hidden=!!(M&&M.sets);   // with sets the centre is the big dot; no second middle mark
     if(rTicksPx!==ppx){   // shutter labels every 2 stops, the ruler's "numbers"
       rl.querySelectorAll(".rt").forEach(function(e){ e.remove(); });
       var lstep=ppx*2>=40?6:12;   // label every 2 stops, or every 4 when zoomed out
-      for(var i=MAX;i>=0;i-=lstep){ var t=document.createElement("span"); t.className="rt"; t.textContent=T[i]; t.style.left=x(i)+"px"; rl.appendChild(t); }
+      for(var i=MAX;i>=0;i-=lstep){ if(i>lim()) continue; var t=document.createElement("span"); t.className="rt"; t.textContent=T[i]; t.style.left=x(i)+"px"; rl.appendChild(t); }
       rTicksPx=ppx;
     }
-    rl.classList.toggle("sets",!!(M&&M.sets)); rl.classList.toggle("tight",ppx*s.step<24); rl.classList.toggle("tiny",ppx*s.step<15); rl.style.setProperty("--dz",Math.max(4,Math.min(7,ppx*s.step-2.5)).toFixed(1)+"px");   // very dense: dots shrink with the spacing   // dots closer than their size: draw them smaller
+    rl.classList.toggle("sets",!!(M&&M.sets)); rl.classList.toggle("tight",ppx*s.step<24); rl.classList.toggle("tiny",ppx*s.step<15); rl.style.setProperty("--dz",Math.max(3.5,Math.min(7,ppx*s.step-4)).toFixed(1)+"px");   // centre dot (dz+3) always leaves 1px to its neighbour   // very dense: dots shrink with the spacing   // dots closer than their size: draw them smaller
     rl.querySelectorAll(".setpill,.slbl").forEach(function(e){ e.remove(); });
     if(M && M.sets){ var cs=-1; for(var q=0;q<M.sets.length;q++){ if(!M.sets[q].ids.every(function(i){ return s.done.indexOf(i)>=0; })){ cs=q; break; } }
       M.sets.forEach(function(g,q){ var a=x(f[g.ids[0]].i), z=x(f[g.ids[g.ids.length-1]].i), pl=document.createElement("div");
@@ -2020,13 +2083,13 @@ body.sun .toast button.strong{background:#fff;color:#000}
     if(s.loc) L.push("Location "+s.loc.lat.toFixed(5)+", "+s.loc.lon.toFixed(5)+" (±"+s.loc.acc+" m) · https://maps.google.com/?q="+s.loc.lat.toFixed(5)+","+s.loc.lon.toFixed(5));
     // setup
     L.push("");
-    L.push("Camera: "+(s.camSet?fAp(s.ap)+" · ISO "+ISO[s.iso]+" · "+wbVal()+"K"+(s.wbK?" (custom)":"")+" · RAW":"settings not recorded")+" · lens "+lensById(s.lens).a+", "+list.length+" angles");
+    L.push("Camera: "+(s.camSet?fAp(s.ap)+" · ISO "+ISO[s.iso]+" · "+wbVal()+"K"+(s.wbK?" (custom)":"")+" · RAW":"settings not recorded")+(s.fastI!==I8K?" · fastest shutter "+T[lim()]:"")+(single()?" · single shot"+(s.lensTxt.trim()?", lens "+s.lensTxt.trim():""):" · lens "+lensById(s.lens).a+", "+list.length+" angles"));
     L.push("Measured range: darkest "+label(s.dark)+" · brightest "+label(s.light));
     if(b) L.push("Bracket: "+b.frames.length+" × "+s.step+" EV · "+label(b.frames[0].i)+" → "+label(b.frames[b.frames.length-1].i)+" · middle "+label(b.mid));
     // autobracket: how the bracket was actually fired, so the merge holds no surprises
     if(M && M.sets){
       L.push("");
-      if(M.big) L.push("Autobracket: "+s.aeb+" × "+s.step+" EV didn't fit 1/8000–30s, so the frames were shot as one partial set");
+      if(M.big) L.push("Autobracket: "+s.aeb+" × "+s.step+" EV didn't fit "+T[lim()]+"–30s, so the frames were shot as one partial set");
       else L.push("Autobracket: "+s.aeb+" × "+s.step+" EV · "+M.sets.length+" set"+(M.sets.length>1?"s":"")+" · "+M.sets.length*s.aeb+" exposures per angle");
       M.sets.forEach(function(g,q){ L.push("  Set "+(q+1)+" · centre "+label(f[g.c].i)+": "+g.ids.map(function(i){ return label(f[i].i); }).join(", ")); });
       var ex=f.filter(function(fr){ return fr.x; }).map(function(fr){ return label(fr.i); });
@@ -2047,15 +2110,26 @@ body.sun .toast button.strong{background:#fff;color:#000}
   // −/+ : one frame less/more at each end; the middle stays put
   function frameStep(d){ var b=bracket(), f=b.frames, n=f.length, st=3*s.step*d;
     if(d<0 && n<=3) return; var D=f[0].i+st, L=f[n-1].i-st;
-    if(d>0){ if(D>MAX){ L-=D-MAX; D=MAX; } if(L<0){ D=Math.min(MAX,D-L); L=0; } if(D-L<=f[0].i-f[n-1].i) return; }   // at a camera limit: grow on the other side
+    if(d>0){ var X=lim(); if(D>X){ L-=D-X; D=X; } if(L<0){ D=Math.min(X,D-L); L=0; } if(D-L<=f[0].i-f[n-1].i) return; }   // at a camera limit: grow on the other side
     expo(function(){ s.dark=D; s.light=L; s.done=[]; },"Frames changed: ticks cleared"); buzz(10); }
   function expo(fn,msg){ guarded(msg||"Exposure changed: ticks cleared",s.done.length>0,function(){ fn(); render(); }); }
-  function setDark(i){ i=clamp(i,3,MAX); if(i===s.dark) return; expo(function(){ s.dark=i; if(s.light>s.dark-3) s.light=s.dark-3; s.done=[]; }); }
-  function setLight(i){ i=clamp(i,0,MAX-3); if(i===s.light) return; expo(function(){ s.light=i; if(s.light>s.dark-3) s.dark=s.light+3; s.done=[]; }); }
+  // Fastest shutter of the camera: everything (wheels, ±, ISO/aperture shifts, set padding) stays at or below it
+  function setFast(X){ X=clamp(X,FMIN,MAX); if(X===s.fastI) return; var moves=s.dark>X;
+    if(!moves){ s.fastI=X; s.camSet=true; render(); return; }
+    expo(function(){ s.fastI=X; s.camSet=true; s.dark=X; if(s.light>s.dark-3) s.light=s.dark-3; s.done=[]; },"Darkest frame moved to "+T[X]+": ticks cleared"); }
+  // Middle shift: darkest and brightest move together, the span stays (textures: ±2 EV around a metered middle)
+  // Each tap moves the frames 1/3 stop: the measured pair moves as far as needed for the middle to move (padding can absorb a step)
+  function shiftBy(d){ var m0=bracket().mid, od=s.dark, ol=s.light, k=0;
+    for(var j=1;j<=12;j++){ var D=od+d*j, L=ol+d*j; if(D>lim()||L<0||D<3) break; s.dark=D; s.light=L; if(bracket().mid!==m0){ k=j; break; } }
+    s.dark=od; s.light=ol; return k; }
+  function shiftOk(d){ return shiftBy(d)>0; }
+  function shiftMid(d){ var k=shiftBy(d); if(!k) return; expo(function(){ s.dark+=d*k; s.light+=d*k; s.done=[]; },"Middle moved: ticks cleared"); buzz(10); }
+  function setDark(i){ i=clamp(i,3,lim()); if(i===s.dark) return; expo(function(){ s.dark=i; if(s.light>s.dark-3) s.light=s.dark-3; s.done=[]; }); }
+  function setLight(i){ i=clamp(i,0,lim()-3); if(i===s.light) return; expo(function(){ s.light=i; if(s.light>s.dark-3) s.dark=s.light+3; s.done=[]; }); }
   // ISO: one stop up makes every shutter in the bracket one stop faster, like a wider aperture
-  function isoOk(p){ var d=3*(p-s.iso); return s.dark+d<=MAX && s.light+d>=0; }   // the whole bracket must still fit 1/8000 … 30s
+  function isoOk(p){ var d=3*(p-s.iso); return s.dark+d<=lim() && s.light+d>=0; }   // the whole bracket must still fit 1/8000 … 30s
   function setIso(p){ p=clamp(p,0,ISO.length-1); var d=p-s.iso; if(!d || !isoOk(p)) return;
-    expo(function(){ s.iso=p; s.camSet=true; var span=s.dark-s.light; s.dark=clamp(s.dark+3*d,span,MAX); s.light=s.dark-span; s.done=[]; },"ISO changed: shutter times recalculated, ticks cleared"); }
+    expo(function(){ s.iso=p; s.camSet=true; var span=s.dark-s.light; s.dark=clamp(s.dark+3*d,span,lim()); s.light=s.dark-span; s.done=[]; },"ISO changed: shutter times recalculated, ticks cleared"); }
   function drawIso(f,n){
     var g=$("isoSeg"); g.innerHTML="";
     ISO.forEach(function(v,i){ var b=document.createElement("button"); b.type="button"; b.textContent=v; b.setAttribute("aria-pressed",s.iso===i); b.disabled=!isoOk(i); b.onclick=function(){ setIso(i); }; g.appendChild(b); });
@@ -2067,29 +2141,33 @@ body.sun .toast button.strong{background:#fff;color:#000}
       if(ni>s.iso) opts.push("ISO\u00a0"+ISO[ni]+" → "+label(li+3*(ni-s.iso)));
       tip="Longest frame "+label(li)+"."+(opts.length?" "+opts.join(", or ").replace(/^o/,"O")+".":"");
     } else if(s.iso>0 && sec(li-3*s.iso)<15){
-      tip="Not needed here: at ISO 100 the longest frame is still only "+label(li-3*s.iso)+" with cleaner shadows.";
-    } else if(s.dark===MAX && s.iso<ISO.length-1 && !isoOk(s.iso+1)) tip=(s.iso===0?"Base ISO, cleanest result. ":"")+"Darkest frame is at 1/8000, so higher ISO can't fit.";
+      tip="ISO 100 is enough here: longest frame only "+label(li-3*s.iso)+", cleaner shadows.";
+    } else if(s.dark===lim() && s.iso<ISO.length-1 && !isoOk(s.iso+1)) tip=(s.iso===0?"Base ISO, cleanest. ":"")+"Darkest frame is at "+T[lim()]+": higher ISO won't fit.";
     else tip=s.iso===0?"Base ISO, cleanest result.":"Higher ISO keeps long frames short, at the cost of shadow noise.";
     $("isoTip").textContent=tip;
   }
   function setAp(p){
     p=clamp(p,0,A.length-1); var d=p-s.ap;
     if(!d){ s.camSet=true; render(); return; }
-    expo(function(){ s.ap=p; s.camSet=true; var span=s.dark-s.light; s.dark=clamp(s.dark-d,span,MAX); s.light=s.dark-span; s.done=[]; },"Aperture changed: shutter times recalculated, ticks cleared");
+    expo(function(){ s.ap=p; s.camSet=true; var span=s.dark-s.light; s.dark=clamp(s.dark-d,span,lim()); s.light=s.dark-span; s.done=[]; },"Aperture changed: shutter times recalculated, ticks cleared");
   }
   function arrows(dn,up,wheel,lo,hi){
-    $(dn).onclick=function(){ wheel.set(clamp(wheel.get()-1,lo,hi),true); };
-    $(up).onclick=function(){ wheel.set(clamp(wheel.get()+1,lo,hi),true); };
+    var v=function(x){ return typeof x==="function"?x():x; };
+    $(dn).onclick=function(){ wheel.set(clamp(wheel.get()-1,v(lo),v(hi)),true); };
+    $(up).onclick=function(){ wheel.set(clamp(wheel.get()+1,v(lo),v(hi)),true); };
   }
   arrows("aDn","aUp",aW,0,A.length-1); arrows("wDn","wUp",wW,0,WB.length-1);
-  arrows("dDn","dUp",dW,0,MAX-3); arrows("lDn","lUp",lW,3,MAX);
+  arrows("dDn","dUp",dW,function(){ return MAX-lim(); },MAX-3); arrows("fDn","fUp",fW,0,MAX-FMIN);
+  $("fastBtn").onclick=function(){ fastOpen=!fastOpen; render(); };
+  $("camXBtn").onclick=function(){ s.camX=!s.camX; if(!s.camX) fastOpen=false; render(); };
+  $("mDn").onclick=function(){ shiftMid(1); }; $("mUp").onclick=function(){ shiftMid(-1); }; arrows("lDn","lUp",lW,function(){ return MAX-lim()+3; },MAX);
   $("fLess").onclick=function(){ frameStep(-1); }; $("fMore").onclick=function(){ frameStep(1); };
 
   function archive(){
     if(!started()) return;
     if(s.t0 && !s.tEnd) s.tEnd=clockEnd();
     var d=new Date(s.t0||Date.now()), list=last.list||[];
-    s.history.unshift({id:Date.now(), t:d.getTime(), project:(s.project||"").trim(), sub:lensById(s.lens).a+" · "+(last.nd||0)+"/"+list.length+" angles", title:ymd(d)+" "+hm(d)+" · "+lensById(s.lens).a+" · "+(last.nd||0)+"/"+list.length+" angles", file:fileBase(d)+".txt", text:shotLog()});
+    s.history.unshift({id:Date.now(), t:d.getTime(), project:(s.project||"").trim(), sub:lensTag()+" · "+(last.nd||0)+"/"+list.length+" angles", title:ymd(d)+" "+hm(d)+" · "+lensTag()+" · "+(last.nd||0)+"/"+list.length+" angles", file:fileBase(d)+".txt", text:shotLog()});
   }
   function clearShoot(){ hideToast(); locGen++; s.notes=""; s.loc=null; $("notes").value=""; s.ang={}; s.tk={}; s.done=[]; s.cur=null; s.sel=null; s.refs={}; s.t0=null; s.tEnd=null; s.tAct=null; timing=null; s.tab="shoot"; render(); window.scrollTo({top:0,behavior:"smooth"}); }
   function newHdri(){ var sn=snap(); archive(); clearShoot(); undoSnap=sn; var pj=(s.project||"").trim(); showToast(pj?"Saved to "+pj:"Saved · no project",null,6000); }
@@ -2310,7 +2388,7 @@ body.sun .toast button.strong{background:#fff;color:#000}
   $("orderReset").onclick=function(){ s.order=null; save(); applyOrder(); };
   // Reset to factory: only preferences. Camera, lens, the current shoot, projects and the log are never touched.
   var LOOKK=["theme","glassLvl","cardGlass","refr","frost","edge","tilt","touch","glow","glowAmt","anim","refract","fx"],
-      SETK=LOOKK.concat(["night","sun","vibe","clock","keepOn","autoLoc","countdown","order","fold","setupOpen","open"]);
+      SETK=LOOKK.concat(["night","sun","vibe","clock","keepOn","autoLoc","camX","countdown","order","fold","setupOpen","open"]);
   function resetPrefs(keys,msg){
     var old={}; keys.forEach(function(k){ old[k]=s[k]; });
     keys.forEach(function(k){ s[k]=k in DEF?JSON.parse(JSON.stringify(DEF[k])):null; });
@@ -2319,9 +2397,10 @@ body.sun .toast button.strong{background:#fff;color:#000}
     render(); bakeGlass(); applyOrder(); drawWake(); if(s.keepOn) wake(); else letSleep();
     undoSnap=JSON.stringify(old); showToast(msg,null,6000);
   }
-  $("xReset").onclick=function(){ guarded("Exposure reset to default",true,function(){ s.step=DEF.step; s.dark=DEF.dark; s.light=DEF.light; s.done=[]; render(); }); };
-  $("camReset").onclick=function(){ guarded("Camera reset to f/8 · 5600K · ISO 100",true,function(){
-    var span=s.dark-s.light; s.dark=clamp(s.dark-(DEF.ap-s.ap)+3*(DEF.iso-s.iso),span,MAX); s.light=s.dark-span;   // keep the measured exposure, like turning the dials by hand
+  $("xReset").onclick=function(){ guarded("Exposure reset to default",true,function(){ s.step=DEF.step; s.dark=Math.min(DEF.dark,lim()); s.light=DEF.light; s.done=[]; render(); }); };
+  $("camReset").onclick=function(){ guarded("Camera reset to f/8 · 5600K · ISO 100 · fastest 1/8000",true,function(){
+    s.fastI=DEF.fastI; var span=s.dark-s.light; s.dark=clamp(s.dark-(DEF.ap-s.ap)+3*(DEF.iso-s.iso),span,MAX); s.light=s.dark-span;
+    if(s.dark>lim()){ s.dark=lim(); if(s.light>s.dark-3) s.light=s.dark-3; }   // past the restored 1/8000: only the darkest moves, your brightest stays   // keep the measured exposure, like turning the dials by hand
     s.ap=DEF.ap; s.wb=DEF.wb; s.wbK=null; s.iso=DEF.iso; s.done=[]; render(); }); };
   $("lookReset").onclick=function(){ resetPrefs(LOOKK,"Look reset to default"); };
   $("setReset").onclick=function(){ resetPrefs(SETK,"All settings reset to default"); };
@@ -2332,6 +2411,13 @@ body.sun .toast button.strong{background:#fff;color:#000}
     n.hidden=false; };
   $("clockToggle").onclick=function(){ s.clock=!s.clock; render(); };
   $("cdToggle").onclick=function(){ s.countdown=!s.countdown; timing=null; render(); };
+  // Mode: HDRI ↔ Single shot. Going back restores the lens and angle pattern you had.
+  [].forEach.call($("modeSeg").children,function(bt){ bt.onclick=function(){
+    var toSingle=bt.getAttribute("data-m")==="single"; if(toSingle===single()) return;
+    if(toSingle){ s.hdriLens=s.lens; s.hdriPat=Object.assign({},s.pat); setPat(Object.assign({},lensById("single").p),"single"); }
+    else { var L=lensById(s.hdriLens&&s.hdriLens!=="single"?s.hdriLens:"15"); setPat(Object.assign({},s.hdriPat||L.p),L.id); }
+  }; });
+  $("sgLensIn").oninput=function(){ s.lensTxt=this.value; save(); var t=$("lensBtn").textContent, arr=t.slice(-1); $("lensBtn").textContent="Single"+(s.lensTxt.trim()?" · "+s.lensTxt.trim():"")+" "+arr; };
   $("lensBtn").onclick=function(){ lensOpen=!lensOpen; $("lensBtn").setAttribute("aria-expanded",lensOpen); animPanel($("lensWrap"),lensOpen); render(); };
   function goTab(t){ $("foldPad").style.height="0px"; s.tab=t; render(); window.scrollTo({top:0}); requestAnimationFrame(function(){ snapAll(); bakeGlass(); }); }
   // ---- Folding blocks (Camera, Exposure, Frames) ----
