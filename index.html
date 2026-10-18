@@ -1171,13 +1171,14 @@ body.sun .toast button.strong{background:#fff;color:#000}
       <div class="row">
         <div class="mini"><span>Show running timer in the top bar</span><button type="button" class="toggle" id="clockToggle"></button></div>
         <div class="mini"><span>Keep screen on</span><button type="button" class="toggle" id="keepToggle"></button></div>
+        <div class="mini"><span>Add location automatically</span><button type="button" class="toggle" id="autoLocToggle"></button></div>
         <div class="mini"><span>Vibration<small id="vibeNote" class="vnote" hidden></small></span><button type="button" class="toggle" id="vibeToggle"></button></div>
         <div class="mini"><span>Sun mode (maximum contrast)</span><button type="button" class="toggle" id="sunToggle"></button></div>
         <div class="mini"><span>Night mode (red on black)</span><button type="button" class="toggle" id="nightToggle"></button></div>
       </div>
     </section>
     <button type="button" class="ghost" id="setReset" style="display:block;margin:4px auto 0">Reset all settings</button>
-    <p class="vers num" id="vers">HDRI Bracket · <span id="build">2026-10-18 · d47cab</span></p>
+    <p class="vers num" id="vers">HDRI Bracket · <span id="build">2026-10-18 · 09fd95</span></p>
   </section>
 
   <!-- LOG -->
@@ -1300,7 +1301,7 @@ body.sun .toast button.strong{background:#fff;color:#000}
   
   var KEY="hdri-bracket-v7";
   var s={ap:A.indexOf(8), wb:WB.indexOf(5600), wbV:2, dark:MAX, light:T.indexOf("1/8"), step:2, done:[],
-         lens:"15", pat:null, ang:{}, cur:null, refs:{}, t0:null, tEnd:null, night:false, sun:false, vibe:true, refract:true, fx:true, tilt:true, glassLvl:null, cardGlass:0, refr:50, frost:80, edge:45, touch:true, glow:true, order:null, countdown:false, clock:true, tab:"shoot", setupOpen:false, camSet:false, sel:null, open:{}, notes:"", loc:null, iso:0, fold:{}, project:"", wbK:null, theme:"glass", anim:"quick", keepOn:true, tk:{}, aeb:0, history:[]};
+         lens:"15", pat:null, ang:{}, cur:null, refs:{}, t0:null, tEnd:null, night:false, sun:false, vibe:true, refract:true, fx:true, tilt:true, glassLvl:null, cardGlass:0, refr:50, frost:80, edge:45, touch:true, glow:true, order:null, countdown:false, clock:true, tab:"shoot", setupOpen:false, camSet:false, sel:null, open:{}, notes:"", loc:null, iso:0, fold:{}, project:"", wbK:null, theme:"glass", anim:"quick", keepOn:true, autoLoc:false, tk:{}, aeb:0, history:[]};
   var DEF=JSON.parse(JSON.stringify(s));   // factory settings, for the Reset buttons
   try{ var v=JSON.parse(localStorage.getItem(KEY)||"null"); if(v && typeof v.dark==="number") s=Object.assign(s,v); }catch(e){}
   if(v && typeof v.dark==="number" && !v.wbV){ var OLDWB=[2800,3200,3600,4000,4400,4800,5200,5600,6000,6500,7000,7500]; var ok=WB.indexOf(OLDWB[s.wb]); s.wb=ok>=0?ok:WB.indexOf(5600); s.wbV=2; }   // keep the saved Kelvin after the range grew
@@ -1310,6 +1311,7 @@ body.sun .toast button.strong{background:#fff;color:#000}
   if(!s.fold || typeof s.fold!=="object") s.fold={};
   if(["smooth","quick","off"].indexOf(s.anim)<0) s.anim="quick";
   if(typeof s.keepOn!=="boolean") s.keepOn=true;
+  if(typeof s.autoLoc!=="boolean") s.autoLoc=false;
   if([0,3,5,7,9].indexOf(s.aeb)<0) s.aeb=0;
   // animation speed: Smooth 600 ms, Quick 250 ms, Off instant (also when the phone asks for reduced motion)
   function animMs(full){ if(matchMedia("(prefers-reduced-motion: reduce)").matches || s.anim==="off") return 0; return s.anim==="smooth"?full:Math.round(full*0.42); }
@@ -1575,7 +1577,7 @@ body.sun .toast button.strong{background:#fff;color:#000}
     $("glowR").value=s.glowAmt; $("glowV").textContent=s.glowAmt+"%";
     document.body.classList.toggle("notouch",!s.touch);
     document.body.classList.toggle("sun",!!s.sun && !s.night);
-    [["tiltToggle","tilt"],["touchToggle","touch"],["glowToggle","glow"],["nightToggle","night"],["clockToggle","clock"],["vibeToggle","vibe"],["sunToggle","sun"],["keepToggle","keepOn"]].forEach(function(t){ var b=$(t[0]); b.textContent=s[t[1]]?"On":"Off"; b.setAttribute("aria-pressed",!!s[t[1]]); });
+    [["tiltToggle","tilt"],["touchToggle","touch"],["glowToggle","glow"],["nightToggle","night"],["clockToggle","clock"],["vibeToggle","vibe"],["sunToggle","sun"],["keepToggle","keepOn"],["autoLocToggle","autoLoc"]].forEach(function(t){ var b=$(t[0]); b.textContent=s[t[1]]?"On":"Off"; b.setAttribute("aria-pressed",!!s[t[1]]); });
     document.querySelectorAll(".tabs [data-tab]").forEach(function(b){ var on=b.getAttribute("data-tab")===s.tab; b.setAttribute("aria-selected",on); });
     placeDrop(); drawLook();
     document.querySelectorAll("[data-panel]").forEach(function(p){ p.classList.toggle("on",p.getAttribute("data-panel")===s.tab); });
@@ -1868,7 +1870,7 @@ body.sun .toast button.strong{background:#fff;color:#000}
   var IDLE=30*60*1000;
   function startClock(){
     var now=Date.now();
-    if(!s.t0){ s.t0=now; s.tEnd=null; }
+    if(!s.t0){ s.t0=now; s.tEnd=null; if(s.autoLoc && !s.loc) getLoc(true); }
     else if(!s.tEnd && s.tAct && now-s.tAct>IDLE) s.t0+=now-s.tAct;
     s.tAct=now;
   }
@@ -2089,7 +2091,7 @@ body.sun .toast button.strong{background:#fff;color:#000}
     var d=new Date(s.t0||Date.now()), list=last.list||[];
     s.history.unshift({id:Date.now(), t:d.getTime(), project:(s.project||"").trim(), sub:lensById(s.lens).a+" · "+(last.nd||0)+"/"+list.length+" angles", title:ymd(d)+" "+hm(d)+" · "+lensById(s.lens).a+" · "+(last.nd||0)+"/"+list.length+" angles", file:fileBase(d)+".txt", text:shotLog()});
   }
-  function clearShoot(){ hideToast(); s.notes=""; s.loc=null; $("notes").value=""; s.ang={}; s.tk={}; s.done=[]; s.cur=null; s.sel=null; s.refs={}; s.t0=null; s.tEnd=null; s.tAct=null; timing=null; s.tab="shoot"; render(); window.scrollTo({top:0,behavior:"smooth"}); }
+  function clearShoot(){ hideToast(); locGen++; s.notes=""; s.loc=null; $("notes").value=""; s.ang={}; s.tk={}; s.done=[]; s.cur=null; s.sel=null; s.refs={}; s.t0=null; s.tEnd=null; s.tAct=null; timing=null; s.tab="shoot"; render(); window.scrollTo({top:0,behavior:"smooth"}); }
   function newHdri(){ var sn=snap(); archive(); clearShoot(); undoSnap=sn; var pj=(s.project||"").trim(); showToast(pj?"Saved to "+pj:"Saved · no project",null,6000); }
   function discardHdri(){
     var snap=JSON.stringify({ang:s.ang,done:s.done,sel:s.sel,cur:s.cur,refs:s.refs,t0:s.t0,tEnd:s.tEnd,tAct:s.tAct,notes:s.notes});
@@ -2308,7 +2310,7 @@ body.sun .toast button.strong{background:#fff;color:#000}
   $("orderReset").onclick=function(){ s.order=null; save(); applyOrder(); };
   // Reset to factory: only preferences. Camera, lens, the current shoot, projects and the log are never touched.
   var LOOKK=["theme","glassLvl","cardGlass","refr","frost","edge","tilt","touch","glow","glowAmt","anim","refract","fx"],
-      SETK=LOOKK.concat(["night","sun","vibe","clock","keepOn","countdown","order","fold","setupOpen","open"]);
+      SETK=LOOKK.concat(["night","sun","vibe","clock","keepOn","autoLoc","countdown","order","fold","setupOpen","open"]);
   function resetPrefs(keys,msg){
     var old={}; keys.forEach(function(k){ old[k]=s[k]; });
     keys.forEach(function(k){ s[k]=k in DEF?JSON.parse(JSON.stringify(DEF[k])):null; });
@@ -2595,7 +2597,7 @@ body.sun .toast button.strong{background:#fff;color:#000}
     ph.parentNode.insertBefore(box,ph.nextSibling);
   }
   // ---- Location: one tap stores the GPS position with this HDRI (works offline; needs the installed app or https) ----
-  var locBusy=false;
+  var locBusy=false, locGen=0;   // locGen: bumped when a shoot is saved/discarded, so a late GPS fix never lands on the next HDRI
   function drawLoc(){
     var b=$("locBtn"), has=!!s.loc;
     b.classList.toggle("has",has); b.setAttribute("aria-pressed",has);
@@ -2605,24 +2607,28 @@ body.sun .toast button.strong{background:#fff;color:#000}
     if(has) $("locMap").href="https://maps.google.com/?q="+s.loc.lat.toFixed(5)+","+s.loc.lon.toFixed(5);
   }
   function locSay(t){ $("locMsg").textContent=t; $("locMsg").hidden=!t; }
-  $("locBtn").onclick=function(){
+  function getLoc(auto){
     if(locBusy) return;
     var framed=false; try{ framed=window.top!==window.self; }catch(e){ framed=true; }
     if(location.protocol==="file:" || framed || !window.isSecureContext || !navigator.geolocation){
+      if(auto) return;
       locSay("Location only works in the installed app (or any https page). Opened as a file or inside a preview, the phone won't share it. Open HDRI Bracket from your home screen to add it.");
       return;
     }
-    locBusy=true; locSay(""); drawLoc();
+    locBusy=true; locSay(""); drawLoc(); var gen=locGen;
     navigator.geolocation.getCurrentPosition(function(pos){
-      locBusy=false; s.loc={lat:pos.coords.latitude, lon:pos.coords.longitude, acc:Math.round(pos.coords.accuracy), t:Date.now()};
+      locBusy=false; if(gen!==locGen){ drawLoc(); return; } s.loc={lat:pos.coords.latitude, lon:pos.coords.longitude, acc:Math.round(pos.coords.accuracy), t:Date.now()};
       locSay(pos.coords.accuracy>100?"Rough position (±"+Math.round(pos.coords.accuracy)+" m). Tap again outside for a better GPS fix.":"");
-      buzz(15); render();
+      if(!auto) buzz(15); render();
     },function(err){
       locBusy=false; drawLoc();
+      if(auto) return;   // automatic: stay silent, the manual button is still there
       locSay(err.code===1?"Location is blocked for this app. Allow it in Chrome: site settings → Location, then tap again."
         :err.code===3?"No GPS fix yet. Try again with a view of the sky.":"Couldn't get a location right now. Try again.");
     },{enableHighAccuracy:true,timeout:20000,maximumAge:60000});
   };
+  $("locBtn").onclick=function(){ getLoc(false); };
+  $("autoLocToggle").onclick=function(){ s.autoLoc=!s.autoLoc; render(); if(s.autoLoc && s.t0 && !s.loc) getLoc(true); };
   $("locX").onclick=function(){ guarded("Location removed",true,function(){ s.loc=null; render(); }); };
   function drawStore(){
     var used=JSON.stringify(s).length, pct=Math.min(100,Math.round(used/QUOTA*100)), warn=storeFull||pct>=80;
