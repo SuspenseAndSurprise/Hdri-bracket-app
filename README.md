@@ -13,6 +13,9 @@ Open it in Chrome on your phone and use ⋮ → Install app. It works offline af
 - Builds the exposure bracket from your darkest and brightest frame
 - Walks you through every angle for your lens and tracks what is done
 - Autobracket sets: splits the bracket into sets of 3, 5, 7 or 9 frames for cameras that can't bracket the whole range, with the centre shutter for each set
+- ND frame: enter your ND and the shutter you used, and see the shutter without filter, where it lands next to your bracket and your camera's fastest shutter, plus a rough hint for the sun
+- Single shot mode for textures and plates, with an optional lens note
+- Fastest shutter setting (up to 1/32000) and shifting the middle of the bracket
 - Notes, location and a log for every HDRI, with a report you can copy
 - Location is added by hand, or automatically if you turn it on in Settings
 - Optional countdown timer for long exposures
@@ -22,6 +25,8 @@ Open it in Chrome on your phone and use ⋮ → Install app. It works offline af
 ![Themes](hdri-bracket-themes.png)
 
 ![Autobracket sets](hdri-bracket-autobracket.png)
+
+**Walkthrough video:** see the latest release.
 
 ## Privacy
 
