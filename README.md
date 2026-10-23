@@ -29,6 +29,32 @@ Open it in Chrome on your phone and use ⋮ → Install app. It works offline af
 
 **Walkthrough video:** see the latest release.
 
+## Your lens and crop sensors
+
+The angle plans are in full-frame focal lengths. Type your own lens under Angles, and if the name has a focal length and a sensor word, the app converts it, picks the matching lens type and shows the full-frame equivalent:
+
+> Fujifilm xe4 23mm apsc → Your lens ≈ **35 mm** full frame (23 mm on APS-C, ×1.5)
+
+| Type in the name | Crop |
+|---|---|
+| APS-C, APSC, DX, XF, XC, DT, DC, DA, Super 35, S35 | ×1.5 |
+| EF-S, RF-S, Canon APS-C | ×1.6 |
+| APS-H | ×1.3 |
+| MFT, M4/3, M43, Micro Four Thirds | ×2 |
+| 1-inch, 1" | ×2.7 |
+| Your own factor: ×1.5, x1.6, crop 1.6 | as typed |
+
+- No sensor word means full frame, so "Sony 14mm" stays 14 mm.
+- Zooms count at their widest end (10-18 mm → 10 mm). The aperture is ignored.
+- Add "fisheye" for fisheye lenses.
+- Mount names on their own (E, Z, RF, EF, X) don't count, because they don't tell the sensor size.
+- Works in Single shot mode too, and the equivalent goes into the report.
+- Saving a preset suggests your lens name as the preset name. If a preset with that name exists, the button says Update, and Undo brings the old one back.
+
+## ND filter
+
+Type the strength the way it's printed on the filter: stops (3), density (0.9) or factor (ND8). The app converts it to stops. Every 0.3 of density is one stop, and ND8 lets through 1/8 of the light, which is also 3 stops.
+
 ## Privacy
 
 No account, no tracking, nothing leaves your phone. Everything is stored on the device.

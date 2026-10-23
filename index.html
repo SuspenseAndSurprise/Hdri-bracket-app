@@ -1271,7 +1271,7 @@ body.sun .toast button.strong{background:#fff;color:#000}
       </div>
     </section>
     <button type="button" class="ghost" id="setReset" style="display:block;margin:4px auto 0">Reset all settings</button>
-    <p class="vers num" id="vers">HDRI Bracket · <span id="build">2026-10-24 · ccf171</span></p>
+    <p class="vers num" id="vers">HDRI Bracket · <span id="build">2026-10-24 · 47351e</span></p>
   </section>
 
   <!-- LOG -->
@@ -2796,6 +2796,7 @@ body.sun .toast button.strong{background:#fff;color:#000}
   }
   var presetOpen=false, presetNaming=false;
   function drawPresets(){
+    if(typeof drawSaveLbl==="function") drawSaveLbl();   // presets added, deleted or undone while naming
     var has=s.presets.length>0, cur=curPreset();
     $("presetRow").hidden=!has; if(!has) presetOpen=false;
     $("presetBtn").textContent=(cur?cur.name:"Choose")+" ▾"; $("presetBtn").setAttribute("aria-expanded",presetOpen);
@@ -2818,16 +2819,21 @@ body.sun .toast button.strong{background:#fff;color:#000}
       b.onclick=function(){ pInc[g[0]]=!pInc[g[0]]; b.setAttribute("aria-pressed",!!pInc[g[0]]); }; inc.appendChild(b); });
   }
   $("presetBtn").onclick=function(){ presetOpen=!presetOpen; render(); };
-  $("presetSave").onclick=function(){ presetNaming=!presetNaming; render(); if(presetNaming){ var i=$("presetName"); i.value=""; i.focus(); } };
+  $("presetSave").onclick=function(){ presetNaming=!presetNaming; render(); if(presetNaming){ var i=$("presetName"); i.value=s.lensTxt.trim().slice(0,30); i.focus(); i.select(); drawSaveLbl(); } };   // a typed lens name is the likely preset name
+  // same name test as presetSaveGo: the button says Update exactly when saving would replace a preset
+  function presetNm(){ return $("presetName").value.trim().slice(0,30); }
+  function saveLbl(){ var nm=presetNm(); return nm && s.presets.some(function(x){ return x.name===nm; })?"Update":"Save"; }
+  function drawSaveLbl(){ $("presetSaveGo").textContent=saveLbl(); }
   function presetSaveGo(){
-    var nm=$("presetName").value.trim().slice(0,30); if(!nm){ $("presetName").focus(); return; }
-    if(!PGROUPS.some(function(g){ return pInc[g[0]]; })){ flash($("presetSaveGo"),"Tick one","Save"); return; }
+    var nm=presetNm(); if(!nm){ $("presetName").focus(); return; }
+    if(!PGROUPS.some(function(g){ return pInc[g[0]]; })){ flash($("presetSaveGo"),"Tick one",saveLbl()); return; }
     var p=presetNow(nm,pInc), old=s.presets.filter(function(x){ return x.name===nm; })[0];
     guarded(old?"Preset "+nm+" updated":"Preset "+nm+" saved",true,function(){
       if(old) s.presets[s.presets.indexOf(old)]=p; else s.presets.push(p);
       presetNaming=false; $("presetName").value=""; render(); });
   }
   $("presetSaveGo").onclick=presetSaveGo;
+  $("presetName").addEventListener("input",drawSaveLbl);
   $("presetName").addEventListener("keydown",function(e){ if(e.key==="Enter"){ e.preventDefault(); presetSaveGo(); } });
   $("presetImport").onclick=function(){ $("presetFile").value=""; $("presetFile").click(); };
   $("presetFile").onchange=function(){

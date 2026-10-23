@@ -1,4 +1,4 @@
-HDRI Bracket · 2026-10-24 · ccf171
+HDRI Bracket · 2026-10-24 · 47351e
 
 New
 - ND frame: enter your ND strength and the shutter you used. Type it the way it's printed on the filter: stops (3), density (0.9) or factor (ND8); the app converts it to stops. The app shows the shutter without filter, where it lands next to your bracket on the ruler, and how far past your camera's fastest shutter it goes.
@@ -16,4 +16,4 @@ Files
 - hdri-bracket-app.zip: the installable version to host yourself (any https host)
 - hdri-bracket-walkthrough.mp4: the walkthrough video
 
-Already using it? Open the app online once and it updates itself. Check the version in Settings: 2026-10-24 · ccf171.
+Already using it? Open the app online once and it updates itself. Check the version in Settings: 2026-10-24 · 47351e.
