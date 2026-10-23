@@ -380,7 +380,11 @@ h2 .no{display:inline-grid;place-items:center;width:22px;height:22px;margin-righ
 .ndbox{display:flex;flex-direction:column;gap:2px;padding-top:4px}
 .ndstep{display:inline-flex;align-items:center}
 .ndstep b{min-width:6.2em;text-align:center;font-size:17px}
-.ndstep .ndin{width:6.2em;min-width:0;text-align:center;font:inherit;font-size:17px;font-weight:700;color:inherit;background:transparent;border:0;border-bottom:1px dashed var(--line);border-radius:0;padding:4px 0;margin:0;outline:none;-webkit-appearance:none;appearance:none}
+.ndstep .ndin{width:6.2em;min-width:0;text-align:center;font:inherit;font-size:17px;font-weight:700;color:inherit;background:transparent;border:0;border-bottom:1.5px solid color-mix(in srgb,var(--muted) 70%,transparent);border-radius:0;padding:4px 0;margin:0;outline:none;-webkit-appearance:none;appearance:none}
+.ndwrap{position:relative;display:inline-block}
+.ndwrap .ndin{box-sizing:border-box;padding:4px 1.25em 4px .35em}
+.ndpen{position:absolute;right:3px;top:50%;transform:translateY(-55%);font-size:15px;color:var(--muted);pointer-events:none}
+.ndwrap:focus-within .ndpen{display:none}
 .ndstep .ndin:focus{border-bottom:1px solid currentColor}
 .ndparse{margin:0 0 2px;font-size:13px;line-height:1.3;color:var(--muted);text-align:right}
 .ndres{margin:4px 0 0;font-size:14px;line-height:1.4}
@@ -1138,7 +1142,7 @@ body.sun .toast button.strong{background:#fff;color:#000}
       <div class="ndrow" id="ndRow">
         <div class="mini"><span>ND frame</span><button type="button" class="pill fastbtn num" id="ndBtn" aria-expanded="false" aria-controls="ndBox"></button></div>
         <div class="ndbox" id="ndBox" hidden>
-          <div class="mini"><span>ND filter</span><span class="ndstep"><button type="button" class="mbtn" id="nsDn" aria-label="Weaker ND">‹</button><input class="num ndin" id="ndSt" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="done" aria-label="ND strength: stops (3), density (0.9) or factor (ND8)"><button type="button" class="mbtn" id="nsUp" aria-label="Stronger ND">›</button></span></div>
+          <div class="mini"><span>ND filter</span><span class="ndstep"><button type="button" class="mbtn" id="nsDn" aria-label="Weaker ND">‹</button><span class="ndwrap"><input class="num ndin" id="ndSt" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="done" aria-label="ND strength: stops (3), density (0.9) or factor (ND8)"><span class="ndpen" aria-hidden="true">✎</span></span><button type="button" class="mbtn" id="nsUp" aria-label="Stronger ND">›</button></span></div>
           <p class="ndparse num" id="ndParse" aria-live="polite" hidden></p>
           <div class="mini"><span>Shutter</span><span class="ndstep"><button type="button" class="mbtn" id="ntDn" aria-label="Faster shutter">‹</button><b class="num" id="ndT"></b><button type="button" class="mbtn" id="ntUp" aria-label="Slower shutter">›</button></span></div>
           <p class="ndres" id="ndRes" aria-live="polite"></p>
@@ -1267,7 +1271,7 @@ body.sun .toast button.strong{background:#fff;color:#000}
       </div>
     </section>
     <button type="button" class="ghost" id="setReset" style="display:block;margin:4px auto 0">Reset all settings</button>
-    <p class="vers num" id="vers">HDRI Bracket · <span id="build">2026-10-24 · c8599d</span></p>
+    <p class="vers num" id="vers">HDRI Bracket · <span id="build">2026-10-24 · 2f9f95</span></p>
   </section>
 
   <!-- LOG -->
