@@ -401,7 +401,11 @@ h2 .no{display:inline-grid;place-items:center;width:22px;height:22px;margin-righ
 .plist2 li b{flex:1;min-width:0;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .plist2 .ghost{padding:5px 10px;font-size:12px}
 .pbtnrow{display:flex;gap:8px;flex-wrap:wrap}
-.pnew2{display:flex;gap:8px;margin:0 0 10px}
+.pnew2{display:flex;gap:8px;margin:0 0 8px}
+.pinc{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px}
+.pinc .chip{min-height:32px;font-size:13px;padding:0 10px}
+.pinc .chip[aria-pressed="false"]{opacity:.55}
+.pname2{flex:1;min-width:0;text-align:left;background:none;border:0;color:var(--fg);font:600 15px var(--face);padding:6px 0;cursor:pointer;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .pnew2 .textin{flex:1}
 #aeb{text-align:center}
 .setupbar{flex:1;min-width:0;display:flex;align-items:center;gap:8px;min-height:48px;padding:4px 6px 4px 10px;border:1px solid var(--line);border-radius:12px;background:var(--panel);color:var(--fg);cursor:pointer;text-align:left;font-family:var(--face)}
@@ -1150,7 +1154,7 @@ body.sun .toast button.strong{background:#fff;color:#000}
         <div class="seg modeseg" id="modeSeg" aria-label="What are you shooting?"><button type="button" data-m="hdri">HDRI</button><button type="button" data-m="single">Single shot</button></div>
         <p class="lp-note" id="lpNote">Full-frame equivalent, camera in portrait. APS-C ≈ ×1.5 (10→15 mm, 16→24 mm) · MFT ≈ ×2</p>
         <div class="lenses" id="lenses"></div>
-        <label class="sglens" id="sgLens" hidden><span>Lens</span><input id="sgLensIn" type="text" maxlength="24" placeholder="optional, e.g. 50 mm" autocomplete="off"></label>
+        <label class="sglens" id="sgLens"><span>Your lens</span><input id="sgLensIn" type="text" maxlength="24" placeholder="optional, e.g. Sony 11 mm" autocomplete="off"></label>
         <p class="rec" id="recLine"></p>
         <details class="guide adjust" id="adjust">
           <summary>Adjust angle pattern</summary>
@@ -1252,14 +1256,14 @@ body.sun .toast button.strong{background:#fff;color:#000}
       <div class="row">
         <h2>Presets</h2>
         <ul class="plist2" id="presetList"></ul>
-        <div class="pnew2" id="presetNew" hidden><input class="textin" id="presetName" type="text" maxlength="30" placeholder="Name, e.g. Sony 11 mm" autocomplete="off" enterkeyhint="done"><button type="button" class="ghost" id="presetSaveGo">Save</button></div>
+        <div class="pform" id="presetNew" hidden><div class="pnew2"><input class="textin" id="presetName" type="text" maxlength="30" placeholder="Name, e.g. Sony 11 mm" autocomplete="off" enterkeyhint="done"><button type="button" class="ghost" id="presetSaveGo">Save</button></div><div class="pinc" id="presetInc" aria-label="Include in preset"></div></div>
         <div class="pbtnrow"><button type="button" class="ghost" id="presetSave">Save current</button><button type="button" class="ghost" id="presetImport">Import</button></div>
         <input type="file" id="presetFile" accept=".json,application/json" hidden>
-        <p class="hint">Saves your camera settings, autobracket, EV step, lens and angle pattern. Not the exposure or project. Export a preset to share it with colleagues.</p>
+        <p class="hint">Pick what goes in when you save. Exposure and project are never stored. Tap a name to apply it, export one to share it with colleagues.</p>
       </div>
     </section>
     <button type="button" class="ghost" id="setReset" style="display:block;margin:4px auto 0">Reset all settings</button>
-    <p class="vers num" id="vers">HDRI Bracket · <span id="build">2026-10-23 · 151fd1</span></p>
+    <p class="vers num" id="vers">HDRI Bracket · <span id="build">2026-10-23 · fc2465</span></p>
   </section>
 
   <!-- LOG -->
@@ -1414,7 +1418,8 @@ body.sun .toast button.strong{background:#fff;color:#000}
   function save(){ try{ localStorage.setItem(KEY,JSON.stringify(s)); storeFull=false; }catch(e){ storeFull=true; } }
   var $=function(id){return document.getElementById(id);};
   var clamp=function(x,a,b){return Math.max(a,Math.min(b,x));};
-  function lensTag(){ return single()?"Single"+(s.lensTxt.trim()?" "+s.lensTxt.trim():""):lensById(s.lens).a; }
+  function lensTag(){ var t=s.lensTxt.trim(); return single()?"Single"+(t?" "+t:""):(t||lensById(s.lens).a); }
+  function lensPill(n){ var t=s.lensTxt.trim(); return single()?"Single"+(t?" · "+t:""):"Lens "+(t||lensById(s.lens).a)+" · "+n+" angles"; }
   function lensById(id){ return LENSES.filter(function(l){return l.id===id;})[0]||LENSES[1]; }
   function sec(i){ return 30*Math.pow(2,-i/3); }
   function label(i){
@@ -1512,7 +1517,7 @@ body.sun .toast button.strong{background:#fff;color:#000}
     showToast(msg,null,warn?9000:5000,warn);
   }
   // Anything that throws work away acts at once and offers Undo (only when there was something to lose)
-  var GUARD=["ang","tk","done","sel","cur","tEnd","tAct","t0","pat","lens","dark","light","ap","iso","step","wb","wbK","camSet","refs","notes","loc","project","history","fastI","ndOn","ndStops","ndI","aeb","presets"];
+  var GUARD=["ang","tk","done","sel","cur","tEnd","tAct","t0","pat","lens","dark","light","ap","iso","step","wb","wbK","camSet","refs","notes","loc","project","history","fastI","ndOn","ndStops","ndI","aeb","presets","lensTxt"];
   function snap(){ var o={}; GUARD.forEach(function(k){ o[k]=s[k]; }); return JSON.stringify(o); }
   function guarded(msg,lose,fn){ if(!lose){ fn(); return; } var sn=snap(); fn(); undoSnap=sn; showToast(msg,null,6000); }
   // toast: one Undo, or a two-way choice (alt = left, main = right)
@@ -1740,7 +1745,7 @@ body.sun .toast button.strong{background:#fff;color:#000}
     if(rp.zen) parts.push("up"); if(rp.nad) parts.push("down");
     if(single()) $("recLine").textContent="One frame, for textures and plates. The lens only goes into the report.";
     else $("recLine").innerHTML="Recommended: <b>"+rt+" angles</b> ("+parts.join(" · ")+"). "+L.why;
-    $("sgLens").hidden=!single(); $("lpNote").hidden=single(); $("adjust").hidden=single(); lb.hidden=single();
+    $("lpNote").hidden=single(); $("adjust").hidden=single(); lb.hidden=single();
     [].forEach.call($("modeSeg").children,function(bt){ bt.setAttribute("aria-pressed",(bt.getAttribute("data-m")==="single")===single()); });
     if(document.activeElement!==$("sgLensIn")) $("sgLensIn").value=s.lensTxt;
     drawAdjust();
@@ -1962,7 +1967,7 @@ body.sun .toast button.strong{background:#fff;color:#000}
     // Angle card: tap it = Angle done · next. Skip = skip this angle. Both act at once with Undo.
     var allShot=s.done.length===n, pr=$("primary");
     $("actions").hidden=s.tab!=="shoot";
-    $("lensBtn").textContent=(single()?"Single"+(s.lensTxt.trim()?" · "+s.lensTxt.trim():""):"Lens "+lensById(s.lens).a+" · "+list.length+" angles")+" "+(lensOpen?"▴":"▾");
+    $("lensBtn").textContent=lensPill(list.length)+" "+(lensOpen?"▴":"▾");
     $("lensBtn").setAttribute("aria-expanded",lensOpen); var lw=$("lensWrap"); if(!lw._raf){ lw.style.height=lensOpen?"":"0px"; lw.style.overflow=lensOpen?"":"hidden"; lw.inert=!lensOpen; }
     var cdb=$("cdToggle"); cdb.textContent="⏱ Countdown "+(s.countdown?"on":"off"); cdb.setAttribute("aria-pressed",!!s.countdown);
     wbTone(); drawAp();
@@ -2180,7 +2185,7 @@ body.sun .toast button.strong{background:#fff;color:#000}
     if(s.loc) L.push("Location "+s.loc.lat.toFixed(5)+", "+s.loc.lon.toFixed(5)+" (±"+s.loc.acc+" m) · https://maps.google.com/?q="+s.loc.lat.toFixed(5)+","+s.loc.lon.toFixed(5));
     // setup
     L.push("");
-    L.push((curPreset()?"Preset: "+curPreset().name+"\n":"")+"Camera: "+(s.camSet?fAp(s.ap)+" · ISO "+ISO[s.iso]+" · "+wbVal()+"K"+(s.wbK?" (custom)":"")+" · RAW":"settings not recorded")+(s.fastI!==I8K?" · fastest shutter "+T[lim()]:"")+(single()?" · single shot"+(s.lensTxt.trim()?", lens "+s.lensTxt.trim():""):" · lens "+lensById(s.lens).a+", "+list.length+" angles"));
+    L.push((curPreset()?"Preset: "+curPreset().name+"\n":"")+"Camera: "+(s.camSet?fAp(s.ap)+" · ISO "+ISO[s.iso]+" · "+wbVal()+"K"+(s.wbK?" (custom)":"")+" · RAW":"settings not recorded")+(s.fastI!==I8K?" · fastest shutter "+T[lim()]:"")+(single()?" · single shot"+(s.lensTxt.trim()?", lens "+s.lensTxt.trim():""):" · lens "+(s.lensTxt.trim()?s.lensTxt.trim()+" ("+lensById(s.lens).a+" type)":lensById(s.lens).a)+", "+list.length+" angles"));
     L.push("Measured range: darkest "+label(s.dark)+" · brightest "+label(s.light));
     if(b) L.push("Bracket: "+b.frames.length+" × "+s.step+" EV · "+label(b.frames[0].i)+" → "+label(b.frames[b.frames.length-1].i)+" · middle "+label(b.mid));
     if(s.ndOn){ var o=ndInfo(); L.push("ND frame: "+s.ndStops+"-stop ND, shutter "+T[o.ti]+" = "+o.eq+" without filter · "+(o.off>0?"+"+(Math.round(o.off*10)/10)+" EV past darkest":"inside the bracket")+(o.room>0.05?" · camera max "+T[lim()]+" is +"+(Math.round(o.room*10)/10)+" EV past darkest, ND adds "+(o.past>0.05?"+"+(Math.round(o.past*10)/10)+" EV":"nothing")+" beyond it":"")); }
@@ -2523,7 +2528,7 @@ body.sun .toast button.strong{background:#fff;color:#000}
     if(toSingle){ s.hdriLens=s.lens; s.hdriPat=Object.assign({},s.pat); setPat(Object.assign({},lensById("single").p),"single"); }
     else { var L=lensById(s.hdriLens&&s.hdriLens!=="single"?s.hdriLens:"15"); setPat(Object.assign({},s.hdriPat||L.p),L.id); }
   }; });
-  $("sgLensIn").oninput=function(){ s.lensTxt=this.value; save(); var t=$("lensBtn").textContent, arr=t.slice(-1); $("lensBtn").textContent="Single"+(s.lensTxt.trim()?" · "+s.lensTxt.trim():"")+" "+arr; };
+  $("sgLensIn").oninput=function(){ s.lensTxt=this.value; save(); var t=$("lensBtn").textContent, arr=t.slice(-1), n=(t.match(/(\d+) angles/)||[0,0])[1]; $("lensBtn").textContent=lensPill(n)+" "+arr; };
   $("lensBtn").onclick=function(){ lensOpen=!lensOpen; $("lensBtn").setAttribute("aria-expanded",lensOpen); animPanel($("lensWrap"),lensOpen); render(); };
   function goTab(t){ $("foldPad").style.height="0px"; s.tab=t; render(); window.scrollTo({top:0}); requestAnimationFrame(function(){ snapAll(); bakeGlass(); }); }
   // ---- Folding blocks (Camera, Exposure, Frames) ----
@@ -2669,52 +2674,60 @@ body.sun .toast button.strong{background:#fff;color:#000}
     }
   }
   // Presets: the user's own camera + lens setups. Saved on the phone, shared as a .json file.
-  var PKEYS=["ap","iso","wb","wbK","fastI","aeb","step"];
-  function presetNow(name){
-    var p={name:name}; PKEYS.forEach(function(k){ p[k]=s[k]; });
-    var L=single()?(s.hdriLens||null):s.lens, P=single()?(s.hdriPat||null):s.pat;
-    if(L && P){ p.lens=L; p.pat=Object.assign({},P); }
+  // A preset only holds the groups you ticked when saving it; applying it leaves everything else alone.
+  var PGROUPS=[["fast","Fastest shutter",["fastI"]],["aeb","Autobracket",["aeb","step"]],["lens","Lens & angles",["lens","pat","lensTxt"]],
+               ["iso","ISO",["iso"]],["wb","White balance",["wb","wbK"]],["ap","Aperture",["ap"]]];
+  var pInc={fast:true,aeb:true,lens:true,iso:true,wb:true,ap:false};
+  function hdriLens(){ return single()?(s.hdriLens||"15"):s.lens; }
+  function hdriPat(){ return single()?(s.hdriPat||lensById(hdriLens()).p):s.pat; }
+  function nowVal(k){ return k==="lens"?hdriLens():k==="pat"?Object.assign({},hdriPat()):k==="lensTxt"?s.lensTxt.trim():s[k]; }
+  function presetNow(name,inc){
+    var p={name:name};
+    PGROUPS.forEach(function(g){ if(inc[g[0]]) g[2].forEach(function(k){ p[k]=nowVal(k); }); });
     return p;
   }
+  function pBody(p){ var o={}; PGROUPS.forEach(function(g){ g[2].forEach(function(k){ if(k in p) o[k]=p[k]; }); }); return JSON.stringify(o); }
   function cleanPreset(o){   // anything from a file is checked before it touches the app
     if(!o || typeof o!=="object") return null;
     var name=String(o.name||"").trim().slice(0,30); if(!name) return null;
-    var int=function(v,lo,hi){ return (typeof v==="number" && v%1===0 && v>=lo && v<=hi)?v:null; };
-    var p={name:name, ap:int(o.ap,0,A.length-1), iso:int(o.iso,0,ISO.length-1), wb:int(o.wb,0,WB.length-1),
-      wbK:(typeof o.wbK==="number" && o.wbK>=2000 && o.wbK<=12000)?Math.round(o.wbK/50)*50:null,
-      fastI:int(o.fastI,FMIN,MAX), aeb:[0,3,5,7,9].indexOf(o.aeb)>=0?o.aeb:null, step:[1,2,3].indexOf(o.step)>=0?o.step:null};
-    if(p.ap==null||p.iso==null||p.wb==null||p.fastI==null||p.aeb==null||p.step==null) return null;
-    var q=o.pat;
-    if(o.lens && o.lens!=="single" && LENSES.some(function(l){ return l.id===o.lens; }) && q && AROUND.indexOf(q.around)>=0 && RING.indexOf(q.up)>=0 && RING.indexOf(q.down)>=0){
-      p.lens=o.lens; p.pat={around:q.around, up:q.up, down:q.down, zen:!!q.zen, nad:!!q.nad};
-    }
+    var int=function(v,lo,hi){ return (typeof v==="number" && v%1===0 && v>=lo && v<=hi)?v:null; }, p={name:name}, bad=false;
+    var chk=function(k,v){ if(!(k in o)) return; if(v==null) bad=true; else p[k]=v; };
+    chk("fastI",int(o.fastI,FMIN,MAX));
+    if("aeb" in o || "step" in o){ chk("aeb",[0,3,5,7,9].indexOf(o.aeb)>=0?o.aeb:null); chk("step",[1,2,3].indexOf(o.step)>=0?o.step:null); if(!("aeb" in p)||!("step" in p)) bad=true; }
+    chk("iso",int(o.iso,0,ISO.length-1));
+    if("wb" in o){ chk("wb",int(o.wb,0,WB.length-1)); p.wbK=(typeof o.wbK==="number" && o.wbK>=2000 && o.wbK<=12000)?Math.round(o.wbK/50)*50:null; }
+    chk("ap",int(o.ap,0,A.length-1));
+    if("lens" in o){ var q=o.pat;
+      if(o.lens!=="single" && LENSES.some(function(l){ return l.id===o.lens; }) && q && AROUND.indexOf(q.around)>=0 && RING.indexOf(q.up)>=0 && RING.indexOf(q.down)>=0){
+        p.lens=o.lens; p.pat={around:q.around, up:q.up, down:q.down, zen:!!q.zen, nad:!!q.nad}; p.lensTxt=String(o.lensTxt||"").trim().slice(0,24);
+      } else bad=true; }
+    if(bad || Object.keys(p).length<2) return null;
     return p;
   }
-  function samePreset(a,b){ return PKEYS.every(function(k){ return a[k]===b[k]; }) && (a.lens||"")===(b.lens||"") && JSON.stringify(a.pat||null)===JSON.stringify(b.pat||null); }
-  function curPreset(){   // the preset your current settings match, if any
-    var now=presetNow(""); return s.presets.filter(function(p){ return samePreset(p,now); })[0]||null;
-  }
+  function presetMatches(p){ return PGROUPS.every(function(g){ return g[2].every(function(k){ return !(k in p) || JSON.stringify(p[k])===JSON.stringify(nowVal(k)); }); }); }
+  function curPreset(){ return s.presets.filter(presetMatches)[0]||null; }   // the preset your current settings match, if any
   function addPresets(list,quiet){
     var n=0;
     list.forEach(function(o){ var p=cleanPreset(o); if(!p) return;
-      if(s.presets.some(function(x){ return x.name===p.name && samePreset(x,p); })) return;   // already have it
+      if(s.presets.some(function(x){ return x.name===p.name && pBody(x)===pBody(p); })) return;   // already have it
       var base=p.name, k=2; while(s.presets.some(function(x){ return x.name===p.name; })) p.name=base.slice(0,26)+" ("+(k++)+")";
       s.presets.push(p); n++; });
     if(n && !quiet) render();
     return n;
   }
   function applyPreset(p){
-    var lensChange=!!p.lens && (p.lens!==(single()?s.hdriLens:s.lens) || JSON.stringify(p.pat)!==JSON.stringify(single()?s.hdriPat:s.pat));
-    guarded("Preset "+p.name+": ticks cleared",s.done.length>0||(lensChange&&Object.keys(s.ang).length>0),function(){
-      var span=s.dark-s.light;
-      s.dark=clamp(s.dark-(p.ap-s.ap)+3*(p.iso-s.iso),span,MAX); s.light=s.dark-span;   // keep the measured exposure, like turning the dials
-      s.fastI=p.fastI; if(s.dark>lim()){ s.dark=lim(); if(s.light>s.dark-3) s.light=s.dark-3; }
-      s.ap=p.ap; s.iso=p.iso; s.wb=p.wb; s.wbK=p.wbK; s.aeb=p.aeb; s.step=p.step; s.camSet=true; s.done=[];
-      if(lensChange){
-        if(single()){ s.hdriLens=p.lens; s.hdriPat=Object.assign({},p.pat); }
-        else { s.lens=p.lens; s.pat=Object.assign({},p.pat); s.ang={}; s.tk={}; s.sel=null; }
-      }
-      render();
+    var lensChange="lens" in p && (p.lens!==hdriLens() || JSON.stringify(p.pat)!==JSON.stringify(hdriPat()));
+    guarded("Preset "+p.name+": ticks cleared",s.done.length>0||(lensChange&&!single()&&Object.keys(s.ang).length>0),function(){
+      var ap=("ap" in p)?p.ap:s.ap, iso=("iso" in p)?p.iso:s.iso, span=s.dark-s.light;
+      s.dark=clamp(s.dark-(ap-s.ap)+3*(iso-s.iso),span,MAX); s.light=s.dark-span;   // keep the measured exposure, like turning the dials
+      if("fastI" in p) s.fastI=p.fastI;
+      if(s.dark>lim()){ s.dark=lim(); if(s.light>s.dark-3) s.light=s.dark-3; }
+      s.ap=ap; s.iso=iso;
+      if("wb" in p){ s.wb=p.wb; s.wbK=p.wbK; }
+      if("aeb" in p){ s.aeb=p.aeb; s.step=p.step; }
+      if("lens" in p){ s.lensTxt=p.lensTxt||"";
+        if(lensChange){ if(single()){ s.hdriLens=p.lens; s.hdriPat=Object.assign({},p.pat); } else { s.lens=p.lens; s.pat=Object.assign({},p.pat); s.ang={}; s.tk={}; s.sel=null; } } }
+      s.camSet=true; s.done=[]; render();
     });
   }
   var presetOpen=false, presetNaming=false;
@@ -2726,20 +2739,26 @@ body.sun .toast button.strong{background:#fff;color:#000}
     if(presetOpen) s.presets.forEach(function(p){ var b=document.createElement("button"); b.type="button"; b.className="chip"; b.textContent=p.name;
       b.setAttribute("aria-pressed",p===cur); b.onclick=function(){ presetOpen=false; if(p!==cur) applyPreset(p); else render(); }; ch.appendChild(b); });
     var ul=$("presetList"); ul.innerHTML=""; ul.hidden=!has;
-    s.presets.forEach(function(p,i){
-      var li=document.createElement("li"), b=document.createElement("b"), ex=document.createElement("button"), del=document.createElement("button");
-      b.textContent=p.name; ex.type=del.type="button"; ex.className=del.className="ghost"; ex.textContent="Export"; del.textContent="Delete";
+    s.presets.forEach(function(p){
+      var li=document.createElement("li"), nm=document.createElement("button"), ex=document.createElement("button"), del=document.createElement("button");
+      nm.type=ex.type=del.type="button"; nm.className="pname2"; nm.textContent=p.name+(p===cur?" ✓":""); nm.title="Apply";
+      nm.onclick=function(){ if(p!==cur) applyPreset(p); };
+      ex.className=del.className="ghost"; ex.textContent="Export"; del.textContent="Delete";
       ex.onclick=function(){ saveFile("HDRI_preset_"+(slug(p.name)||"preset")+".json",JSON.stringify({app:"hdri-bracket",type:"preset",version:1,presets:[p]},null,1),ex,"Export"); };
       del.onclick=function(){ guarded("Preset "+p.name+" deleted",true,function(){ s.presets=s.presets.filter(function(x){ return x!==p; }); render(); }); };
-      li.appendChild(b); li.appendChild(ex); li.appendChild(del); ul.appendChild(li);
+      li.appendChild(nm); li.appendChild(ex); li.appendChild(del); ul.appendChild(li);
     });
     $("presetNew").hidden=!presetNaming;
+    var inc=$("presetInc"); inc.innerHTML="";
+    PGROUPS.forEach(function(g){ var b=document.createElement("button"); b.type="button"; b.className="chip"; b.textContent=g[1]; b.setAttribute("aria-pressed",!!pInc[g[0]]);
+      b.onclick=function(){ pInc[g[0]]=!pInc[g[0]]; b.setAttribute("aria-pressed",!!pInc[g[0]]); }; inc.appendChild(b); });
   }
   $("presetBtn").onclick=function(){ presetOpen=!presetOpen; render(); };
   $("presetSave").onclick=function(){ presetNaming=!presetNaming; render(); if(presetNaming){ var i=$("presetName"); i.value=""; i.focus(); } };
   function presetSaveGo(){
     var nm=$("presetName").value.trim().slice(0,30); if(!nm){ $("presetName").focus(); return; }
-    var p=presetNow(nm), old=s.presets.filter(function(x){ return x.name===nm; })[0];
+    if(!PGROUPS.some(function(g){ return pInc[g[0]]; })){ flash($("presetSaveGo"),"Tick one","Save"); return; }
+    var p=presetNow(nm,pInc), old=s.presets.filter(function(x){ return x.name===nm; })[0];
     guarded(old?"Preset "+nm+" updated":"Preset "+nm+" saved",!!old,function(){
       if(old) s.presets[s.presets.indexOf(old)]=p; else s.presets.push(p);
       presetNaming=false; $("presetName").value=""; render(); });
@@ -2752,6 +2771,7 @@ body.sun .toast button.strong{background:#fff;color:#000}
     var f=this.files&&this.files[0]; if(!f) return; var rd=new FileReader();
     rd.onload=function(){
       try{ var d=JSON.parse(rd.result), list=Array.isArray(d)?d:(Array.isArray(d.presets)?d.presets:[d]);
+        if(!list.some(cleanPreset)) throw 0;
         var n=addPresets(list); if(n) showToast(n===1?"Preset added":n+" presets added",null,3000); else flash($("presetImport"),"Nothing new","Import");
       }catch(e){ flash($("presetImport"),"Not a preset file","Import"); }
     };
