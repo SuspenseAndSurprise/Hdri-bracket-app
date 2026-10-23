@@ -1,7 +1,7 @@
-HDRI Bracket · 2026-10-24 · b5b9fa
+HDRI Bracket · 2026-10-24 · c8599d
 
 New
-- ND frame: enter your ND strength and the shutter you used. The app shows the shutter without filter, where it lands next to your bracket on the ruler, and how far past your camera's fastest shutter it goes.
+- ND frame: enter your ND strength and the shutter you used. Type it the way it's printed on the filter: stops (3), density (0.9) or factor (ND8); the app converts it to stops. The app shows the shutter without filter, where it lands next to your bracket on the ruler, and how far past your camera's fastest shutter it goes.
 - Sun hint: a rough estimate of how many stops of ND the sun needs, based on your own settings.
 - Light/Dark/Auto mode: pick it in Settings → Look, or let it follow your system.
 - Presets: save your camera, autobracket, lens and angle setup (you choose what goes in), pick it in the Camera card, and share it as a .json file.
@@ -16,4 +16,4 @@ Files
 - hdri-bracket-app.zip: the installable version to host yourself (any https host)
 - hdri-bracket-walkthrough.mp4: the walkthrough video
 
-Already using it? Open the app online once and it updates itself. Check the version in Settings: 2026-10-24 · b5b9fa.
+Already using it? Open the app online once and it updates itself. Check the version in Settings: 2026-10-24 · c8599d.
