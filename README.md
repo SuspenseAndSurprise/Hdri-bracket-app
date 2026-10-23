@@ -20,7 +20,7 @@ Open it in Chrome on your phone and use ⋮ → Install app. It works offline af
 - Location is added by hand, or automatically if you turn it on in Settings
 - Optional countdown timer for long exposures
 - Built-in how-to, under Settings
-- Themes (Glass, Calm, Classic), night mode and sun mode
+- Themes (Glass, Calm, Classic), Light/Dark/Auto mode, night mode and sun mode
 
 ![Themes](hdri-bracket-themes.png)
 
