@@ -1148,9 +1148,9 @@ body.sun .toast button.strong{background:#fff;color:#000}
       <div class="chead"><h2><span class="no">3</span>Angles</h2><button type="button" class="pill" id="lensBtn" aria-expanded="false" aria-controls="lensWrap"></button></div>
       <div class="pwrap" id="lensWrap" style="height:0px;overflow:hidden" inert><div class="lenspanel" id="lensPanel">
         <div class="seg modeseg" id="modeSeg" aria-label="What are you shooting?"><button type="button" data-m="hdri">HDRI</button><button type="button" data-m="single">Single shot</button></div>
-        <p class="lp-note" id="lpNote">Full-frame equivalent, camera in portrait. APS-C ≈ ×1.5 (10→15 mm, 16→24 mm) · MFT ≈ ×2</p>
+        <p class="lp-note" id="lpNote">Full-frame equivalent, camera in portrait. Add APS-C or MFT to your lens name and the app converts it and sets the angles.</p>
         <div class="lenses" id="lenses"></div>
-        <label class="sglens" id="sgLens"><span>Your lens</span><input id="sgLensIn" type="text" maxlength="24" placeholder="optional, e.g. Sony 11 mm" autocomplete="off"></label>
+        <label class="sglens" id="sgLens"><span>Your lens</span><input id="sgLensIn" type="text" maxlength="24" placeholder="optional, e.g. Sony 11 mm APS-C" autocomplete="off" enterkeyhint="done"></label>
         <p class="rec" id="recLine"></p>
         <details class="guide adjust" id="adjust">
           <summary>Adjust angle pattern</summary>
@@ -1259,7 +1259,7 @@ body.sun .toast button.strong{background:#fff;color:#000}
       </div>
     </section>
     <button type="button" class="ghost" id="setReset" style="display:block;margin:4px auto 0">Reset all settings</button>
-    <p class="vers num" id="vers">HDRI Bracket · <span id="build">2026-10-23 · fc2465</span></p>
+    <p class="vers num" id="vers">HDRI Bracket · <span id="build">2026-10-24 · b5b9fa</span></p>
   </section>
 
   <!-- LOG -->
@@ -2524,6 +2524,31 @@ body.sun .toast button.strong{background:#fff;color:#000}
     if(toSingle){ s.hdriLens=s.lens; s.hdriPat=Object.assign({},s.pat); setPat(Object.assign({},lensById("single").p),"single"); }
     else { var L=lensById(s.hdriLens&&s.hdriLens!=="single"?s.hdriLens:"15"); setPat(Object.assign({},s.hdriPat||L.p),L.id); }
   }; });
+  // Typing a lens with a focal length picks the matching lens type (full-frame equivalent). "fisheye", "APS-C" and "MFT" in the name are taken into account.
+  // crop factors from words people put in lens names: sensor size, or the mount's crop line
+  var CROPS=[[/\bmicro\s*four\s*thirds?\b|\bfour\s*thirds?\b|\bm4\/?3\b|\bm\s*4\s*\/\s*3\b|\bmicro\s*4\s*\/?\s*3\b|\bm43\b|\bmft\b|\bmzd\b|\bm\.?\s*zuiko\b/i,2],
+             [/\b1\s*(?:"|''|inch|in)\b|\b1-inch\b/i,2.7],
+             [/\baps\s*-?\s*h\b/i,1.3],
+             [/\b(?:ef|rf)\s*-?\s*s\b|\bcanon\s+aps\s*-?\s*c\b/i,1.6],
+             [/\baps\s*-?\s*c\b|\bdx\b|\bx[fc]\b|\bdt\b|\bdc\b|\bda\b|\bsuper\s*-?\s*35\b|\bs35\b/i,1.5]];   // DX Nikon · XF/XC Fuji · DT Sony · DC Sigma · DA Pentax
+  function lensFromText(t){
+    var crop=1, x=t.match(/(?:[x×*]|crop\s*(?:factor)?)\s*(\d(?:[.,]\d+)?)\b/i);   // explicit "×1.5" or "crop 1.6"
+    if(x){ crop=parseFloat(x[1].replace(",",".")); t=t.replace(x[0]," "); if(!(crop>=1 && crop<=6)) crop=1; }
+    else for(var k=0;k<CROPS.length;k++){ var c=t.match(CROPS[k][0]); if(c){ crop=CROPS[k][1]; t=t.replace(c[0]," "); break; } }
+    t=t.replace(/f\s*\/?\s*\d+(?:[.,]\d+)?/ig," ");   // drop the aperture, f/1.8
+    var m=t.match(/(\d+(?:[.,]\d+)?)\s*(?:-|–|to)\s*\d+(?:[.,]\d+)?\s*mm/i)||t.match(/(\d+(?:[.,]\d+)?)\s*mm/i)||t.match(/^\D*(\d+(?:[.,]\d+)?)\D*$/); if(!m) return null;   // a zoom counts at its widest end
+    var mm=parseFloat(m[1].replace(",",".")); if(!(mm>=4 && mm<=200)) return null;
+    var e=mm*crop, fish=/fish/i.test(t);
+    var id=fish?(e<=10?"8":"15"):(e<=17?"14":(e<=28?"24":"35"));
+    return {id:id, e:Math.round(e), crop:crop};
+  }
+  $("sgLensIn").onchange=function(){
+    if(single()) return;
+    var r=lensFromText(this.value.trim()); if(!r || r.id===s.lens) return;
+    var L=lensById(r.id), had=Object.keys(s.ang).length>0, sn=snap();
+    setPat(Object.assign({},L.p),r.id); undoSnap=sn;
+    showToast("Lens type: "+L.a+(L.b?" "+L.b:"")+(r.crop>1?" (≈"+r.e+" mm full frame)":"")+(had?" · angle progress reset":""),null,6000);
+  };
   $("sgLensIn").oninput=function(){ s.lensTxt=this.value; save(); var t=$("lensBtn").textContent, arr=t.slice(-1), n=(t.match(/(\d+) angles/)||[0,0])[1]; $("lensBtn").textContent=lensPill(n)+" "+arr; };
   $("lensBtn").onclick=function(){ lensOpen=!lensOpen; $("lensBtn").setAttribute("aria-expanded",lensOpen); animPanel($("lensWrap"),lensOpen); render(); };
   function goTab(t){ $("foldPad").style.height="0px"; s.tab=t; render(); window.scrollTo({top:0}); requestAnimationFrame(function(){ snapAll(); bakeGlass(); }); }
@@ -2755,10 +2780,9 @@ body.sun .toast button.strong{background:#fff;color:#000}
     var nm=$("presetName").value.trim().slice(0,30); if(!nm){ $("presetName").focus(); return; }
     if(!PGROUPS.some(function(g){ return pInc[g[0]]; })){ flash($("presetSaveGo"),"Tick one","Save"); return; }
     var p=presetNow(nm,pInc), old=s.presets.filter(function(x){ return x.name===nm; })[0];
-    guarded(old?"Preset "+nm+" updated":"Preset "+nm+" saved",!!old,function(){
+    guarded(old?"Preset "+nm+" updated":"Preset "+nm+" saved",true,function(){
       if(old) s.presets[s.presets.indexOf(old)]=p; else s.presets.push(p);
       presetNaming=false; $("presetName").value=""; render(); });
-    if(!old) showToast("Preset "+nm+" saved",null,3000);
   }
   $("presetSaveGo").onclick=presetSaveGo;
   $("presetName").addEventListener("keydown",function(e){ if(e.key==="Enter"){ e.preventDefault(); presetSaveGo(); } });
@@ -2768,7 +2792,7 @@ body.sun .toast button.strong{background:#fff;color:#000}
     rd.onload=function(){
       try{ var d=JSON.parse(rd.result), list=Array.isArray(d)?d:(Array.isArray(d.presets)?d.presets:[d]);
         if(!list.some(cleanPreset)) throw 0;
-        var n=addPresets(list); if(n) showToast(n===1?"Preset added":n+" presets added",null,3000); else flash($("presetImport"),"Nothing new","Import");
+        var sn=snap(), n=addPresets(list); if(n){ undoSnap=sn; showToast(n===1?"Preset added":n+" presets added",null,4000); } else flash($("presetImport"),"Nothing new","Import");
       }catch(e){ flash($("presetImport"),"Not a preset file","Import"); }
     };
     rd.readAsText(f);
