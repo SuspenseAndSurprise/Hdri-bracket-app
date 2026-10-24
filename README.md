@@ -20,7 +20,7 @@ Open it in Chrome on your phone and use ⋮ → Install app. It works offline af
 - Location is added by hand, or automatically if you turn it on in Settings
 - Optional countdown timer for long exposures
 - Built-in how-to, under Settings
-- Presets for your camera and lens setup: pick one in the Camera card, rename or trim them under Settings, share them as a .json file
+- Presets for your camera and lens setup: pick one in the Camera card (tap again for no preset), see at a glance what each one sets, rename, trim, export or delete them under Settings, share them as a .json file
 - Themes (Glass, Calm, Classic), Light/Dark/Auto mode, night mode and sun mode
 
 ![Themes](hdri-bracket-themes.png)

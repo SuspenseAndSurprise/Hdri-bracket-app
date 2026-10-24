@@ -415,6 +415,9 @@ h2 .no{display:inline-grid;place-items:center;width:22px;height:22px;margin-righ
 .plist2 li b{flex:1;min-width:0;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .plist2 .ghost{padding:5px 10px;font-size:12px}
 .pbtnrow{display:flex;gap:8px;flex-wrap:wrap}
+.psave{display:block;width:100%;min-height:42px;margin:0 0 6px;font-weight:500}
+#presetNew:not([hidden]){margin-bottom:6px}
+.pfile{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:10px;padding-top:10px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
 .pnew2{display:flex;gap:8px;margin:0 0 8px}
 .pinc{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px}
 .pinc .chip{min-height:32px;font-size:13px;padding:0 10px}
@@ -894,6 +897,7 @@ body.glass:not(.sun) .dfold{border-color:var(--lg-edge)}
 .fbtn{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:var(--panel);color:var(--fg);font-size:24px;line-height:1;display:grid;place-items:center;padding:0;flex:none}
 .fbtn:disabled{opacity:.3}
 body.night .fbtn{border-color:rgba(255,74,58,.3)}
+body.night .loupe{box-shadow:inset 0 1px 0 rgba(255,74,58,.30),inset 0 0 0 1px rgba(255,74,58,.14),0 4px 14px rgba(0,0,0,.18);background:linear-gradient(180deg,rgba(255,74,58,.06),rgba(255,74,58,0) 50%);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}   /* dial lens: red rim, no white */
 .toast.warn #toastMsg::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--rec);margin-right:7px;vertical-align:1px}
 .xcount .cov{display:block;font-size:13px;margin-top:2px;opacity:.85}
 .cmark.anim{transition:left .38s cubic-bezier(.2,.8,.2,1)}
@@ -1273,15 +1277,16 @@ body.sun .toast button.strong{background:#fff;color:#000}
     <section class="card" aria-label="Presets">
       <div class="row">
         <h2>Presets</h2>
-        <ul class="plist2" id="presetList"></ul>
+        <button type="button" class="ghost psave" id="presetSave">+ Save current setup</button>
         <div class="pform" id="presetNew" hidden><div class="pnew2"><input class="textin" id="presetName" type="text" maxlength="30" placeholder="Name, e.g. Sony 11 mm" autocomplete="off" enterkeyhint="done"><button type="button" class="ghost" id="presetSaveGo">Save</button></div><div class="pinc" id="presetInc" aria-label="Include in preset"></div><div class="pedx" id="presetEdX" hidden><button type="button" class="ghost" id="presetExp">Export</button><button type="button" class="ghost" id="presetDel">Delete</button></div></div>
-        <div class="pbtnrow"><button type="button" class="ghost" id="presetSave">Save current</button><button type="button" class="ghost" id="presetImport">Import</button></div>
+        <ul class="plist2" id="presetList"></ul>
+        <p class="hint">Pick what goes in when you save. Exposure and project are never stored. Tap a name to apply it, tap it again to unselect. Edit renames it, drops parts of it, exports or deletes it.</p>
+        <div class="pfile"><span>Got a preset file from a colleague?</span><button type="button" class="ghost" id="presetImport">Import .json</button></div>
         <input type="file" id="presetFile" accept=".json,application/json" hidden>
-        <p class="hint">Pick what goes in when you save. Exposure and project are never stored. Tap a name to apply it, tap it again to unselect. Edit renames it, drops parts of it, or exports it to share with colleagues.</p>
       </div>
     </section>
     <button type="button" class="ghost" id="setReset" style="display:block;margin:4px auto 0">Reset all settings</button>
-    <p class="vers num" id="vers">HDRI Bracket · <span id="build">2026-10-24 · 457e4d</span></p>
+    <p class="vers num" id="vers">HDRI Bracket · <span id="build">2026-10-24 · 237ac9</span></p>
   </section>
 
   <!-- LOG -->
@@ -2827,7 +2832,7 @@ body.sun .toast button.strong{background:#fff;color:#000}
       b.textContent=p.name; b.appendChild(pSum(p));
       b.setAttribute("aria-pressed",p===cur); b.onclick=function(){ presetTap(p,cur); }; ch.appendChild(b); });
 
-    var ul=$("presetList"), pf=$("presetNew"); ul.parentNode.insertBefore(pf,ul.nextSibling); ul.innerHTML=""; ul.hidden=!has;   // park the form before the rows are rebuilt
+    var ul=$("presetList"), pf=$("presetNew"); ul.parentNode.insertBefore(pf,ul); ul.innerHTML=""; ul.hidden=!has;   // park the form before the rows are rebuilt
     if(editP && s.presets.indexOf(editP)<0){ editP=null; presetNaming=false; }   // edited preset deleted or undone away
     s.presets.forEach(function(p){
       var li=document.createElement("li"), nm=document.createElement("button"), ed=document.createElement("button");
