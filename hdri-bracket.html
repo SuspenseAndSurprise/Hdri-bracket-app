@@ -1231,13 +1231,6 @@ body.sun .toast button.strong{background:#fff;color:#000}
         <input type="file" id="presetFile" accept=".json,application/json" hidden>
       </div>
     </section>
-    <section class="card" aria-label="Layout">
-      <div class="row">
-        <div><h2>Layout</h2><p>Order of the blocks on the Shoot page. Saved on this phone.</p></div>
-        <ul class="order" id="orderList"></ul>
-        <button type="button" class="ghost" id="orderReset" style="align-self:flex-start">Reset order</button>
-      </div>
-    </section>
     <details class="card howto" id="howto">
       <summary>How to shoot an HDRI</summary>
       <ol>
@@ -1253,6 +1246,23 @@ body.sun .toast button.strong{background:#fff;color:#000}
       </ol>
       <button type="button" class="handle dfold" data-fold><span class="grip" aria-hidden="true"></span><span class="hl"><b>How to shoot</b></span><span class="hchev" aria-hidden="true">Fold ▴</span></button>
     </details>
+    <section class="card" aria-label="Options">
+      <div class="row">
+        <div class="mini"><span>Sun mode (maximum contrast)</span><button type="button" class="toggle" id="sunToggle"></button></div>
+        <div class="mini"><span>Night mode (red on black)</span><button type="button" class="toggle" id="nightToggle"></button></div>
+        <div class="mini"><span>Keep screen on</span><button type="button" class="toggle" id="keepToggle"></button></div>
+        <div class="mini"><span>Show running timer in the top bar</span><button type="button" class="toggle" id="clockToggle"></button></div>
+        <div class="mini"><span>Add location automatically</span><button type="button" class="toggle" id="autoLocToggle"></button></div>
+        <div class="mini"><span>Vibration<small id="vibeNote" class="vnote" hidden></small></span><button type="button" class="toggle" id="vibeToggle"></button></div>
+      </div>
+    </section>
+    <section class="card" aria-label="Layout">
+      <div class="row">
+        <div><h2>Layout</h2><p>Order of the blocks on the Shoot page. Saved on this phone.</p></div>
+        <ul class="order" id="orderList"></ul>
+        <button type="button" class="ghost" id="orderReset" style="align-self:flex-start">Reset order</button>
+      </div>
+    </section>
     <section class="card" aria-label="Look">
       <details class="lookdet" id="lookDet">
         <summary><span><b>Look</b><small>Theme, glass, light and effects</small></span><span class="lk-chev" aria-hidden="true"></span></summary>
@@ -1275,18 +1285,8 @@ body.sun .toast button.strong{background:#fff;color:#000}
         <button type="button" class="handle dfold" data-fold><span class="grip" aria-hidden="true"></span><span class="hl"><b>Look</b></span><span class="hchev" aria-hidden="true">Fold ▴</span></button>
       </details>
     </section>
-    <section class="card" aria-label="Options">
-      <div class="row">
-        <div class="mini"><span>Show running timer in the top bar</span><button type="button" class="toggle" id="clockToggle"></button></div>
-        <div class="mini"><span>Keep screen on</span><button type="button" class="toggle" id="keepToggle"></button></div>
-        <div class="mini"><span>Add location automatically</span><button type="button" class="toggle" id="autoLocToggle"></button></div>
-        <div class="mini"><span>Vibration<small id="vibeNote" class="vnote" hidden></small></span><button type="button" class="toggle" id="vibeToggle"></button></div>
-        <div class="mini"><span>Sun mode (maximum contrast)</span><button type="button" class="toggle" id="sunToggle"></button></div>
-        <div class="mini"><span>Night mode (red on black)</span><button type="button" class="toggle" id="nightToggle"></button></div>
-      </div>
-    </section>
     <button type="button" class="ghost" id="setReset" style="display:block;margin:4px auto 0">Reset all settings</button>
-    <p class="vers num" id="vers"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true" class="vlogo"><rect width="256" height="256" rx="58" fill="#1C1815"/><path d="M141.94 43.14A86 86 0 0 1 194.52 73.50" fill="none" stroke="#FF4A2B" stroke-width="12"/><path d="M208.46 97.64A86 86 0 0 1 211.90 146.87" fill="none" stroke="#FF4A2B" stroke-width="12"/><path d="M186.30 191.23A86 86 0 0 1 141.94 212.86" fill="none" stroke="#6A6A6A" stroke-width="12"/><path d="M114.06 212.86A86 86 0 0 1 61.48 182.50" fill="none" stroke="#6A6A6A" stroke-width="12"/><path d="M47.54 158.36A86 86 0 0 1 47.54 97.64" fill="none" stroke="#6A6A6A" stroke-width="12"/><path d="M61.48 73.50A86 86 0 0 1 114.06 43.14" fill="none" stroke="#6A6A6A" stroke-width="12"/><path d="M128 128L202.48 171.00" stroke="#FF4A2B" stroke-width="11" stroke-linecap="round"/><g fill="#FFFFFF"><circle cx="128.00" cy="42.00" r="15"/><circle cx="202.48" cy="85.00" r="15"/><circle cx="128.00" cy="214.00" r="15"/><circle cx="53.52" cy="171.00" r="15"/><circle cx="53.52" cy="85.00" r="15"/></g><g fill="#FF4A2B"><circle cx="128" cy="128" r="13"/><circle cx="202.48" cy="171.00" r="27"/></g></svg>HDRI Bracket · <span id="build">2026-10-24 · 6c8cb0</span></p>
+    <p class="vers num" id="vers"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true" class="vlogo"><rect width="256" height="256" rx="58" fill="#1C1815"/><path d="M141.94 43.14A86 86 0 0 1 194.52 73.50" fill="none" stroke="#FF4A2B" stroke-width="12"/><path d="M208.46 97.64A86 86 0 0 1 211.90 146.87" fill="none" stroke="#FF4A2B" stroke-width="12"/><path d="M186.30 191.23A86 86 0 0 1 141.94 212.86" fill="none" stroke="#6A6A6A" stroke-width="12"/><path d="M114.06 212.86A86 86 0 0 1 61.48 182.50" fill="none" stroke="#6A6A6A" stroke-width="12"/><path d="M47.54 158.36A86 86 0 0 1 47.54 97.64" fill="none" stroke="#6A6A6A" stroke-width="12"/><path d="M61.48 73.50A86 86 0 0 1 114.06 43.14" fill="none" stroke="#6A6A6A" stroke-width="12"/><path d="M128 128L202.48 171.00" stroke="#FF4A2B" stroke-width="11" stroke-linecap="round"/><g fill="#FFFFFF"><circle cx="128.00" cy="42.00" r="15"/><circle cx="202.48" cy="85.00" r="15"/><circle cx="128.00" cy="214.00" r="15"/><circle cx="53.52" cy="171.00" r="15"/><circle cx="53.52" cy="85.00" r="15"/></g><g fill="#FF4A2B"><circle cx="128" cy="128" r="13"/><circle cx="202.48" cy="171.00" r="27"/></g></svg>HDRI Bracket · <span id="build">2026-10-24 · f2be84</span></p>
   </section>
 
   <!-- LOG -->
