@@ -1224,6 +1224,17 @@ body.sun .toast button.strong{background:#fff;color:#000}
 
   <!-- SETTINGS -->
   <section class="panel" data-panel="settings">
+    <section class="card" aria-label="Presets">
+      <div class="row">
+        <h2>Presets</h2>
+        <button type="button" class="ghost psave" id="presetSave">+ Save current setup</button>
+        <div class="pform" id="presetNew" hidden><div class="pnew2"><input class="textin" id="presetName" type="text" maxlength="30" placeholder="Name, e.g. Sony 11 mm" autocomplete="off" enterkeyhint="done"><button type="button" class="ghost" id="presetSaveGo">Save</button></div><div class="pinc" id="presetInc" aria-label="Include in preset"></div><div class="pedx" id="presetEdX" hidden><button type="button" class="ghost" id="presetExp">Export</button><button type="button" class="ghost" id="presetDel">Delete</button></div></div>
+        <ul class="plist2" id="presetList"></ul>
+        <p class="hint">Pick what goes in when you save. Exposure and project are never stored. Tap a name to apply it, tap it again to unselect. Edit renames it, drops parts of it, exports or deletes it.</p>
+        <div class="pfile"><span>Got a preset file from a colleague?</span><button type="button" class="ghost" id="presetImport">Import .json</button></div>
+        <input type="file" id="presetFile" accept=".json,application/json" hidden>
+      </div>
+    </section>
     <section class="card" aria-label="Layout">
       <div class="row">
         <div><h2>Layout</h2><p>Order of the blocks on the Shoot page. Saved on this phone.</p></div>
@@ -1278,19 +1289,8 @@ body.sun .toast button.strong{background:#fff;color:#000}
         <div class="mini"><span>Night mode (red on black)</span><button type="button" class="toggle" id="nightToggle"></button></div>
       </div>
     </section>
-    <section class="card" aria-label="Presets">
-      <div class="row">
-        <h2>Presets</h2>
-        <button type="button" class="ghost psave" id="presetSave">+ Save current setup</button>
-        <div class="pform" id="presetNew" hidden><div class="pnew2"><input class="textin" id="presetName" type="text" maxlength="30" placeholder="Name, e.g. Sony 11 mm" autocomplete="off" enterkeyhint="done"><button type="button" class="ghost" id="presetSaveGo">Save</button></div><div class="pinc" id="presetInc" aria-label="Include in preset"></div><div class="pedx" id="presetEdX" hidden><button type="button" class="ghost" id="presetExp">Export</button><button type="button" class="ghost" id="presetDel">Delete</button></div></div>
-        <ul class="plist2" id="presetList"></ul>
-        <p class="hint">Pick what goes in when you save. Exposure and project are never stored. Tap a name to apply it, tap it again to unselect. Edit renames it, drops parts of it, exports or deletes it.</p>
-        <div class="pfile"><span>Got a preset file from a colleague?</span><button type="button" class="ghost" id="presetImport">Import .json</button></div>
-        <input type="file" id="presetFile" accept=".json,application/json" hidden>
-      </div>
-    </section>
     <button type="button" class="ghost" id="setReset" style="display:block;margin:4px auto 0">Reset all settings</button>
-    <p class="vers num" id="vers"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true" class="vlogo"><rect width="256" height="256" rx="58" fill="#1C1815"/><path d="M141.94 43.14A86 86 0 0 1 194.52 73.50" fill="none" stroke="#FF4A2B" stroke-width="12"/><path d="M208.46 97.64A86 86 0 0 1 211.90 146.87" fill="none" stroke="#FF4A2B" stroke-width="12"/><path d="M186.30 191.23A86 86 0 0 1 141.94 212.86" fill="none" stroke="#6A6A6A" stroke-width="12"/><path d="M114.06 212.86A86 86 0 0 1 61.48 182.50" fill="none" stroke="#6A6A6A" stroke-width="12"/><path d="M47.54 158.36A86 86 0 0 1 47.54 97.64" fill="none" stroke="#6A6A6A" stroke-width="12"/><path d="M61.48 73.50A86 86 0 0 1 114.06 43.14" fill="none" stroke="#6A6A6A" stroke-width="12"/><path d="M128 128L202.48 171.00" stroke="#FF4A2B" stroke-width="11" stroke-linecap="round"/><g fill="#FFFFFF"><circle cx="128.00" cy="42.00" r="15"/><circle cx="202.48" cy="85.00" r="15"/><circle cx="128.00" cy="214.00" r="15"/><circle cx="53.52" cy="171.00" r="15"/><circle cx="53.52" cy="85.00" r="15"/></g><g fill="#FF4A2B"><circle cx="128" cy="128" r="13"/><circle cx="202.48" cy="171.00" r="27"/></g></svg>HDRI Bracket · <span id="build">2026-10-24 · cda7a6</span></p>
+    <p class="vers num" id="vers"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true" class="vlogo"><rect width="256" height="256" rx="58" fill="#1C1815"/><path d="M141.94 43.14A86 86 0 0 1 194.52 73.50" fill="none" stroke="#FF4A2B" stroke-width="12"/><path d="M208.46 97.64A86 86 0 0 1 211.90 146.87" fill="none" stroke="#FF4A2B" stroke-width="12"/><path d="M186.30 191.23A86 86 0 0 1 141.94 212.86" fill="none" stroke="#6A6A6A" stroke-width="12"/><path d="M114.06 212.86A86 86 0 0 1 61.48 182.50" fill="none" stroke="#6A6A6A" stroke-width="12"/><path d="M47.54 158.36A86 86 0 0 1 47.54 97.64" fill="none" stroke="#6A6A6A" stroke-width="12"/><path d="M61.48 73.50A86 86 0 0 1 114.06 43.14" fill="none" stroke="#6A6A6A" stroke-width="12"/><path d="M128 128L202.48 171.00" stroke="#FF4A2B" stroke-width="11" stroke-linecap="round"/><g fill="#FFFFFF"><circle cx="128.00" cy="42.00" r="15"/><circle cx="202.48" cy="85.00" r="15"/><circle cx="128.00" cy="214.00" r="15"/><circle cx="53.52" cy="171.00" r="15"/><circle cx="53.52" cy="85.00" r="15"/></g><g fill="#FF4A2B"><circle cx="128" cy="128" r="13"/><circle cx="202.48" cy="171.00" r="27"/></g></svg>HDRI Bracket · <span id="build">2026-10-24 · 6c8cb0</span></p>
   </section>
 
   <!-- LOG -->
