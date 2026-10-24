@@ -1,4 +1,4 @@
-HDRI Bracket · 2026-10-24 · 64f525
+HDRI Bracket · 2026-10-24 · b3be21
 
 New
 - How to shoot: now also covers a head that can't tilt fully up or down (angles per tilt limit), the tripod and ground (when to paint out, when to bracket), and a short good-to-remember list.
@@ -11,6 +11,7 @@ New
 - New app icon and logo: an exposure dial. The angle ring picks up the same idea: a red sweep runs from 0° round to the current angle, with a gap around any angle you skipped. Reinstall from the home screen if your phone keeps showing the old icon.
 
 Fixes
+- Font now ships with the app instead of loading from Google Fonts. Nothing leaves your phone, and offline the big numbers keep their narrow Archivo shape instead of falling back to a wider system font.
 - Night mode: the lens over the Darkest and Brightest dials had a white rim; it's red now like the rest.
 
 Install
@@ -21,4 +22,4 @@ Files
 - hdri-bracket-app.zip: the installable version to host yourself (any https host)
 - hdri-bracket-walkthrough.mp4: the walkthrough video
 
-Already using it? Open the app online once and it updates itself. Check the version in Settings: 2026-10-24 · 64f525.
+Already using it? Open the app online once and it updates itself. Check the version in Settings: 2026-10-24 · b3be21.

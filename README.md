@@ -62,7 +62,7 @@ Type the strength the way it's printed on the filter: stops (3), density (0.9) o
 
 ## Privacy
 
-No account, no tracking, nothing leaves your phone. Everything is stored on the device.
+No account, no tracking, nothing leaves your phone. Everything is stored on the device. The font (Archivo, SIL Open Font License, see `OFL.txt`) ships with the app, so no request goes to Google or any other server.
 
 ## Run it yourself
 
