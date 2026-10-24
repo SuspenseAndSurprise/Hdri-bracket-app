@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0B0B0B">
 <title>HDRI Bracket</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTYgMjU2IiByb2xlPSJpbWciIGFyaWEtbGFiZWw9IkhEUkkgQnJhY2tldCBpY29uIChzbWFsbC1zaXplIGN1dCkiPjx0aXRsZT5IRFJJIEJyYWNrZXQgaWNvbiAoc21hbGwtc2l6ZSBjdXQpPC90aXRsZT48cmVjdCB3aWR0aD0iMjU2IiBoZWlnaHQ9IjI1NiIgcng9IjU4IiBmaWxsPSIjMUMxODE1Ii8+PHBhdGggZD0iTTE0MS45NCA0My4xNEE4NiA4NiAwIDAgMSAxOTQuNTIgNzMuNTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZGNEEyQiIgc3Ryb2tlLXdpZHRoPSIxMiIvPjxwYXRoIGQ9Ik0yMDguNDYgOTcuNjRBODYgODYgMCAwIDEgMjExLjkwIDE0Ni44NyIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRkY0QTJCIiBzdHJva2Utd2lkdGg9IjEyIi8+PHBhdGggZD0iTTE4Ni4zMCAxOTEuMjNBODYgODYgMCAwIDEgMTQxLjk0IDIxMi44NiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNkE2QTZBIiBzdHJva2Utd2lkdGg9IjEyIi8+PHBhdGggZD0iTTExNC4wNiAyMTIuODZBODYgODYgMCAwIDEgNjEuNDggMTgyLjUwIiBmaWxsPSJub25lIiBzdHJva2U9IiM2QTZBNkEiIHN0cm9rZS13aWR0aD0iMTIiLz48cGF0aCBkPSJNNDcuNTQgMTU4LjM2QTg2IDg2IDAgMCAxIDQ3LjU0IDk3LjY0IiBmaWxsPSJub25lIiBzdHJva2U9IiM2QTZBNkEiIHN0cm9rZS13aWR0aD0iMTIiLz48cGF0aCBkPSJNNjEuNDggNzMuNTBBODYgODYgMCAwIDEgMTE0LjA2IDQzLjE0IiBmaWxsPSJub25lIiBzdHJva2U9IiM2QTZBNkEiIHN0cm9rZS13aWR0aD0iMTIiLz48cGF0aCBkPSJNMTI4IDEyOEwyMDIuNDggMTcxLjAwIiBzdHJva2U9IiNGRjRBMkIiIHN0cm9rZS13aWR0aD0iMTEiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxnIGZpbGw9IiNGRkZGRkYiPjxjaXJjbGUgY3g9IjEyOC4wMCIgY3k9IjQyLjAwIiByPSIxNSIvPjxjaXJjbGUgY3g9IjIwMi40OCIgY3k9Ijg1LjAwIiByPSIxNSIvPjxjaXJjbGUgY3g9IjEyOC4wMCIgY3k9IjIxNC4wMCIgcj0iMTUiLz48Y2lyY2xlIGN4PSI1My41MiIgY3k9IjE3MS4wMCIgcj0iMTUiLz48Y2lyY2xlIGN4PSI1My41MiIgY3k9Ijg1LjAwIiByPSIxNSIvPjwvZz48ZyBmaWxsPSIjRkY0QTJCIj48Y2lyY2xlIGN4PSIxMjgiIGN5PSIxMjgiIHI9IjEzIi8+PGNpcmNsZSBjeD0iMjAyLjQ4IiBjeT0iMTcxLjAwIiByPSIyNyIvPjwvZz48L3N2Zz4=">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&display=swap">
 <style>:root{padding-top:env(safe-area-inset-top,0px)}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 <style>
@@ -893,6 +894,8 @@ body.glass:not(.sun) .dfold{border-color:var(--lg-edge)}
 .fbtn{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:var(--panel);color:var(--fg);font-size:24px;line-height:1;display:grid;place-items:center;padding:0;flex:none}
 .fbtn:disabled{opacity:.3}
 body.night .fbtn{border-color:rgba(255,74,58,.3)}
+.vlogo{width:18px;height:18px;vertical-align:-4px;margin-right:6px}
+body.night .vlogo{filter:grayscale(1) sepia(1) saturate(5) hue-rotate(-35deg) brightness(.75)}
 body.night .loupe{box-shadow:inset 0 1px 0 rgba(255,74,58,.30),inset 0 0 0 1px rgba(255,74,58,.14),0 4px 14px rgba(0,0,0,.18);background:linear-gradient(180deg,rgba(255,74,58,.06),rgba(255,74,58,0) 50%);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}   /* dial lens: red rim, no white */
 .toast.warn #toastMsg::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--rec);margin-right:7px;vertical-align:1px}
 .xcount .cov{display:block;font-size:13px;margin-top:2px;opacity:.85}
@@ -1282,7 +1285,7 @@ body.sun .toast button.strong{background:#fff;color:#000}
       </div>
     </section>
     <button type="button" class="ghost" id="setReset" style="display:block;margin:4px auto 0">Reset all settings</button>
-    <p class="vers num" id="vers">HDRI Bracket · <span id="build">2026-10-24 · 237ac9</span></p>
+    <p class="vers num" id="vers"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true" class="vlogo"><rect width="256" height="256" rx="58" fill="#1C1815"/><path d="M141.94 43.14A86 86 0 0 1 194.52 73.50" fill="none" stroke="#FF4A2B" stroke-width="12"/><path d="M208.46 97.64A86 86 0 0 1 211.90 146.87" fill="none" stroke="#FF4A2B" stroke-width="12"/><path d="M186.30 191.23A86 86 0 0 1 141.94 212.86" fill="none" stroke="#6A6A6A" stroke-width="12"/><path d="M114.06 212.86A86 86 0 0 1 61.48 182.50" fill="none" stroke="#6A6A6A" stroke-width="12"/><path d="M47.54 158.36A86 86 0 0 1 47.54 97.64" fill="none" stroke="#6A6A6A" stroke-width="12"/><path d="M61.48 73.50A86 86 0 0 1 114.06 43.14" fill="none" stroke="#6A6A6A" stroke-width="12"/><path d="M128 128L202.48 171.00" stroke="#FF4A2B" stroke-width="11" stroke-linecap="round"/><g fill="#FFFFFF"><circle cx="128.00" cy="42.00" r="15"/><circle cx="202.48" cy="85.00" r="15"/><circle cx="128.00" cy="214.00" r="15"/><circle cx="53.52" cy="171.00" r="15"/><circle cx="53.52" cy="85.00" r="15"/></g><g fill="#FF4A2B"><circle cx="128" cy="128" r="13"/><circle cx="202.48" cy="171.00" r="27"/></g></svg>HDRI Bracket · <span id="build">2026-10-24 · 1fb02c</span></p>
   </section>
 
   <!-- LOG -->

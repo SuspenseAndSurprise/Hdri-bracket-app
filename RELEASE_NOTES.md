@@ -1,4 +1,4 @@
-HDRI Bracket · 2026-10-24 · 237ac9
+HDRI Bracket · 2026-10-24 · 1fb02c
 
 New
 - ND frame: enter your ND strength and the shutter you used. Type it the way it's printed on the filter: stops (3), density (0.9) or factor (ND8); the app converts it to stops. The app shows the shutter without filter, where it lands next to your bracket on the ruler, and how far past your camera's fastest shutter it goes.
@@ -7,6 +7,7 @@ New
 - Presets: save your camera, autobracket, lens and angle setup, and choose what goes in. Pick one under Presets in the Camera card (folded away until you open it); tap it again to go back to no preset, which is the default. Each preset shows what it sets: saved parts in white, the rest greyed out. In Settings, Edit renames a preset, drops parts of it, exports or deletes it. Share presets as a .json file.
 - Your lens: type your own lens name, e.g. Sony 11 mm. With a focal length in the name it picks the matching lens type and shows the full-frame equivalent (fisheye, APS-C and MFT understood). It shows on the lens button, in presets and in the log, also in Single shot mode.
 - Walkthrough video (2:15) showing one HDRI from start to finish.
+- New app icon and logo: an exposure dial. Reinstall from the home screen if your phone keeps showing the old icon.
 
 Fixes
 - Night mode: the lens over the Darkest and Brightest dials had a white rim; it's red now like the rest.
@@ -19,4 +20,4 @@ Files
 - hdri-bracket-app.zip: the installable version to host yourself (any https host)
 - hdri-bracket-walkthrough.mp4: the walkthrough video
 
-Already using it? Open the app online once and it updates itself. Check the version in Settings: 2026-10-24 · 237ac9.
+Already using it? Open the app online once and it updates itself. Check the version in Settings: 2026-10-24 · 1fb02c.

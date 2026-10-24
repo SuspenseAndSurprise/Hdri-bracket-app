@@ -1,4 +1,9 @@
-# HDRI Bracket
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="logo/lockup-horizontal-dark.svg">
+    <img src="logo/lockup-horizontal-light.svg" alt="HDRI Bracket" height="72">
+  </picture>
+</p>
 
 A free on-set companion for shooting HDRIs. Set your darkest and brightest exposure, and it builds the bracket, walks you through every angle and keeps a log of every HDRI you shoot.
 
