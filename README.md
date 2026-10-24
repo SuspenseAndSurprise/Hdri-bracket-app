@@ -77,3 +77,5 @@ Open the app online once and it updates itself. Settings shows the version (date
 Issues and suggestions are welcome, especially from people who shoot HDRIs regularly.
 
 Made with the help of AI.
+
+Current version: f2be84
