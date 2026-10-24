@@ -24,7 +24,7 @@ Open it in Chrome on your phone and use ⋮ → Install app. It works offline af
 - Notes, location and a log for every HDRI, with a report you can copy
 - Location is added by hand, or automatically if you turn it on in Settings
 - Optional countdown timer for long exposures
-- Built-in how-to, under Settings, including what to do when your head can't tilt fully up or down, how to handle the tripod and ground, and stitching tips
+- Built-in how-to, under Settings, including what to do when your head can't point straight up or down, the tripod and ground, and a few things to remember
 - Presets for your camera and lens setup: pick one in the Camera card (tap again for no preset), see at a glance what each one sets, rename, trim, export or delete them under Settings, share them as a .json file
 - Themes (Glass, Calm, Classic), Light/Dark/Auto mode, night mode and sun mode
 

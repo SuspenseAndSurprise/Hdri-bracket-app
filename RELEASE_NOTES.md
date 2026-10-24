@@ -1,7 +1,7 @@
-HDRI Bracket · 2026-10-24 · 285040
+HDRI Bracket · 2026-10-24 · 64f525
 
 New
-- How to shoot: now also covers a head that can't tilt fully up or down (angles per tilt limit), handling the tripod and ground (when to paint out, when to bracket), and stitching tips.
+- How to shoot: now also covers a head that can't tilt fully up or down (angles per tilt limit), the tripod and ground (when to paint out, when to bracket), and a short good-to-remember list.
 - ND frame: enter your ND strength and the shutter you used. Type it the way it's printed on the filter: stops (3), density (0.9) or factor (ND8); the app converts it to stops. The app shows the shutter without filter, where it lands next to your bracket on the ruler, and how far past your camera's fastest shutter it goes.
 - Sun hint: a rough estimate of how many stops of ND the sun needs, based on your own settings.
 - Light/Dark/Auto mode: pick it in Settings → Look, or let it follow your system.
@@ -21,4 +21,4 @@ Files
 - hdri-bracket-app.zip: the installable version to host yourself (any https host)
 - hdri-bracket-walkthrough.mp4: the walkthrough video
 
-Already using it? Open the app online once and it updates itself. Check the version in Settings: 2026-10-24 · 285040.
+Already using it? Open the app online once and it updates itself. Check the version in Settings: 2026-10-24 · 64f525.
