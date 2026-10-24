@@ -1,7 +1,7 @@
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="logo/lockup-horizontal-dark.svg">
-    <img src="logo/lockup-horizontal-light.svg" alt="HDRI Bracket" height="72">
+    <source media="(prefers-color-scheme: dark)" srcset="logo-dark.svg">
+    <img src="logo-light.svg" alt="HDRI Bracket" height="72">
   </picture>
 </p>
 
