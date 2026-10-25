@@ -19,12 +19,11 @@ Open it in Chrome on your phone and use ⋮ → Install app. It works offline af
 - Walks you through every angle for your lens and tracks what's done
 - Autobracket sets for cameras that can't bracket the whole range (see below)
 - ND frame: enter your ND as printed on the filter and see what it adds (see below)
-- Single shot mode for textures and plates (see below)
 - Presets for your camera and lens setup (see below)
 - Fastest shutter setting (up to 1/32000) and shifting the middle of the bracket
 - Notes, location (by hand or automatic) and a log for every HDRI, with a report you can copy
 - Optional countdown timer for long exposures
-- Built-in how-to under Settings, including a head that can't point straight up or down, the tripod and ground, and a few things to remember
+- Built-in how-to under Settings, including a head that can't point straight up or down, the tripod and ground, and a few things to remember (also how to shoot textures with the camera's own A mode)
 - Themes (Glass, Calm, Classic), Light/Dark/Auto, night mode and sun mode
 
 ![Themes](hdri-bracket-themes.png)
@@ -41,31 +40,16 @@ Splits the bracket into sets of 3, 5, 7 or 9 frames, with the centre shutter to 
 
 ![Autobracket sets](hdri-bracket-autobracket.png)
 
-## Single shot
-
-For textures and plates, at one angle. Pick it under Angles, then choose:
-
-| Shot as | What you shoot |
-|---|---|
-| Bracket | Your HDRI exposure range, at this one angle |
-| One frame | One shutter of its own; your HDRI range stays as it is |
-
-Done logs exactly what you shot. A small icon next to the timer shows the mode: a ring for HDRI, stacked frames for Single · bracket, one frame for Single · one frame.
-
 ## Presets
 
 A preset stores parts of your setup. Exposure and project are never stored.
 
-| Mode | Parts you can store |
-|---|---|
-| HDRI | Fastest shutter, autobracket, lens & angles, ISO, white balance, aperture |
-| Single shot | ISO, white balance, aperture, Bracket or One frame (with its shutter) |
+Parts you can store: fastest shutter, autobracket, lens & angles, ISO, white balance and aperture.
 
 - **Apply:** tap a preset in the Camera card. Tap it again for no preset. Each preset shows at a glance what it sets.
 - **Save:** Settings → Save current setup. Name it (up to 40 characters; your lens name is suggested) and pick what goes in.
 - **Update:** changed something after picking one? Update next to it saves that back. To overwrite another, use Save current setup → Or replace.
-- **Edit:** rename, add or drop parts, copy an HDRI preset to Single shot (ISO, white balance and aperture, set to Bracket), export or delete.
-- **Modes:** a preset belongs to the mode you saved it in. The Camera card shows only that mode's presets; Settings lists all of them with a mode tag and greys out the other mode's.
+- **Edit:** rename, add or drop parts, export or delete.
 - **Share:** Export all and Import .json at the bottom of Presets (one .json file). Edit exports a single preset.
 - **Undo** works for every save, update and delete.
 
@@ -88,7 +72,7 @@ The angle plans are in full-frame focal lengths. Type your own lens under Angles
 - Zooms count at their widest end (10-18 mm → 10 mm). The aperture is ignored.
 - Add "fisheye" for fisheye lenses.
 - Mount names on their own (E, Z, RF, EF, X) don't count, because they don't tell the sensor size.
-- Works in Single shot mode too, and the equivalent goes into the report.
+- The equivalent also goes into the report.
 
 ## ND filter
 

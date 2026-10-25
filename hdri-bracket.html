@@ -314,7 +314,6 @@ body.night .sw,body.night .track .span{filter:sepia(1) saturate(4) hue-rotate(-3
 .clock.idle{color:var(--muted)}
 .wakeico{display:inline-flex;align-items:center;color:var(--muted);opacity:.6;margin-right:-6px;flex:none}
 .wakeico[hidden]{display:none}
-.modeico{margin-right:0}
 .newbtn{height:44px;min-width:56px;border:1px solid var(--line);border-radius:12px;background:var(--panel);color:var(--fg);font:700 14px var(--face);cursor:pointer;padding:0 10px}
 .panel{display:none;flex-direction:column;gap:12px}
 .panel.on{display:flex}
@@ -433,7 +432,6 @@ h2 .no{display:inline-grid;place-items:center;width:22px;height:22px;margin-righ
 .pnew2{display:flex;gap:8px;margin:0 0 8px}
 .pinc{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px}
 .prepl{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:4px 0 14px;padding-top:12px;border-top:1px solid var(--line)}
-.pother{margin:4px 0 0;font-size:13px;color:var(--muted)}
 .plbl{flex-basis:100%;margin:0 0 2px;font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 .pincd{margin:2px 0 12px;padding-top:10px;border-top:1px solid var(--line)}
 .pincd summary{list-style:none;cursor:pointer;display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 8px;padding:2px 0 8px}
@@ -452,15 +450,7 @@ h2 .no{display:inline-grid;place-items:center;width:22px;height:22px;margin-righ
 .pinc .chip[aria-pressed="false"]{opacity:.55}
 .plist2 li .pform{flex-basis:100%;width:100%;padding-top:4px}
 .pedx{display:flex;flex-wrap:wrap;gap:8px;margin:-4px 0 10px}
-.xcard.one .xr-hdri{display:none!important}
-.sgline{display:flex;flex-direction:column;gap:6px}
-.sgsub{display:flex;align-items:center;justify-content:space-between;gap:10px}
-.sglbl{font-size:14px;font-weight:700;color:var(--fg)}
-.sgline .sgseg{display:flex;gap:4px;flex:0 0 auto;width:calc(50% - 2px)}
-.sgline .sgseg button{flex:1;min-width:0;height:36px!important;min-height:36px!important;font-size:14px!important;padding:0 6px}
-.sgseg button{min-width:0;padding:0 12px;font-size:15px!important}
-.pmode{display:inline-block;margin-left:6px;padding:0 6px;border:1px solid var(--line);border-radius:6px;font-size:11px;font-weight:600;letter-spacing:.04em;color:var(--muted);vertical-align:2px}
-#presetList .pname2:disabled{opacity:.45;cursor:default}
+
 .pname2{flex:1;min-width:0;text-align:left;background:none;border:0;color:var(--fg);font:600 15px var(--face);padding:6px 0;cursor:pointer;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .pname2 .psub{font-size:12.5px;white-space:normal}
 .pnew2 .textin{flex:1}
@@ -1079,7 +1069,6 @@ body.sun .toast button.strong{background:#fff;color:#000}
 <div class="projsheet" id="projSheet" hidden></div>
 <header class="top">
   <button type="button" class="projbox" id="projBtn" aria-haspopup="true"><span class="projlbl">Project</span><span class="projin" id="project"></span></button>
-  <span class="wakeico modeico" id="modeIco" role="img"></span>
   <span class="wakeico" id="wakeIco" role="img" aria-label="Screen stays on" title="Screen stays on" hidden><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
   <span class="clock num" id="clock" aria-label="Time since first frame">0:00</span>
   <button type="button" class="newbtn" id="newHdri">New</button>
@@ -1167,17 +1156,8 @@ body.sun .toast button.strong{background:#fff;color:#000}
     <div class="camcard">
     <div class="setupwrap" id="xwrap"><div class="setupinner">
     <section class="card xcard" id="xcard" aria-label="Exposure range">
-      <div class="xhead"><div class="tl"><h2 class="ftitle" id="xTitle" role="button" tabindex="0" aria-label="Fold exposure"><span class="no">2</span>Exposure</h2><button type="button" class="rst xr-hdri" id="xReset" aria-label="Reset exposure to 1/8000 – 1/8, 2 EV" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.4-5.7"/><path d="M4 4v4.5h4.5"/></svg></button></div><div class="seg xr-hdri" id="stepSeg" aria-label="EV step"></div></div>
-      <div class="xrow" id="sgTRow" hidden>
-        <div class="xl"><b>Shutter</b></div>
-        <div class="wheelrow">
-          <button type="button" class="arrow" id="sDn" aria-label="Darker">‹</button>
-          <div class="wheel"><div class="strip num" id="sWheel" aria-label="Shutter" tabindex="0"></div></div>
-          <button type="button" class="arrow" id="sUp" aria-label="Brighter">›</button>
-        </div>
-        <p class="xhint">Expose for your subject. Your HDRI range is kept as it is.</p>
-      </div>
-      <div class="xrow xr-hdri">
+      <div class="xhead"><div class="tl"><h2 class="ftitle" id="xTitle" role="button" tabindex="0" aria-label="Fold exposure"><span class="no">2</span>Exposure</h2><button type="button" class="rst" id="xReset" aria-label="Reset exposure to 1/8000 – 1/8, 2 EV" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.4-5.7"/><path d="M4 4v4.5h4.5"/></svg></button></div><div class="seg" id="stepSeg" aria-label="EV step"></div></div>
+      <div class="xrow">
         <div class="xl"><b>Darkest</b></div>
         <div class="wheelrow">
           <button type="button" class="arrow" id="dDn" aria-label="Darker">‹</button>
@@ -1186,7 +1166,7 @@ body.sun .toast button.strong{background:#fff;color:#000}
         </div>
         <p class="xhint">Make the brightest important areas just below clipping.</p>
       </div>
-      <div class="xrow xr-hdri">
+      <div class="xrow">
         <div class="xl"><b>Brightest</b></div>
         <div class="wheelrow">
           <button type="button" class="arrow" id="lDn" aria-label="Darker">‹</button>
@@ -1195,14 +1175,14 @@ body.sun .toast button.strong{background:#fff;color:#000}
         </div>
         <p class="xhint">Make the darkest important areas clearly visible, not black. Lamps and windows will clip here, that is fine: the faster frames cover them. Not sure? Go one dot slower (one stop): cleaner shadows for a little more time.</p>
       </div>
-      <div class="xviz xr-hdri">
+      <div class="xviz">
         <div class="midline"><span id="midK">Middle · 0 EV</span><span class="mshift"><button type="button" class="mbtn" id="mDn" aria-label="Middle darker (faster shutter)">‹</button><b class="num" id="midVal"></b><button type="button" class="mbtn" id="mUp" aria-label="Middle brighter (slower shutter)">›</button></span></div>
         <div class="fstep"><button type="button" class="fbtn" id="fLess" aria-label="One frame less at each end">−</button><b class="num" id="fCount"></b><button type="button" class="fbtn" id="fMore" aria-label="One frame more at each end">+</button></div>
         <p class="xcount" id="midCount"></p>
         <div class="track ruler" id="track"><div class="cmark" aria-hidden="true"></div><div class="rulr" id="rl"><div class="rail"></div><div class="span" id="rSpan"></div></div></div>
       </div>
-      <p class="apwarn xwarn xr-hdri" id="warn"></p>
-      <div class="ndrow xr-hdri" id="ndRow">
+      <p class="apwarn xwarn" id="warn"></p>
+      <div class="ndrow" id="ndRow">
         <div class="mini"><span>ND frame</span><button type="button" class="pill fastbtn num" id="ndBtn" aria-expanded="false" aria-controls="ndBox"></button></div>
         <div class="ndbox" id="ndBox" hidden>
           <div class="mini"><span>ND filter</span><span class="ndstep"><button type="button" class="mbtn" id="nsDn" aria-label="Weaker ND">‹</button><span class="ndwrap"><input class="num ndin" id="ndSt" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="done" aria-label="ND strength: stops (3), density (0.9) or factor (ND8)"><span class="ndpen" aria-hidden="true">✎</span></span><button type="button" class="mbtn" id="nsUp" aria-label="Stronger ND">›</button></span></div>
@@ -1222,8 +1202,6 @@ body.sun .toast button.strong{background:#fff;color:#000}
     <section class="nowcard" id="nowcard">
       <div class="chead"><h2><span class="no">3</span>Angles</h2><button type="button" class="pill" id="lensBtn" aria-expanded="false" aria-controls="lensWrap"></button></div>
       <div class="pwrap" id="lensWrap" style="height:0px;overflow:hidden" inert><div class="lenspanel" id="lensPanel">
-        <div class="seg modeseg" id="modeSeg" aria-label="What are you shooting?"><button type="button" data-m="hdri">HDRI</button><button type="button" data-m="single">Single shot</button></div>
-        <div class="sgline" id="sgRow" hidden><div class="sgsub"><span class="sglbl">Shot as</span><div class="seg sgseg" id="sgSeg" aria-label="Single shot exposure"><button type="button" data-o="0">Bracket</button><button type="button" data-o="1">One frame</button></div></div><p class="lp-note" id="sgHint"></p></div>
         <p class="lp-note" id="lpNote">Full-frame equivalent, camera in portrait. Add APS-C or MFT to your lens name and the app converts it and sets the angles.</p>
         <div class="lenses" id="lenses"></div>
         <label class="sglens" id="sgLens"><span>Your lens</span><input id="sgLensIn" type="text" maxlength="24" placeholder="optional, e.g. Sony 11 mm APS-C" autocomplete="off" enterkeyhint="done"></label>
@@ -1274,15 +1252,14 @@ body.sun .toast button.strong{background:#fff;color:#000}
       <div class="row">
         <h2>Presets</h2>
         <button type="button" class="ghost psave" id="presetSave">+ Save current setup</button>
-        <div class="pform" id="presetNew" hidden><div class="pnew2"><input class="textin" id="presetName" type="text" maxlength="40" placeholder="Name, e.g. Sony 11 mm" autocomplete="off" enterkeyhint="done"><button type="button" class="ghost" id="presetSaveGo">Save</button></div><div class="prepl" id="presetRepl" hidden><p class="plbl">Or replace an existing preset</p></div><details class="pincd" id="presetIncD"><summary><span class="plbl" id="presetIncL">What goes in</span><span class="pincs" id="presetIncS"></span></summary><div class="pinc" id="presetInc" aria-label="Include in preset"></div></details><div class="pedx" id="presetEdX" hidden><button type="button" class="ghost" id="presetToS">Copy to Single shot</button><button type="button" class="ghost" id="presetExp">Export</button><button type="button" class="ghost" id="presetDel">Delete</button></div></div>
-        <p class="pother" id="presetOther" hidden></p><ul class="plist2" id="presetList"></ul>
+        <div class="pform" id="presetNew" hidden><div class="pnew2"><input class="textin" id="presetName" type="text" maxlength="40" placeholder="Name, e.g. Sony 11 mm" autocomplete="off" enterkeyhint="done"><button type="button" class="ghost" id="presetSaveGo">Save</button></div><div class="prepl" id="presetRepl" hidden><p class="plbl">Or replace an existing preset</p></div><details class="pincd" id="presetIncD"><summary><span class="plbl" id="presetIncL">What goes in</span><span class="pincs" id="presetIncS"></span></summary><div class="pinc" id="presetInc" aria-label="Include in preset"></div></details><div class="pedx" id="presetEdX" hidden><button type="button" class="ghost" id="presetExp">Export</button><button type="button" class="ghost" id="presetDel">Delete</button></div></div>
+        <ul class="plist2" id="presetList"></ul>
         <details class="phelp" id="presetHelp"><summary><span id="presetHelpLine">Tap a preset to apply it, tap again to unselect.</span></summary>
           <ul>
             <li><b>Apply:</b> tap a name. Tap it again for no preset. Exposure and project are never stored.</li>
             <li><b>Save:</b> name it and pick what goes in, or replace an existing preset.</li>
             <li><b>Update:</b> changed something after picking one? Update next to it saves that back.</li>
-            <li><b>Edit:</b> rename, add or drop parts, copy an HDRI preset to Single shot, export or delete.</li>
-            <li><b>HDRI and Single shot</b> each have their own presets. The other mode's are greyed out.</li>
+            <li><b>Edit:</b> rename, add or drop parts, export or delete.</li>
             <li><b>Share:</b> Export all puts every preset in one file; Import reads it back.</li>
           </ul>
         </details>
@@ -1321,6 +1298,7 @@ body.sun .toast button.strong{background:#fff;color:#000}
         <li><b>Turn around the nodal point, also when tilting.</b> Otherwise close objects shift and the seams show.</li>
         <li><b>Shots need to overlap.</b> The app's angle count takes care of it. Don't skip angles.</li>
         <li><b>Same bracket at every angle.</b> Otherwise the brightness doesn't match across the seams.</li>
+        <li><b>Textures and plates:</b> shoot them in A mode, or meter in A and copy the values to M for a consistent series.</li>
       </ul>
       <button type="button" class="handle dfold" data-fold><span class="grip" aria-hidden="true"></span><span class="hl"><b>How to shoot</b></span><span class="hchev" aria-hidden="true">Fold ▴</span></button>
     </details>
@@ -1364,7 +1342,7 @@ body.sun .toast button.strong{background:#fff;color:#000}
       </details>
     </section>
     <button type="button" class="ghost" id="setReset" style="display:block;margin:4px auto 0">Reset all settings</button>
-    <p class="vers num" id="vers"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true" class="vlogo"><rect width="256" height="256" rx="58" fill="#1C1815"/><path d="M141.94 43.14A86 86 0 0 1 194.52 73.50" fill="none" stroke="#FF4A2B" stroke-width="12"/><path d="M208.46 97.64A86 86 0 0 1 211.90 146.87" fill="none" stroke="#FF4A2B" stroke-width="12"/><path d="M186.30 191.23A86 86 0 0 1 141.94 212.86" fill="none" stroke="#6A6A6A" stroke-width="12"/><path d="M114.06 212.86A86 86 0 0 1 61.48 182.50" fill="none" stroke="#6A6A6A" stroke-width="12"/><path d="M47.54 158.36A86 86 0 0 1 47.54 97.64" fill="none" stroke="#6A6A6A" stroke-width="12"/><path d="M61.48 73.50A86 86 0 0 1 114.06 43.14" fill="none" stroke="#6A6A6A" stroke-width="12"/><path d="M128 128L202.48 171.00" stroke="#FF4A2B" stroke-width="11" stroke-linecap="round"/><g fill="#FFFFFF"><circle cx="128.00" cy="42.00" r="15"/><circle cx="202.48" cy="85.00" r="15"/><circle cx="128.00" cy="214.00" r="15"/><circle cx="53.52" cy="171.00" r="15"/><circle cx="53.52" cy="85.00" r="15"/></g><g fill="#FF4A2B"><circle cx="128" cy="128" r="13"/><circle cx="202.48" cy="171.00" r="27"/></g></svg>HDRI Bracket · <span id="build">2026-10-24 · 0d9a69</span></p>
+    <p class="vers num" id="vers"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true" class="vlogo"><rect width="256" height="256" rx="58" fill="#1C1815"/><path d="M141.94 43.14A86 86 0 0 1 194.52 73.50" fill="none" stroke="#FF4A2B" stroke-width="12"/><path d="M208.46 97.64A86 86 0 0 1 211.90 146.87" fill="none" stroke="#FF4A2B" stroke-width="12"/><path d="M186.30 191.23A86 86 0 0 1 141.94 212.86" fill="none" stroke="#6A6A6A" stroke-width="12"/><path d="M114.06 212.86A86 86 0 0 1 61.48 182.50" fill="none" stroke="#6A6A6A" stroke-width="12"/><path d="M47.54 158.36A86 86 0 0 1 47.54 97.64" fill="none" stroke="#6A6A6A" stroke-width="12"/><path d="M61.48 73.50A86 86 0 0 1 114.06 43.14" fill="none" stroke="#6A6A6A" stroke-width="12"/><path d="M128 128L202.48 171.00" stroke="#FF4A2B" stroke-width="11" stroke-linecap="round"/><g fill="#FFFFFF"><circle cx="128.00" cy="42.00" r="15"/><circle cx="202.48" cy="85.00" r="15"/><circle cx="128.00" cy="214.00" r="15"/><circle cx="53.52" cy="171.00" r="15"/><circle cx="53.52" cy="85.00" r="15"/></g><g fill="#FF4A2B"><circle cx="128" cy="128" r="13"/><circle cx="202.48" cy="171.00" r="27"/></g></svg>HDRI Bracket · <span id="build">2026-10-25 · 53a1b2</span></p>
   </section>
 
   <!-- LOG -->
@@ -1482,13 +1460,8 @@ body.sun .toast button.strong{background:#fff;color:#000}
     {id:"15", a:"15 mm", b:"fisheye", p:{around:6, up:0, down:0, zen:true, nad:true}, why:"The classic 6 + up + down."},
     {id:"14", a:"14–16", b:"wide",    p:{around:8, up:0, down:0, zen:true, nad:true}, why:"One level row covers ±50°. Up and down close the poles."},
     {id:"24", a:"24 mm", b:"",        p:{around:10,up:8, down:8, zen:true, nad:true}, why:"Needs tilted rows at ±45°. Slow: only when you need the resolution."},
-    {id:"35", a:"35 mm", b:"",        p:{around:14,up:10,down:10,zen:true, nad:true}, why:"Very slow on set. Only for high-resolution backplates."},
-    {id:"single", a:"Single shot", b:"textures, plates", p:{around:1,up:0,down:0,zen:false,nad:false}, why:"One frame, for textures and plates."}
+    {id:"35", a:"35 mm", b:"",        p:{around:14,up:10,down:10,zen:true, nad:true}, why:"Very slow on set. Only for high-resolution backplates."}
   ];
-  function single(){ return s.lens==="single"; }
-  // Single shot · One frame: its own shutter (sgT), separate from the HDRI range (dark/light), which it never touches
-  function oneF(){ return single() && !!s.sgOne; }
-  function sgI(){ return clamp(s.sgT==null?Math.round((s.dark+s.light)/2):s.sgT,0,lim()); }
   var REFS=[["grey","Grey"],["chrome","Chrome"],["chart","Chart"]];
   var AROUND=[3,4,5,6,8,10,12,14,16], RING=[0,4,6,8,10,12];
   var ROWS=[[90,"Straight up"],[45,"Tilt up 45°"],[0,"Level"],[-45,"Tilt down 45°"],[-90,"Straight down"]];
@@ -1509,15 +1482,21 @@ body.sun .toast button.strong{background:#fff;color:#000}
   if([0,3,5,7,9].indexOf(s.aeb)<0) s.aeb=0;
   if(v && typeof v.fastI!=="number" && [0,1,2].indexOf(v.fast)>=0) s.fastI=I8K-3*v.fast;   // previous build stored 0/1/2 (1/8000, 1/4000, 1/2000)
   delete s.fast; s.fastI=Math.max(FMIN,Math.min(MAX,s.fastI)); if(typeof s.lensTxt!=="string") s.lensTxt=""; if(s.presetSel!==undefined && s.presetSel!==null && typeof s.presetSel!=="string") delete s.presetSel;
-  if(s.presetSelS!==undefined && s.presetSelS!==null && typeof s.presetSelS!=="string") delete s.presetSelS;
-  if(typeof s.sgOne!=="boolean") s.sgOne=false;   // Single shot: false = the HDRI bracket at one angle, true = one frame with its own shutter
-  if(!(typeof s.sgT==="number" && s.sgT%1===0 && s.sgT>=0 && s.sgT<=MAX)) s.sgT=null;
+
   if(s.dark>lim()){ s.dark=lim(); if(s.light>s.dark-3) s.light=s.dark-3; }
   // animation speed: Smooth 600 ms, Quick 250 ms, Off instant (also when the phone asks for reduced motion)
   function animMs(full){ if(matchMedia("(prefers-reduced-motion: reduce)").matches || s.anim==="off") return 0; return s.anim==="smooth"?full:Math.round(full*0.42); }
   if(s.glassLvl==null) s.glassLvl = s.refract===false?0:(s.fx===false?1:2);
   if(["glass","calm","classic"].indexOf(s.theme)<0) s.theme="glass";
   if(!Array.isArray(s.presets)) s.presets=[];
+  // Single shot was removed: an app saved in that mode goes back to the HDRI lens it had (its one-angle progress starts fresh),
+  // and a Single shot preset keeps its camera parts (ISO, WB, aperture) as a normal preset
+  (function(){ var ok=function(id){ return LENSES.some(function(l){ return l.id===id; }); };
+    if(s.lens==="single" || !ok(s.lens)){ var L=ok(s.hdriLens)?s.hdriLens:"15"; s.lens=L;
+      s.pat=(s.hdriPat && typeof s.hdriPat.around==="number")?s.hdriPat:Object.assign({},lensById(L).p); s.ang={}; s.tk={}; s.done=[]; s.sel=null; }
+    if(s.presets.some(function(p){ return p && p.mode; })) s.presets=s.presets.map(function(p){ return p && p.mode?cleanPreset(p):p; }).filter(Boolean);
+    if(s.presetSel && !s.presets.some(function(p){ return p.name===s.presetSel; })) s.presetSel=null;
+    ["hdriLens","hdriPat","sgOne","sgT","presetSelS"].forEach(function(k){ delete s[k]; }); })();
   function applyMode(){ var r=document.documentElement; if(s.scheme==="light"||s.scheme==="dark") r.setAttribute("data-theme",s.scheme); else r.removeAttribute("data-theme"); try{ wbTone(); }catch(e){} }
   applyMode();
   function glv(){ return s.theme==="glass"?s.glassLvl:0; }   // Calm and Classic are solid: no glass effects
@@ -1527,8 +1506,8 @@ body.sun .toast button.strong{background:#fff;color:#000}
   var clamp=function(x,a,b){return Math.max(a,Math.min(b,x));};
   function lensEq(){ var t=s.lensTxt.trim(), r=t&&CROPS?lensFromText(t):null; return r&&r.crop>1?r:null; }
   function eqFm(v){ return (Math.round(v*10)/10+"").replace(/\.0$/,""); }
-  function lensTag(){ var t=s.lensTxt.trim(); return single()?"Single"+(t?" "+t:""):(t||lensById(s.lens).a); }
-  function lensPill(n){ var t=s.lensTxt.trim(); return single()?"Single · "+(s.sgOne?"One frame":"Bracket")+(t?" · "+t:""):"Lens "+(t||lensById(s.lens).a)+" · "+n+" angles"; }
+  function lensTag(){ var t=s.lensTxt.trim(); return t||lensById(s.lens).a; }
+  function lensPill(n){ var t=s.lensTxt.trim(); return "Lens "+(t||lensById(s.lens).a)+" · "+n+" angles"; }
   function lensById(id){ return LENSES.filter(function(l){return l.id===id;})[0]||LENSES[1]; }
   function sec(i){ return 30*Math.pow(2,-i/3); }
   function label(i){
@@ -1569,7 +1548,7 @@ body.sun .toast button.strong{background:#fff;color:#000}
   // Past the camera's fastest shutter the ladder slides slower, just enough. null when full sets don't fit at all.
   var I1S=T.indexOf("1s");
   function aebFit(){
-    var N=s.aeb, st=3*s.step; if(!N || oneF()) return null;
+    var N=s.aeb, st=3*s.step; if(!N) return null;
     var m=Math.max(1,Math.ceil((s.dark-s.light)/st)+1), F=Math.ceil(m/N)*N, kB=0;
     while(kB<F-m && s.light-(kB+1)*st>=I1S) kB++;
     var lo=Math.min(s.light-kB*st, lim()-(F-1)*st);
@@ -1578,7 +1557,6 @@ body.sun .toast button.strong{background:#fff;color:#000}
     return {N:N, F:F, lo:lo, hi:lo+(F-1)*st, qb:qb, qt:qt};
   }
   function bracket(){
-    if(oneF()){ var i1=sgI(); return {mid:i1, frames:[{i:i1, ev:0}]}; }
     var st=3*s.step, half=Math.ceil((s.dark-s.light)/2/st), ext=half*st, mid=Math.round((s.dark+s.light)/2);
     if(mid+ext>lim()) mid=lim()-ext;
     if(mid-ext>s.light) mid=s.light+ext;
@@ -1596,7 +1574,7 @@ body.sun .toast button.strong{background:#fff;color:#000}
   // no overlaps. Padding to full sets goes on the dark side (fast frames, free in time); only past 1/8000 it spills bright.
   function plan(b){
     var f=b.frames.map(function(o){ return {i:o.i, ev:o.ev}; }), N=s.aeb;
-    if(!N || oneF()) return {frames:f, sets:null};
+    if(!N) return {frames:f, sets:null};
     var A=aebFit();
     if(A){ var st0=3*s.step, M0=b.mid, g=[], sets0=[], j, q;
       for(q=A.F-1;q>=0;q--){ var i=A.lo+q*st0; g.push({i:i, ev:(M0-i)/st0*s.step}); if(q>A.qt||q<A.qb) g[g.length-1].x=1; }
@@ -1646,7 +1624,6 @@ body.sun .toast button.strong{background:#fff;color:#000}
     return out;
   }
   function angText(a){
-    if(single()) return {v:"Straight ahead", d:"Aim at your subject."};
     if(a.el===90) return {v:"Straight up", d:"Point the lens at the sky."};
     if(a.el===-90) return {v:"Straight down", d:"Move the tripod legs aside if you need a clean ground."};
     var tilt=a.el===0?"level":(a.el>0?"tilt up 45°":"tilt down 45°");
@@ -1664,10 +1641,10 @@ body.sun .toast button.strong{background:#fff;color:#000}
     showToast(msg,null,warn?9000:5000,warn);
   }
   // Anything that throws work away acts at once and offers Undo (only when there was something to lose)
-  var GUARD=["ang","tk","done","sel","cur","tEnd","tAct","t0","pat","lens","dark","light","ap","iso","step","wb","wbK","camSet","refs","notes","loc","project","history","fastI","ndOn","ndStops","ndI","aeb","presets","lensTxt","presetSel","presetSelS","sgOne","sgT"];
+  var GUARD=["ang","tk","done","sel","cur","tEnd","tAct","t0","pat","lens","dark","light","ap","iso","step","wb","wbK","camSet","refs","notes","loc","project","history","fastI","ndOn","ndStops","ndI","aeb","presets","lensTxt","presetSel"];
   function snap(){ var o={}; GUARD.forEach(function(k){ o[k]=s[k]; }); return JSON.stringify(o); }
   // preset changes undo only the preset list, never the live setup or other changes made since
-  function pGuarded(msg,fn){ var o={presets:s.presets}; if(s.presetSel!==undefined) o.presetSel=s.presetSel; if(s.presetSelS!==undefined) o.presetSelS=s.presetSelS; var sn=JSON.stringify(o); fn(); undoSnap=sn; showToast(msg,null,6000); }
+  function pGuarded(msg,fn){ var o={presets:s.presets}; if(s.presetSel!==undefined) o.presetSel=s.presetSel; var sn=JSON.stringify(o); fn(); undoSnap=sn; showToast(msg,null,6000); }
   function guarded(msg,lose,fn){ if(!lose){ fn(); return; } var sn=snap(); fn(); undoSnap=sn; showToast(msg,null,6000); }
   // toast: one Undo, or a two-way choice (alt = left, main = right)
   var toastMain=null, toastAltFn=null;
@@ -1813,10 +1790,6 @@ body.sun .toast button.strong{background:#fff;color:#000}
   var fW=Wheel($("fWheel"),SH.slice(0,MAX-FMIN+1),3,function(p){ setFast(MAX-p); });
   var dW=Wheel($("dWheel"),SH,3,function(p){ setDark(MAX-p); },function(){ return MAX-lim(); });
   var lW=Wheel($("lWheel"),SH,3,function(p){ setLight(MAX-p); },function(){ return MAX-lim()+3; },function(){ return MAX-lim(); });
-  var sW=Wheel($("sWheel"),SH,3,function(p){ setSg(MAX-p); },function(){ return MAX-lim(); });
-  function setSg(i){ i=clamp(i,0,lim()); if(i===sgI() && s.sgT!=null) return; expo(function(){ s.sgT=i; s.done=[]; },"Shutter changed: ticks cleared"); }
-  [].forEach.call($("sgSeg").children,function(bt){ bt.onclick=function(){ var on=bt.getAttribute("data-o")==="1"; if(on===!!s.sgOne) return;
-    var t=sgI(); keepPlace(function(){ expo(function(){ s.sgOne=on; if(on && s.sgT==null) s.sgT=t; s.done=[]; },"Exposure changed: ticks cleared"); }); }; });
   var aW=Wheel($("aWheel"),A.map(function(a){return "f/"+a;}),3,function(p){ setAp(p); });
   var wW=Wheel($("wWheel"),WB.map(function(k){return k+"K";}),0,function(p){ if(s.wbK && p===nearWB(s.wbK)) return; s.wb=p; s.wbK=null; s.camSet=true; render(); });
   // custom Kelvin: any value 2000–12000 (rounded to 50); the wheel rests on the nearest preset
@@ -1869,7 +1842,7 @@ body.sun .toast button.strong{background:#fff;color:#000}
     document.querySelectorAll("[data-panel]").forEach(function(p){ p.classList.toggle("on",p.getAttribute("data-panel")===s.tab); });
     $("xReset").hidden=s.step===DEF.step && s.dark===Math.min(DEF.dark,lim()) && s.light===DEF.light;
     $("camReset").hidden=s.ap===DEF.ap && s.wb===DEF.wb && !s.wbK && s.iso===DEF.iso && s.fastI===DEF.fastI;
-    aW.set(s.ap,false); wW.set(s.wb,false); dW.dim(); lW.dim(); dW.set(MAX-s.dark,false); lW.set(MAX-s.light,false); $("sgTRow").hidden=!oneF(); $("xcard").classList.toggle("one",oneF()); sW.dim(); sW.set(MAX-sgI(),false);
+    aW.set(s.ap,false); wW.set(s.wb,false); dW.dim(); lW.dim(); dW.set(MAX-s.dark,false); lW.set(MAX-s.light,false);
 
     guide($("aOpts"),A_GUIDE,function(g){return g.avoid?"":"f/"+g.f;},function(g){return A[s.ap]===g.f;},function(g){ setAp(A.indexOf(g.f)); },$("aGuide"));
     guide($("wOpts"),W_GUIDE,function(g){return g.k?g.k+"K":"";},function(g){return !s.wbK && WB[s.wb]===g.k;},function(g){ s.wb=WB.indexOf(g.k); s.wbK=null; s.camSet=true; render(); },$("wGuide"));
@@ -1892,7 +1865,6 @@ body.sun .toast button.strong{background:#fff;color:#000}
     // lens
     var lb=$("lenses"); lb.innerHTML="";
     LENSES.forEach(function(l){
-      if(l.id==="single") return;   // Single shot is a mode (switch above), not a lens
       var b=document.createElement("button"); b.type="button"; b.setAttribute("aria-pressed",s.lens===l.id);
       b.innerHTML='<span class="l1"></span><span class="l2"></span>';
       b.querySelector(".l1").textContent=l.a; b.querySelector(".l2").textContent=l.b||" ";
@@ -1903,10 +1875,7 @@ body.sun .toast button.strong{background:#fff;color:#000}
     var parts=[rp.around+" level"]; if(rp.up) parts.push(rp.up+" tilted up"); if(rp.down) parts.push(rp.down+" tilted down");
     if(rp.zen) parts.push("up"); if(rp.nad) parts.push("down");
     var eq=lensEq(), eqH=eq?"Your lens ≈ <b>"+eq.e+" mm</b> full frame ("+eqFm(eq.mm)+" mm "+(eq.sen?"on "+eq.sen+", ×":"× ")+eqFm(eq.crop)+"). ":"";
-    if(single()) $("recLine").innerHTML=eqH+"For textures and plates, at one angle. The lens only goes into the report.";
-    else { $("recLine").innerHTML=eqH+"Recommended: <b>"+rt+" angles</b> ("+parts.join(" · ")+"). "+L.why; }
-    $("lpNote").hidden=single(); $("adjust").hidden=single(); lb.hidden=single();
-    [].forEach.call($("modeSeg").children,function(bt){ bt.setAttribute("aria-pressed",(bt.getAttribute("data-m")==="single")===single()); });
+    $("recLine").innerHTML=eqH+"Recommended: <b>"+rt+" angles</b> ("+parts.join(" · ")+"). "+L.why;
     if(document.activeElement!==$("sgLensIn")) $("sgLensIn").value=s.lensTxt;
     drawAdjust();
 
@@ -1918,18 +1887,7 @@ body.sun .toast button.strong{background:#fff;color:#000}
     drawRows(list,cur); drawRing(list,cur);
     var nd=0,nsk=0; list.forEach(function(a){ if(s.ang[a.key]==="done") nd++; if(s.ang[a.key]==="skip") nsk++; });
 
-    // mode, subtle, next to the timer: ring = HDRI, one frame = Single · one frame, stacked frames = Single · bracket
-    var mk=single()?(s.sgOne?"one":"brk"):"hdri", mi=$("modeIco");
-    if(mi._k!==mk){ mi._k=mk; var tt=mk==="hdri"?"HDRI":mk==="one"?"Single shot · one frame":"Single shot · bracket";
-      mi.setAttribute("aria-label",tt); mi.title=tt;
-      mi.innerHTML='<svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+
-        (mk==="hdri"?'<circle cx="12" cy="12" r="8" stroke-width="1.6"/><circle cx="12" cy="4" r="2.3" fill="currentColor" stroke="none"/><circle cx="20" cy="12" r="2.3" fill="currentColor" stroke="none"/><circle cx="12" cy="20" r="2.3" fill="currentColor" stroke="none"/><circle cx="4" cy="12" r="2.3" fill="currentColor" stroke="none"/>'
-        :mk==="one"?'<rect x="4" y="6.5" width="16" height="11" rx="2"/>'
-        :'<rect x="3" y="9" width="14" height="10" rx="2"/><path d="M7 6h12a2 2 0 0 1 2 2v8"/>')+'</svg>'; }
     // exposure
-    var one=oneF(); $("sgRow").hidden=!single(); $("sgTRow").hidden=!one; $("xcard").classList.toggle("one",one);
-    [].forEach.call($("sgSeg").children,function(bt){ bt.setAttribute("aria-pressed",(bt.getAttribute("data-o")==="1")===one); });
-    $("sgHint").textContent=one?"One frame with its own shutter (set in Exposure). Your HDRI range stays as it is.":"Your HDRI exposure range, shot at this one angle.";
     var b=bracket(), f=b.frames, n=f.length, stops=(f[0].i-f[n-1].i)/3;
     $("midVal").textContent=label(b.mid); $("mDn").disabled=!shiftOk(1); $("mUp").disabled=!shiftOk(-1);
     // how far the symmetric bracket reaches past the measured ends (it can't stop exactly on both with whole steps)
@@ -1942,7 +1900,7 @@ body.sun .toast button.strong{background:#fff;color:#000}
     var xf=!!s.fold.exposure, ff=!!s.fold.frames;
     $("xwrap").inert=xf; $("fwrap").inert=ff;
     $("xFold").setAttribute("aria-expanded",!xf); $("fFold").setAttribute("aria-expanded",!ff);
-    $("xSum").textContent=xf?(one?"One frame · "+label(f[0].i):label(f[0].i)+" → "+label(f[n-1].i)+" · "+n+" × "+s.step+" EV"):"";
+    $("xSum").textContent=xf?label(f[0].i)+" → "+label(f[n-1].i)+" · "+n+" × "+s.step+" EV":"";
     $("fSum").textContent=ff?s.done.length+"/"+n+" ticked":"";
     $("xChev").textContent=xf?"▾":"Fold ▴"; $("fChev").textContent=ff?"▾":"Fold ▴";
     $("fCount").textContent=n+(n===1?" frame":" frames")+" · "+fx(stops)+" EV";
@@ -2071,7 +2029,7 @@ body.sun .toast button.strong{background:#fff;color:#000}
     if(M.sets) $("fSum").textContent=ff?(M.sets.filter(function(g){ return g.ids.every(function(i){ return s.done.indexOf(i)>=0; }); }).length+"/"+M.sets.length+" sets"):"";
     $("setLine").hidden=!M.sets; if(M.sets) $("setLine").textContent=setLine(M);
     $("cdToggle").hidden=!!M.sets;
-    $("aebHint").hidden=!s.aeb || oneF();
+    $("aebHint").hidden=!s.aeb;
     (function(){ var o=ndInfo(), on=!!s.ndOn;
       $("ndBtn").textContent=on?stTxt(s.ndStops)+" · "+T[o.ti]+" ▴":"Off ▾"; $("ndBtn").setAttribute("aria-expanded",on); $("ndBox").hidden=!on;
       if(document.activeElement!==$("ndSt")) $("ndSt").value=stTxt(s.ndStops); $("ndT").textContent=T[o.ti];
@@ -2170,7 +2128,6 @@ body.sun .toast button.strong{background:#fff;color:#000}
 
     var bulb=f[n-1].i<0;
     if(M.sets) $("aeb").innerHTML="Per set: put the camera on the <b>centre shutter</b> and fire one burst of "+s.aeb+" × "+s.step+" EV."+(bulb?" Frames past 30s need bulb: shoot those by hand.":"");
-    else if(oneF()) $("aeb").innerHTML="One frame at <b>"+label(f[0].i)+"</b>. Autobracket off on the camera.";
     else $("aeb").innerHTML=(n<=9 && !bulb)
       ? "Autobracket: <b>"+n+" × "+s.step+" EV</b> around <b>"+label(b.mid)+"</b>. If your camera can't do "+n+" frames, shoot by hand."
       : "Too many frames or too long for autobracket. Shoot this one by hand.";
@@ -2357,11 +2314,10 @@ body.sun .toast button.strong{background:#fff;color:#000}
     if(s.loc) L.push("Location "+s.loc.lat.toFixed(5)+", "+s.loc.lon.toFixed(5)+" (±"+s.loc.acc+" m) · https://maps.google.com/?q="+s.loc.lat.toFixed(5)+","+s.loc.lon.toFixed(5));
     // setup
     L.push("");
-    L.push((curPreset()?"Preset: "+curPreset().name+"\n":"")+"Camera: "+(s.camSet?fAp(s.ap)+" · ISO "+ISO[s.iso]+" · "+wbVal()+"K"+(s.wbK?" (custom)":"")+" · RAW":"settings not recorded")+(s.fastI!==I8K?" · fastest shutter "+T[lim()]:"")+(single()?" · single shot"+(s.lensTxt.trim()?", lens "+s.lensTxt.trim()+(lensEq()?" (≈"+lensEq().e+" mm full frame)":""):""):" · lens "+(s.lensTxt.trim()?s.lensTxt.trim()+" ("+(lensEq()?"≈"+lensEq().e+" mm full frame, ":"")+lensById(s.lens).a+" type)":lensById(s.lens).a)+", "+list.length+" angles"));
-    if(oneF()) L.push("Exposure: one frame · "+label(sgI())+" (own shutter, separate from the HDRI range)");
-    else { L.push("Measured range: darkest "+label(s.dark)+" · brightest "+label(s.light));
-    if(b) L.push("Bracket: "+b.frames.length+" × "+s.step+" EV · "+label(b.frames[0].i)+" → "+label(b.frames[b.frames.length-1].i)+" · middle "+label(b.mid)); }
-    if(s.ndOn && !oneF()){ var o=ndInfo(); L.push("ND frame: "+stTxt(s.ndStops)+" ND, shutter "+T[o.ti]+" = "+o.eq+" without filter · "+(o.off>0?"+"+(Math.round(o.off*10)/10)+" EV past darkest":"inside the bracket")+(o.room>0.05?" · camera max "+T[lim()]+" is +"+(Math.round(o.room*10)/10)+" EV past darkest, ND adds "+(o.past>0.05?"+"+(Math.round(o.past*10)/10)+" EV":"nothing")+" beyond it":"")); }
+    L.push((curPreset()?"Preset: "+curPreset().name+"\n":"")+"Camera: "+(s.camSet?fAp(s.ap)+" · ISO "+ISO[s.iso]+" · "+wbVal()+"K"+(s.wbK?" (custom)":"")+" · RAW":"settings not recorded")+(s.fastI!==I8K?" · fastest shutter "+T[lim()]:"")+" · lens "+(s.lensTxt.trim()?s.lensTxt.trim()+" ("+(lensEq()?"≈"+lensEq().e+" mm full frame, ":"")+lensById(s.lens).a+" type)":lensById(s.lens).a)+", "+list.length+" angles");
+    L.push("Measured range: darkest "+label(s.dark)+" · brightest "+label(s.light));
+    if(b) L.push("Bracket: "+b.frames.length+" × "+s.step+" EV · "+label(b.frames[0].i)+" → "+label(b.frames[b.frames.length-1].i)+" · middle "+label(b.mid));
+    if(s.ndOn){ var o=ndInfo(); L.push("ND frame: "+stTxt(s.ndStops)+" ND, shutter "+T[o.ti]+" = "+o.eq+" without filter · "+(o.off>0?"+"+(Math.round(o.off*10)/10)+" EV past darkest":"inside the bracket")+(o.room>0.05?" · camera max "+T[lim()]+" is +"+(Math.round(o.room*10)/10)+" EV past darkest, ND adds "+(o.past>0.05?"+"+(Math.round(o.past*10)/10)+" EV":"nothing")+" beyond it":"")); }
     // autobracket: how the bracket was actually fired, so the merge holds no surprises
     if(M && M.sets){
       L.push("");
@@ -2405,7 +2361,7 @@ body.sun .toast button.strong{background:#fff;color:#000}
   // ISO: one stop up makes every shutter in the bracket one stop faster, like a wider aperture
   function isoOk(p){ var d=3*(p-s.iso); return s.dark+d<=lim() && s.light+d>=0; }   // the whole bracket must still fit 1/8000 … 30s
   function setIso(p){ p=clamp(p,0,ISO.length-1); var d=p-s.iso; if(!d || !isoOk(p)) return;
-    expo(function(){ s.iso=p; s.camSet=true; var span=s.dark-s.light; s.dark=clamp(s.dark+3*d,span,lim()); s.light=s.dark-span; if(s.sgT!=null) s.sgT=clamp(s.sgT+3*d,0,lim()); s.done=[]; },"ISO changed: shutter times recalculated, ticks cleared"); }
+    expo(function(){ s.iso=p; s.camSet=true; var span=s.dark-s.light; s.dark=clamp(s.dark+3*d,span,lim()); s.light=s.dark-span; s.done=[]; },"ISO changed: shutter times recalculated, ticks cleared"); }
   function drawIso(f,n){
     var g=$("isoSeg"); g.innerHTML="";
     ISO.forEach(function(v,i){ var b=document.createElement("button"); b.type="button"; b.textContent=v; b.setAttribute("aria-pressed",s.iso===i); b.disabled=!isoOk(i); b.onclick=function(){ setIso(i); }; g.appendChild(b); });
@@ -2425,7 +2381,7 @@ body.sun .toast button.strong{background:#fff;color:#000}
   function setAp(p){
     p=clamp(p,0,A.length-1); var d=p-s.ap;
     if(!d){ s.camSet=true; render(); return; }
-    expo(function(){ s.ap=p; s.camSet=true; var span=s.dark-s.light; s.dark=clamp(s.dark-d,span,lim()); s.light=s.dark-span; if(s.sgT!=null) s.sgT=clamp(s.sgT-d,0,lim()); s.done=[]; },"Aperture changed: shutter times recalculated, ticks cleared");
+    expo(function(){ s.ap=p; s.camSet=true; var span=s.dark-s.light; s.dark=clamp(s.dark-d,span,lim()); s.light=s.dark-span; s.done=[]; },"Aperture changed: shutter times recalculated, ticks cleared");
   }
   function arrows(dn,up,wheel,lo,hi){
     var v=function(x){ return typeof x==="function"?x():x; };
@@ -2433,7 +2389,7 @@ body.sun .toast button.strong{background:#fff;color:#000}
     $(up).onclick=function(){ wheel.set(clamp(wheel.get()+1,v(lo),v(hi)),true); };
   }
   arrows("aDn","aUp",aW,0,A.length-1); arrows("wDn","wUp",wW,0,WB.length-1);
-  arrows("dDn","dUp",dW,function(){ return MAX-lim(); },MAX-3); arrows("sDn","sUp",sW,function(){ return MAX-lim(); },MAX); arrows("fDn","fUp",fW,0,MAX-FMIN);
+  arrows("dDn","dUp",dW,function(){ return MAX-lim(); },MAX-3); arrows("fDn","fUp",fW,0,MAX-FMIN);
   $("fastBtn").onclick=function(){ fastOpen=!fastOpen; render(); };
   $("ndBtn").onclick=function(){ s.ndOn=!s.ndOn; render(); };
   $("nsDn").onclick=function(){ s.ndStops=Math.max(1/3,Math.round((s.ndStops-1)*3)/3); render(); };
@@ -2705,14 +2661,6 @@ body.sun .toast button.strong{background:#fff;color:#000}
     n.hidden=false; };
   $("clockToggle").onclick=function(){ s.clock=!s.clock; render(); };
   $("cdToggle").onclick=function(){ s.countdown=!s.countdown; timing=null; render(); };
-  function keepPlace(fn){ var el=$("nowcard"), y0=el.getBoundingClientRect().top; fn(); var d=el.getBoundingClientRect().top-y0; if(Math.abs(d)>1) window.scrollBy(0,d); }
-  // Mode: HDRI ↔ Single shot. Going back restores the lens and angle pattern you had.
-  [].forEach.call($("modeSeg").children,function(bt){ bt.onclick=function(){
-    var toSingle=bt.getAttribute("data-m")==="single"; if(toSingle===single()) return;
-    keepPlace(function(){
-    if(toSingle){ s.hdriLens=s.lens; s.hdriPat=Object.assign({},s.pat); setPat(Object.assign({},lensById("single").p),"single"); }
-    else { var L=lensById(s.hdriLens&&s.hdriLens!=="single"?s.hdriLens:"15"); setPat(Object.assign({},s.hdriPat||L.p),L.id); }
-    }); }; });
   // Typing a lens with a focal length picks the matching lens type (full-frame equivalent). "fisheye", "APS-C" and "MFT" in the name are taken into account.
   // crop factors from words people put in lens names: sensor size, or the mount's crop line
   var CROPS=[[/\bmicro\s*four\s*thirds?\b|\bfour\s*thirds?\b|\bm4\/?3\b|\bm\s*4\s*\/\s*3\b|\bmicro\s*4\s*\/?\s*3\b|\bm43\b|\bmft\b|\bmzd\b|\bm\.?\s*zuiko\b/i,2],
@@ -2738,7 +2686,6 @@ body.sun .toast button.strong{background:#fff;color:#000}
   }
   $("sgLensIn").onchange=function(){
     var r=lensFromText(this.value.trim());
-    if(single()){ if(r){ s.hdriLens=r.id; s.hdriPat=Object.assign({},lensById(r.id).p); } render(); return; }   // remember the matching HDRI lens type, so presets and switching back fit the typed lens
     if(!r || r.id===s.lens){ render(); return; }
     var L=lensById(r.id), had=Object.keys(s.ang).length>0, sn=snap();
     setPat(Object.assign({},L.p),r.id); undoSnap=sn;
@@ -2894,35 +2841,27 @@ body.sun .toast button.strong{background:#fff;color:#000}
   // Presets: the user's own camera + lens setups. Saved on the phone, shared as a .json file.
   // A preset only holds the groups you ticked when saving it; applying it leaves everything else alone.
   var PGROUPS=[["fast","Fastest shutter",["fastI"]],["aeb","Autobracket",["aeb","step"]],["lens","Lens & angles",["lens","pat","lensTxt"]],
-               ["iso","ISO",["iso"]],["wb","White balance",["wb","wbK"]],["ap","Aperture",["ap"]],["shot","Shutter",["sgOne","sgT"]]];
-  var PSHORT={fast:"Shutter",aeb:"AEB",lens:"Lens",iso:"ISO",wb:"WB",ap:"f/",shot:"Shutter"};
-  // a preset belongs to the mode it was saved in: HDRI (no mode field, as before) or Single shot (mode:"single")
-  function curMode(){ return single()?"single":"hdri"; }
-  function pMode(p){ return p.mode==="single"?"single":"hdri"; }
-  function pGroups(m){ var S=["shot","iso","wb","ap"]; return PGROUPS.filter(function(g){ return m==="single"?S.indexOf(g[0])>=0:g[0]!=="shot"; }); }
-  function selKey(){ return single()?"presetSelS":"presetSel"; }
+               ["iso","ISO",["iso"]],["wb","White balance",["wb","wbK"]],["ap","Aperture",["ap"]]];
+  var PSHORT={fast:"Shutter",aeb:"AEB",lens:"Lens",iso:"ISO",wb:"WB",ap:"f/"};
   // one line with all six parts: what a preset sets stands out, the rest stays faintly visible
   function pSum(p){ var el=document.createElement("span"), on=[]; el.className="psub";
-    pGroups(pMode(p)).forEach(function(g,i){ var t=document.createElement("span"), inc=g[2][0] in p; if(i) el.appendChild(document.createTextNode(" · "));
-      t.textContent=g[0]==="shot"?(p.sgOne?label(p.sgT):"Bracket"):PSHORT[g[0]]; if(inc){ t.className="on"; on.push(g[1]); } el.appendChild(t); });
+    PGROUPS.forEach(function(g,i){ var t=document.createElement("span"), inc=g[2][0] in p; if(i) el.appendChild(document.createTextNode(" · "));
+      t.textContent=PSHORT[g[0]]; if(inc){ t.className="on"; on.push(g[1]); } el.appendChild(t); });
     el.setAttribute("aria-label","Sets: "+(on.join(", ")||"nothing")); return el; }
-  var pInc={fast:true,aeb:true,lens:true,iso:true,wb:true,ap:false}, pIncS={shot:true,iso:true,wb:true,ap:true};
-  function incNow(){ return single()?pIncS:pInc; }
-  function hdriLens(){ return single()?(s.hdriLens||"15"):s.lens; }
-  function hdriPat(){ return single()?(s.hdriPat||lensById(hdriLens()).p):s.pat; }
-  function nowVal(k){ return k==="sgOne"?!!s.sgOne:k==="sgT"?sgI():k==="lens"?hdriLens():k==="pat"?Object.assign({},hdriPat()):k==="lensTxt"?s.lensTxt.trim():s[k]; }
+  var pInc={fast:true,aeb:true,lens:true,iso:true,wb:true,ap:false};
+  function nowVal(k){ return k==="pat"?Object.assign({},s.pat):k==="lensTxt"?s.lensTxt.trim():s[k]; }
   function presetNow(name,inc){
-    var p={name:name}; if(single()) p.mode="single";
-    pGroups(curMode()).forEach(function(g){ if(inc[g[0]]) g[2].forEach(function(k){ p[k]=nowVal(k); }); });
+    var p={name:name};
+    PGROUPS.forEach(function(g){ if(inc[g[0]]) g[2].forEach(function(k){ p[k]=nowVal(k); }); });
     return p;
   }
-  function pBody(p){ var o={}; if(p.mode==="single") o.mode="single"; PGROUPS.forEach(function(g){ g[2].forEach(function(k){ if(k in p) o[k]=p[k]; }); }); return JSON.stringify(o); }
+  function pBody(p){ var o={}; PGROUPS.forEach(function(g){ g[2].forEach(function(k){ if(k in p) o[k]=p[k]; }); }); return JSON.stringify(o); }
   function cleanPreset(o){   // anything from a file is checked before it touches the app
     if(!o || typeof o!=="object") return null;
     var name=String(o.name||"").trim().slice(0,40); if(!name) return null;
     if(o.mode!==undefined && o.mode!=="single" && o.mode!=="hdri") return null;
-    var sgl=o.mode==="single";
-    if(sgl ? ["fastI","aeb","step","lens","pat"].some(function(k){ return k in o; }) : ("sgOne" in o || "sgT" in o)) return null;   // parts that don't belong to its mode: not guessed
+    if(o.mode==="single") o={name:o.name, iso:o.iso, wb:o.wb, wbK:o.wbK, ap:o.ap};   // a Single shot preset from an older build: its camera parts (ISO, WB, aperture) carry over
+    ["iso","wb","wbK","ap"].forEach(function(k){ if(o[k]===undefined) delete o[k]; });
     var int=function(v,lo,hi){ return (typeof v==="number" && v%1===0 && v>=lo && v<=hi)?v:null; }, p={name:name}, bad=false;
     var chk=function(k,v){ if(!(k in o)) return; if(v==null) bad=true; else p[k]=v; };
     chk("fastI",int(o.fastI,FMIN,MAX));
@@ -2930,24 +2869,23 @@ body.sun .toast button.strong{background:#fff;color:#000}
     chk("iso",int(o.iso,0,ISO.length-1));
     if("wb" in o){ chk("wb",int(o.wb,0,WB.length-1)); p.wbK=(typeof o.wbK==="number" && o.wbK>=2000 && o.wbK<=12000)?Math.round(o.wbK/50)*50:null; }
     chk("ap",int(o.ap,0,A.length-1));
-    if(sgl){ p.mode="single"; if("sgOne" in o || "sgT" in o){ chk("sgOne",typeof o.sgOne==="boolean"?o.sgOne:null); chk("sgT",int(o.sgT,0,MAX)); if(!("sgOne" in p)||!("sgT" in p)) bad=true; } }
     if("lens" in o){ var q=o.pat;
       if(o.lens!=="single" && LENSES.some(function(l){ return l.id===o.lens; }) && q && AROUND.indexOf(q.around)>=0 && RING.indexOf(q.up)>=0 && RING.indexOf(q.down)>=0){
         p.lens=o.lens; p.pat={around:q.around, up:q.up, down:q.down, zen:!!q.zen, nad:!!q.nad}; p.lensTxt=String(o.lensTxt||"").trim().slice(0,24);
       } else bad=true; }
-    if(bad || Object.keys(p).filter(function(k){ return k!=="mode"; }).length<2) return null;
+    if(bad || Object.keys(p).length<2) return null;
     return p;
   }
-  function presetMatches(p){ return pMode(p)===curMode() && PGROUPS.every(function(g){ return g[2].every(function(k){ return !(k in p) || JSON.stringify(p[k])===JSON.stringify(nowVal(k)); }); }); }
+  function presetMatches(p){ return PGROUPS.every(function(g){ return g[2].every(function(k){ return !(k in p) || JSON.stringify(p[k])===JSON.stringify(nowVal(k)); }); }); }
   // no preset is the default; the active one is the one you picked, as long as your settings still match it. Tap it again to unselect
-  function curPreset(){ var nm=s[selKey()]; if(!nm) return null;   // HDRI and Single each remember their own pick
+  function curPreset(){ var nm=s.presetSel; if(!nm) return null;
     var p=s.presets.filter(function(x){ return x.name===nm; })[0]; return p&&presetMatches(p)?p:null; }
-  function selPreset(){ var nm=s[selKey()]; return nm?s.presets.filter(function(x){ return x.name===nm; })[0]||null:null; }
+  function selPreset(){ var nm=s.presetSel; return nm?s.presets.filter(function(x){ return x.name===nm; })[0]||null:null; }
   // write the current setup into a preset, for the parts it holds (or the ticked ones while editing); name may change
   function presetFromNow(p,nm,inc){ var q=presetNow(nm,inc);
     pGuarded("Preset "+(nm!==p.name?p.name+" renamed to "+nm+" and updated":nm+" updated"),function(){
-      s.presets[s.presets.indexOf(p)]=q; if(s.presetSel===p.name) s.presetSel=nm; if(s.presetSelS===p.name) s.presetSelS=nm; editP=null; presetNaming=false; $("presetName").value=""; render(); }); }
-  function presetTap(p,cur){ if(pMode(p)!==curMode()) return; if(p===cur){ s[selKey()]=null; save(); render(); } else applyPreset(p); }
+      s.presets[s.presets.indexOf(p)]=q; if(s.presetSel===p.name) s.presetSel=nm; editP=null; presetNaming=false; $("presetName").value=""; render(); }); }
+  function presetTap(p,cur){ if(p===cur){ s.presetSel=null; save(); render(); } else applyPreset(p); }
   function addPresets(list,quiet){
     var n=0;
     list.forEach(function(o){ var p=cleanPreset(o); if(!p) return;
@@ -2958,62 +2896,57 @@ body.sun .toast button.strong{background:#fff;color:#000}
     return n;
   }
   function applyPreset(p){
-    var lensChange="lens" in p && (p.lens!==hdriLens() || JSON.stringify(p.pat)!==JSON.stringify(hdriPat()));
-    guarded("Preset "+p.name+": ticks cleared",s.done.length>0||(lensChange&&!single()&&Object.keys(s.ang).length>0),function(){
-      var ap=("ap" in p)?p.ap:s.ap, iso=("iso" in p)?p.iso:s.iso, span=s.dark-s.light, ap0=s.ap, iso0=s.iso;
+    var lensChange="lens" in p && (p.lens!==s.lens || JSON.stringify(p.pat)!==JSON.stringify(s.pat));
+    guarded("Preset "+p.name+": ticks cleared",s.done.length>0||(lensChange&&Object.keys(s.ang).length>0),function(){
+      var ap=("ap" in p)?p.ap:s.ap, iso=("iso" in p)?p.iso:s.iso, span=s.dark-s.light;
       s.dark=clamp(s.dark-(ap-s.ap)+3*(iso-s.iso),span,MAX); s.light=s.dark-span;   // keep the measured exposure, like turning the dials
       if("fastI" in p) s.fastI=p.fastI;
       if(s.dark>lim()){ s.dark=lim(); if(s.light>s.dark-3) s.light=s.dark-3; }
       s.ap=ap; s.iso=iso;
       if("wb" in p){ s.wb=p.wb; s.wbK=p.wbK; }
       if("aeb" in p){ s.aeb=p.aeb; s.step=p.step; }
-      if("sgT" in p){ s.sgOne=p.sgOne; s.sgT=p.sgT; } else if(s.sgT!=null) s.sgT=clamp(s.sgT-(ap-ap0)+3*(iso-iso0),0,lim());   // own shutter: from the preset, or kept at the same exposure
       if("lens" in p){ s.lensTxt=p.lensTxt||"";
-        if(lensChange){ if(single()){ s.hdriLens=p.lens; s.hdriPat=Object.assign({},p.pat); } else { s.lens=p.lens; s.pat=Object.assign({},p.pat); s.ang={}; s.tk={}; s.sel=null; } } }
-      s[selKey()]=p.name; s.camSet=true; s.done=[]; render();
+        if(lensChange){ s.lens=p.lens; s.pat=Object.assign({},p.pat); s.ang={}; s.tk={}; s.sel=null; } }
+      s.presetSel=p.name; s.camSet=true; s.done=[]; render();
     });
   }
   var presetNaming=false, editP=null, eInc={}, replP=null, replInc={}, replAll=false, incOpen=false;   // incOpen: the What goes in chips are unfolded   // replP: an existing preset picked under "Or replace"   // editP: the preset being edited (rename, drop groups)
-  function drawIncSum(IN,m){ var on=pGroups(m).filter(function(g){ return IN[g[0]]; }).map(function(g){ return g[0]==="shot"?"Shutter":PSHORT[g[0]]==="f/"?"Aperture":PSHORT[g[0]]; });
+  function drawIncSum(IN){ var on=PGROUPS.filter(function(g){ return IN[g[0]]; }).map(function(g){ return PSHORT[g[0]]==="f/"?"Aperture":PSHORT[g[0]]; });
     $("presetIncS").textContent=on.length?on.join(" · "):"nothing yet"; }
   $("presetIncD").addEventListener("toggle",function(){ if(!editP) incOpen=this.open; });
   function drawRepl(){
-    if(replP && (s.presets.indexOf(replP)<0 || presetNm()!==replP.name || pMode(replP)!==curMode())) replP=null;   // typed another name: a new preset again
+    if(replP && (s.presets.indexOf(replP)<0 || presetNm()!==replP.name)) replP=null;   // typed another name: a new preset again
     // Save current setup: tap an existing preset to replace it with the current setup (its parts are preselected)
-    var rp=$("presetRepl"), same=s.presets.filter(function(p){ return pMode(p)===curMode(); }), sp0=selPreset();
+    var rp=$("presetRepl"), same=s.presets.slice(), sp0=selPreset();
     if(sp0 && same.indexOf(sp0)>0){ same.splice(same.indexOf(sp0),1); same.unshift(sp0); }   // the preset you use first
     var q=presetNm().toLowerCase(), list=(q && !replP)?same.filter(function(p){ return p.name.toLowerCase().indexOf(q)>=0; }):same, CAP=6, more=replAll?0:Math.max(0,list.length-CAP);
     rp.hidden=!!editP || !presetNaming || !list.length; [].slice.call(rp.querySelectorAll("button")).forEach(function(x){ x.remove(); });
     if(!rp.hidden) list.slice(0,list.length-more).forEach(function(p){ var c=document.createElement("button"); c.type="button"; c.className="chip"; c.textContent=p.name; c.setAttribute("aria-pressed",p===replP);
-      c.onclick=function(){ if(replP===p){ replP=null; $("presetName").value=""; } else { replP=p; replInc={}; pGroups(pMode(p)).forEach(function(g){ replInc[g[0]]=g[2][0] in p; }); $("presetName").value=p.name; } drawPresets(); drawSaveLbl(); };
+      c.onclick=function(){ if(replP===p){ replP=null; $("presetName").value=""; } else { replP=p; replInc={}; PGROUPS.forEach(function(g){ replInc[g[0]]=g[2][0] in p; }); $("presetName").value=p.name; } drawPresets(); drawSaveLbl(); };
       rp.appendChild(c); });
     if(!rp.hidden && more){ var mb=document.createElement("button"); mb.type="button"; mb.className="chip pmore"; mb.textContent="+"+more+" more"; mb.onclick=function(){ replAll=true; drawRepl(); }; rp.appendChild(mb); }
   }
   function drawPresets(){
     if(typeof drawSaveLbl==="function") drawSaveLbl();   // presets added, deleted or undone while naming
-    var has=s.presets.length>0, cur=curPreset(), mine=s.presets.filter(function(p){ return pMode(p)===curMode(); });
-    $("presetRow").hidden=!mine.length;
+    var has=s.presets.length>0, cur=curPreset();
+    $("presetRow").hidden=!has;
     // Camera card: every preset is one tap; the small line says what it sets
     var pOpen=!!s.fold.presetsOpen, ch=$("presetChoose"); ch.innerHTML=""; ch.hidden=!pOpen;   // folded by default: one quiet line with the active preset
     $("presetFold").setAttribute("aria-expanded",pOpen); $("presetCur").textContent=cur?cur.name:""; $("presetFold").querySelector(".pchev").textContent=pOpen?"▴":"▾";
-    mine.forEach(function(p){ var b=document.createElement("button"); b.type="button"; b.className="chip";
+    s.presets.forEach(function(p){ var b=document.createElement("button"); b.type="button"; b.className="chip";
       b.textContent=p.name; b.appendChild(pSum(p));
       b.setAttribute("aria-pressed",p===cur); b.onclick=function(){ presetTap(p,cur); }; ch.appendChild(b); });
 
-    var oth=s.presets.filter(function(p){ return pMode(p)!==curMode(); }).length;   // the other mode's presets are greyed: say why
-    $("presetOther").hidden=!oth; $("presetOther").textContent=oth?(single()?"Greyed out: HDRI presets. Switch Angles to HDRI to use them.":"Greyed out: Single shot presets. Switch Angles to Single shot to use them."):"";
     var ul=$("presetList"), pf=$("presetNew"); ul.parentNode.insertBefore(pf,ul); ul.innerHTML=""; ul.hidden=!has;   // park the form before the rows are rebuilt
     if(editP && s.presets.indexOf(editP)<0){ editP=null; presetNaming=false; }   // edited preset deleted or undone away
     s.presets.forEach(function(p){
       var li=document.createElement("li"), nm=document.createElement("button"), ed=document.createElement("button");
       nm.type=ed.type="button"; nm.className="pname2"; nm.textContent=p.name+(p===cur?" ✓":""); nm.title="Apply";
-      if(pMode(p)==="single" || single()){ var tg=document.createElement("span"); tg.className="pmode"; tg.textContent=pMode(p)==="single"?"Single":"HDRI"; nm.appendChild(tg); }
-      if(pMode(p)!==curMode()){ nm.disabled=true; nm.title=pMode(p)==="single"?"Switch to Single shot to use it":"Switch to HDRI to use it"; }
       nm.appendChild(pSum(p));
       nm.onclick=function(){ presetTap(p,cur); };
       if(p===selPreset() && !presetMatches(p) && p!==editP){ var up=document.createElement("button"); up.type="button"; up.className="ghost";
         up.textContent="Update"; up.title="Save your current setup into "+p.name;
-        up.onclick=function(){ var inc={}; pGroups(pMode(p)).forEach(function(g){ inc[g[0]]=g[2][0] in p; }); presetFromNow(p,p.name,inc); }; li.appendChild(nm); li.appendChild(up); }
+        up.onclick=function(){ var inc={}; PGROUPS.forEach(function(g){ inc[g[0]]=g[2][0] in p; }); presetFromNow(p,p.name,inc); }; li.appendChild(nm); li.appendChild(up); }
       ed.className="ghost"; ed.textContent=p===editP?"Close":"Edit"; ed.setAttribute("aria-expanded",p===editP);
       ed.onclick=function(){ if(editP===p){ editP=null; presetNaming=false; render(); return; } presetEdit(p); };
       if(!nm.parentNode) li.appendChild(nm); li.appendChild(ed); ul.appendChild(li);
@@ -3021,58 +2954,51 @@ body.sun .toast button.strong{background:#fff;color:#000}
     });
     $("presetNew").hidden=!presetNaming;
     $("presetSave").textContent=presetNaming&&!editP?"Cancel":"+ Save current setup";
-    $("presetHelpLine").textContent=editP?"Rename it, add or drop parts, or export, copy or delete it."
+    $("presetHelpLine").textContent=editP?"Rename it, add or drop parts, or export or delete it."
       :presetNaming?"Type a new name, or tap one under Or replace. Tap Change to pick what goes in."
       :selPreset()&&!curPreset()?"You changed something: Update saves it into "+selPreset().name+"."
       :"Tap a preset to apply it, tap again to unselect.";
     var inc=$("presetInc"); inc.innerHTML="";
     drawRepl();
-    var IN=editP?eInc:replP?replInc:incNow();   // editing: ticked = what the preset holds; untick to drop a part, tick one to add it (current value)
-    pGroups(editP?pMode(editP):curMode()).forEach(function(g){ var b=document.createElement("button"); b.type="button"; b.className="chip"; b.textContent=g[1]; b.setAttribute("aria-pressed",!!IN[g[0]]);
-      b.onclick=function(){ IN[g[0]]=!IN[g[0]]; b.setAttribute("aria-pressed",!!IN[g[0]]); drawIncSum(IN, editP?pMode(editP):curMode()); }; inc.appendChild(b); });
-    $("presetEdX").hidden=!editP; $("presetToS").hidden=!editP || pMode(editP)!=="hdri";
-    drawIncSum(IN, editP?pMode(editP):curMode()); $("presetIncD").open=!!editP || incOpen; $("presetIncL").textContent=editP?"Parts in this preset":"What goes in";
+    var IN=editP?eInc:replP?replInc:pInc;   // editing: ticked = what the preset holds; untick to drop a part, tick one to add it (current value)
+    PGROUPS.forEach(function(g){ var b=document.createElement("button"); b.type="button"; b.className="chip"; b.textContent=g[1]; b.setAttribute("aria-pressed",!!IN[g[0]]);
+      b.onclick=function(){ IN[g[0]]=!IN[g[0]]; b.setAttribute("aria-pressed",!!IN[g[0]]); drawIncSum(IN); }; inc.appendChild(b); });
+    $("presetEdX").hidden=!editP;
+    drawIncSum(IN); $("presetIncD").open=!!editP || incOpen; $("presetIncL").textContent=editP?"Parts in this preset":"What goes in";
   }
   $("presetSave").onclick=function(){ presetNaming=editP?true:!presetNaming; editP=null; replP=null; replAll=false; incOpen=false; if(!presetNaming) $("presetName").value=""; render(); if(presetNaming){ var i=$("presetName"); i.value=s.lensTxt.trim().slice(0,40); i.focus(); i.select(); drawSaveLbl(); } };   // a typed lens name is the likely preset name
   // same name test as presetSaveGo: the button says Update exactly when saving would replace a preset
   function presetNm(){ return $("presetName").value.trim().slice(0,40); }
   function saveLbl(){ var nm=presetNm(); return nm && s.presets.some(function(x){ return x.name===nm; })?"Update":"Save"; }
   function drawSaveLbl(){ $("presetSaveGo").textContent=editP?"Done":saveLbl(); }
-  function presetEdit(p){ editP=p; eInc={}; pGroups(pMode(p)).forEach(function(g){ eInc[g[0]]=g[2][0] in p; });
+  function presetEdit(p){ editP=p; eInc={}; PGROUPS.forEach(function(g){ eInc[g[0]]=g[2][0] in p; });
     presetNaming=true; render(); var i=$("presetName"); i.value=p.name; i.focus(); i.select(); drawSaveLbl(); }
   function presetEditGo(){   // rename and/or drop groups; the old name is gone, nothing else keeps it
     var p=editP, nm=presetNm(); if(!nm){ $("presetName").focus(); return; }
-    if(!pGroups(pMode(p)).some(function(g){ return eInc[g[0]]; })){ flash($("presetSaveGo"),"Tick one","Done"); return; }
+    if(!PGROUPS.some(function(g){ return eInc[g[0]]; })){ flash($("presetSaveGo"),"Tick one","Done"); return; }
     if(s.presets.some(function(x){ return x!==p && x.name===nm; })){ flash($("presetSaveGo"),"Name taken","Done"); return; }
-    var q={name:nm}; if(p.mode==="single") q.mode="single"; pGroups(pMode(p)).forEach(function(g){ if(eInc[g[0]]) g[2].forEach(function(k){ q[k]=(g[2][0] in p)?p[k]:nowVal(k); }); });   // a part added here takes the current value
+    var q={name:nm}; PGROUPS.forEach(function(g){ if(eInc[g[0]]) g[2].forEach(function(k){ q[k]=(g[2][0] in p)?p[k]:nowVal(k); }); });   // a part added here takes the current value
     if(pBody(q)===pBody(p) && nm===p.name){ editP=null; presetNaming=false; render(); return; }
     pGuarded(nm!==p.name?"Preset "+p.name+" renamed to "+nm:"Preset "+nm+" changed",function(){
       s.presets[s.presets.indexOf(p)]=q; if(s.presetSel===p.name) s.presetSel=nm; editP=null; presetNaming=false; $("presetName").value=""; render(); });
   }
-  // an HDRI preset as a Single shot preset: the shared camera parts (ISO, WB, aperture), set to Bracket; the original stays
-  $("presetToS").onclick=function(){ var p=editP; if(!p || pMode(p)!=="hdri") return;
-    var q={name:"", mode:"single"}, base=p.name.slice(0,31)+" · Single", nm=base, k=2;
-    while(s.presets.some(function(x){ return x.name===nm; })) nm=base.slice(0,36)+" ("+(k++)+")";
-    q.name=nm; if("iso" in p) q.iso=p.iso; if("wb" in p){ q.wb=p.wb; q.wbK=p.wbK; } if("ap" in p) q.ap=p.ap; q.sgOne=false; q.sgT=sgI();
-    pGuarded("Copied to Single shot as "+nm,function(){ s.presets.push(q); editP=null; presetNaming=false; $("presetName").value=""; render(); }); };
   $("presetExp").onclick=function(){ var p=editP; if(p) saveFile("HDRI_preset_"+(slug(p.name)||"preset")+".json",JSON.stringify({app:"hdri-bracket",type:"preset",version:1,presets:[p]},null,1),this,"Export"); };
   $("presetDel").onclick=function(){ var p=editP; if(!p) return; pGuarded("Preset "+p.name+" deleted",function(){ s.presets=s.presets.filter(function(x){ return x!==p; }); editP=null; presetNaming=false; render(); }); };
   function presetSaveGo(){
     if(editP){ presetEditGo(); return; }
     var nm=presetNm(); if(!nm){ $("presetName").focus(); return; }
-    var inc=replP&&replP.name===nm?replInc:incNow(); if(!pGroups(curMode()).some(function(g){ return inc[g[0]]; })){ flash($("presetSaveGo"),"Tick one",saveLbl()); return; }
+    var inc=replP&&replP.name===nm?replInc:pInc; if(!PGROUPS.some(function(g){ return inc[g[0]]; })){ flash($("presetSaveGo"),"Tick one",saveLbl()); return; }
     var p=presetNow(nm,inc), old=s.presets.filter(function(x){ return x.name===nm; })[0];
-    if(old && pMode(old)!==curMode()){ flash($("presetSaveGo"),pMode(old)==="single"?"Name used in Single":"Name used in HDRI",saveLbl()); return; }
     pGuarded(old?"Preset "+nm+" updated":"Preset "+nm+" saved",function(){
       if(old) s.presets[s.presets.indexOf(old)]=p; else s.presets.push(p); replP=null;
-      s[selKey()]=nm;   // what you just saved is your current setup: it's the picked preset now (Camera card, Update)
+      s.presetSel=nm;   // what you just saved is your current setup: it's the picked preset now (Camera card, Update)
       presetNaming=false; $("presetName").value=""; render(); });
   }
   $("presetSaveGo").onclick=presetSaveGo;
   $("presetFold").onclick=function(){ s.fold.presetsOpen=!s.fold.presetsOpen; save(); render(); };
   $("presetName").addEventListener("input",function(){ var had=replP; if(replP && presetNm()!==replP.name) replP=null; if(had && !replP){ var i=$("presetName"), c=i.selectionStart; drawPresets(); if(document.activeElement!==i){ i.focus(); try{ i.setSelectionRange(c,c); }catch(e){} } } else drawRepl(); drawSaveLbl(); });   // typing narrows the Or replace list
   $("presetName").addEventListener("keydown",function(e){ if(e.key==="Enter"){ e.preventDefault(); presetSaveGo(); } });
-  // all presets in one file (HDRI and Single): the same format Import reads
+  // all presets in one file: the same format Import reads
   $("presetExpAll").onclick=function(){ if(!s.presets.length){ flash(this,"No presets yet","Export all"); return; }
     saveFile("HDRI_presets_"+ymd(new Date())+".json",JSON.stringify({app:"hdri-bracket",type:"preset",version:1,presets:s.presets},null,1),this,"Export all"); };
   $("presetImport").onclick=function(){ $("presetFile").value=""; $("presetFile").click(); };
@@ -3286,7 +3212,7 @@ body.sun .toast button.strong{background:#fff;color:#000}
   function fitBar(){ document.documentElement.style.setProperty("--bb",$("bottombar").offsetHeight+"px"); if(typeof bakeGlass==="function") bakeGlass(); }
   window.addEventListener("resize",fitBar);
   var _r2=render; render=function(){ _r2(); fitBar(); };
-  function snapAll(){ aW.snap(); wW.snap(); dW.snap(); lW.snap(); sW.snap(); fW.snap(); }
+  function snapAll(){ aW.snap(); wW.snap(); dW.snap(); lW.snap(); fW.snap(); }
   render();
   requestAnimationFrame(snapAll);
   if(document.fonts && document.fonts.ready) document.fonts.ready.then(snapAll);
