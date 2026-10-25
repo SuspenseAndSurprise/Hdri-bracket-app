@@ -1,4 +1,4 @@
-HDRI Bracket · 2026-10-24 · 720c0e
+HDRI Bracket · 2026-10-24 · fe4979
 
 New
 - Single shot: choose Bracket (your HDRI range at one angle, as before) or One frame, with its own shutter dial. The HDRI range stays untouched, and Done logs the one frame you shot.
@@ -31,4 +31,4 @@ Files
 - hdri-bracket-app.zip: the installable version to host yourself (any https host)
 - hdri-bracket-walkthrough.mp4: the walkthrough video
 
-Already using it? Open the app online once and it updates itself. Check the version in Settings: 2026-10-24 · 720c0e.
+Already using it? Open the app online once and it updates itself. Check the version in Settings: 2026-10-24 · fe4979.

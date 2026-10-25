@@ -423,9 +423,12 @@ h2 .no{display:inline-grid;place-items:center;width:22px;height:22px;margin-righ
 .pfile{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:10px;padding-top:10px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
 .pnew2{display:flex;gap:8px;margin:0 0 8px}
 .pinc{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px}
-.prepl{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:0 0 10px}
-.prepl>span{font-size:13px;color:var(--muted);margin-right:2px}
-.prepl .chip{min-height:32px;font-size:13px;padding:0 10px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.prepl{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:4px 0 14px;padding-top:12px;border-top:1px solid var(--line)}
+.plbl{flex-basis:100%;margin:0 0 2px;font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+#presetIncL{margin-top:2px;padding-top:12px;border-top:1px solid var(--line)}
+.prepl .chip{min-height:32px;font-size:13px;padding:0 12px 0 10px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;border-style:dashed}
+.prepl .chip::before{content:"↻ ";opacity:.7}
+.prepl .chip[aria-pressed="true"]{border-style:solid}
 .pinc .chip{min-height:32px;font-size:13px;padding:0 10px}
 .pinc .chip[aria-pressed="false"]{opacity:.55}
 .plist2 li .pform{flex-basis:100%;width:100%;padding-top:4px}
@@ -1250,7 +1253,7 @@ body.sun .toast button.strong{background:#fff;color:#000}
       <div class="row">
         <h2>Presets</h2>
         <button type="button" class="ghost psave" id="presetSave">+ Save current setup</button>
-        <div class="pform" id="presetNew" hidden><div class="pnew2"><input class="textin" id="presetName" type="text" maxlength="40" placeholder="Name, e.g. Sony 11 mm" autocomplete="off" enterkeyhint="done"><button type="button" class="ghost" id="presetSaveGo">Save</button></div><div class="prepl" id="presetRepl" hidden><span>Or replace:</span></div><div class="pinc" id="presetInc" aria-label="Include in preset"></div><div class="pedx" id="presetEdX" hidden><button type="button" class="ghost" id="presetExp">Export</button><button type="button" class="ghost" id="presetDel">Delete</button></div></div>
+        <div class="pform" id="presetNew" hidden><div class="pnew2"><input class="textin" id="presetName" type="text" maxlength="40" placeholder="Name, e.g. Sony 11 mm" autocomplete="off" enterkeyhint="done"><button type="button" class="ghost" id="presetSaveGo">Save</button></div><div class="prepl" id="presetRepl" hidden><p class="plbl">Or replace an existing preset</p></div><p class="plbl" id="presetIncL">What goes in</p><div class="pinc" id="presetInc" aria-label="Include in preset"></div><div class="pedx" id="presetEdX" hidden><button type="button" class="ghost" id="presetExp">Export</button><button type="button" class="ghost" id="presetDel">Delete</button></div></div>
         <ul class="plist2" id="presetList"></ul>
         <p class="hint">Pick what goes in when you save. Exposure and project are never stored. Tap a name to apply it, tap it again to unselect. Changed something after picking one? Update saves your current setup into it. To overwrite another, use Save current setup and tap it under Or replace. Edit renames it, adds or drops parts, exports or deletes it.</p>
         <div class="pfile"><span>Got a preset file from a colleague?</span><button type="button" class="ghost" id="presetImport">Import .json</button></div>
@@ -1331,7 +1334,7 @@ body.sun .toast button.strong{background:#fff;color:#000}
       </details>
     </section>
     <button type="button" class="ghost" id="setReset" style="display:block;margin:4px auto 0">Reset all settings</button>
-    <p class="vers num" id="vers"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true" class="vlogo"><rect width="256" height="256" rx="58" fill="#1C1815"/><path d="M141.94 43.14A86 86 0 0 1 194.52 73.50" fill="none" stroke="#FF4A2B" stroke-width="12"/><path d="M208.46 97.64A86 86 0 0 1 211.90 146.87" fill="none" stroke="#FF4A2B" stroke-width="12"/><path d="M186.30 191.23A86 86 0 0 1 141.94 212.86" fill="none" stroke="#6A6A6A" stroke-width="12"/><path d="M114.06 212.86A86 86 0 0 1 61.48 182.50" fill="none" stroke="#6A6A6A" stroke-width="12"/><path d="M47.54 158.36A86 86 0 0 1 47.54 97.64" fill="none" stroke="#6A6A6A" stroke-width="12"/><path d="M61.48 73.50A86 86 0 0 1 114.06 43.14" fill="none" stroke="#6A6A6A" stroke-width="12"/><path d="M128 128L202.48 171.00" stroke="#FF4A2B" stroke-width="11" stroke-linecap="round"/><g fill="#FFFFFF"><circle cx="128.00" cy="42.00" r="15"/><circle cx="202.48" cy="85.00" r="15"/><circle cx="128.00" cy="214.00" r="15"/><circle cx="53.52" cy="171.00" r="15"/><circle cx="53.52" cy="85.00" r="15"/></g><g fill="#FF4A2B"><circle cx="128" cy="128" r="13"/><circle cx="202.48" cy="171.00" r="27"/></g></svg>HDRI Bracket · <span id="build">2026-10-24 · 720c0e</span></p>
+    <p class="vers num" id="vers"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true" class="vlogo"><rect width="256" height="256" rx="58" fill="#1C1815"/><path d="M141.94 43.14A86 86 0 0 1 194.52 73.50" fill="none" stroke="#FF4A2B" stroke-width="12"/><path d="M208.46 97.64A86 86 0 0 1 211.90 146.87" fill="none" stroke="#FF4A2B" stroke-width="12"/><path d="M186.30 191.23A86 86 0 0 1 141.94 212.86" fill="none" stroke="#6A6A6A" stroke-width="12"/><path d="M114.06 212.86A86 86 0 0 1 61.48 182.50" fill="none" stroke="#6A6A6A" stroke-width="12"/><path d="M47.54 158.36A86 86 0 0 1 47.54 97.64" fill="none" stroke="#6A6A6A" stroke-width="12"/><path d="M61.48 73.50A86 86 0 0 1 114.06 43.14" fill="none" stroke="#6A6A6A" stroke-width="12"/><path d="M128 128L202.48 171.00" stroke="#FF4A2B" stroke-width="11" stroke-linecap="round"/><g fill="#FFFFFF"><circle cx="128.00" cy="42.00" r="15"/><circle cx="202.48" cy="85.00" r="15"/><circle cx="128.00" cy="214.00" r="15"/><circle cx="53.52" cy="171.00" r="15"/><circle cx="53.52" cy="85.00" r="15"/></g><g fill="#FF4A2B"><circle cx="128" cy="128" r="13"/><circle cx="202.48" cy="171.00" r="27"/></g></svg>HDRI Bracket · <span id="build">2026-10-24 · fe4979</span></p>
   </section>
 
   <!-- LOG -->
@@ -2971,7 +2974,7 @@ body.sun .toast button.strong{background:#fff;color:#000}
     var IN=editP?eInc:replP?replInc:incNow();   // editing: ticked = what the preset holds; untick to drop a part, tick one to add it (current value)
     pGroups(editP?pMode(editP):curMode()).forEach(function(g){ var b=document.createElement("button"); b.type="button"; b.className="chip"; b.textContent=g[1]; b.setAttribute("aria-pressed",!!IN[g[0]]);
       b.onclick=function(){ IN[g[0]]=!IN[g[0]]; b.setAttribute("aria-pressed",!!IN[g[0]]); }; inc.appendChild(b); });
-    $("presetEdX").hidden=!editP;
+    $("presetEdX").hidden=!editP; $("presetIncL").textContent=editP?"Parts in this preset":"What goes in";
   }
   $("presetSave").onclick=function(){ presetNaming=editP?true:!presetNaming; editP=null; replP=null; render(); if(presetNaming){ var i=$("presetName"); i.value=s.lensTxt.trim().slice(0,40); i.focus(); i.select(); drawSaveLbl(); } };   // a typed lens name is the likely preset name
   // same name test as presetSaveGo: the button says Update exactly when saving would replace a preset
