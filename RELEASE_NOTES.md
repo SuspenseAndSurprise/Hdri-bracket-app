@@ -1,4 +1,4 @@
-HDRI Bracket · 2026-10-24 · 440133
+HDRI Bracket · 2026-10-24 · 855058
 
 New
 - Single shot: choose Bracket (your HDRI range at one angle, as before) or One frame, with its own shutter dial in Exposure. The choice sits in Angles, right under HDRI | Single shot, and the Angles card stays in place on screen when you switch. The HDRI range stays untouched, and Done logs the one frame you shot.
@@ -16,7 +16,7 @@ Fixes
 - Presets: when the other mode's presets are greyed out, a line now says why and how to use them (switch Angles to HDRI or Single shot). In Single shot, HDRI presets are tagged HDRI.
 - Reset all settings: folded cards now follow the reset right away. Before, the Camera card could stay open while the app thought it was closed, so tapping it seemed to do nothing. Undo of the reset restores the folds too.
 - Dials: a shutter or aperture dial could show an empty middle after it had been hidden (One frame ↔ Bracket, a folded card). It now lines up again as soon as it shows.
-- Presets: you can now save changes into a preset. Pick or save one, adjust, and in Settings that preset shows an Update button (a preset you just saved counts as picked). To overwrite any other preset with your current setup, tap Save current setup and pick it under "Or replace": no typing, its parts are preselected and the button says Update. Edit can now add parts as well as drop them. Changing a setting a preset holds still takes you out of that preset in the Camera card. Preset names can be up to 40 characters.
+- Presets: you can now save changes into a preset. Pick or save one, adjust, and in Settings that preset shows an Update button (a preset you just saved counts as picked). To overwrite any other preset with your current setup, tap Save current setup and pick it under "Or replace": no typing, its parts are preselected and the button says Update. The list shows the preset you use first and at most six (tap "+ more" for the rest); typing narrows it. While the form is open, the Save current setup button turns into Cancel. Edit can now add parts as well as drop them. Changing a setting a preset holds still takes you out of that preset in the Camera card. Preset names can be up to 40 characters.
 - Presets: Edit on an HDRI preset can copy it to Single shot (ISO, white balance and aperture, set to Bracket); the original stays as it is.
 - Top bar: a small icon next to the timer shows the mode: a ring for HDRI, stacked frames for Single · bracket, one frame for Single · one frame.
 - Single shot: the Angles pill shows "Single · Bracket" or "Single · One frame".
@@ -34,4 +34,4 @@ Files
 - hdri-bracket-app.zip: the installable version to host yourself (any https host)
 - hdri-bracket-walkthrough.mp4: the walkthrough video
 
-Already using it? Open the app online once and it updates itself. Check the version in Settings: 2026-10-24 · 440133.
+Already using it? Open the app online once and it updates itself. Check the version in Settings: 2026-10-24 · 855058.

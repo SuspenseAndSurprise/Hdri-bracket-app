@@ -435,6 +435,8 @@ h2 .no{display:inline-grid;place-items:center;width:22px;height:22px;margin-righ
 #presetIncL{margin-top:2px;padding-top:12px;border-top:1px solid var(--line)}
 .prepl .chip{min-height:32px;font-size:13px;padding:0 12px 0 10px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;border-style:dashed}
 .prepl .chip::before{content:"↻ ";opacity:.7}
+.prepl .chip.pmore{border-style:solid;color:var(--muted)}
+.prepl .chip.pmore::before{content:none}
 .prepl .chip[aria-pressed="true"]{border-style:solid}
 .pinc .chip{min-height:32px;font-size:13px;padding:0 10px}
 .pinc .chip[aria-pressed="false"]{opacity:.55}
@@ -1343,7 +1345,7 @@ body.sun .toast button.strong{background:#fff;color:#000}
       </details>
     </section>
     <button type="button" class="ghost" id="setReset" style="display:block;margin:4px auto 0">Reset all settings</button>
-    <p class="vers num" id="vers"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true" class="vlogo"><rect width="256" height="256" rx="58" fill="#1C1815"/><path d="M141.94 43.14A86 86 0 0 1 194.52 73.50" fill="none" stroke="#FF4A2B" stroke-width="12"/><path d="M208.46 97.64A86 86 0 0 1 211.90 146.87" fill="none" stroke="#FF4A2B" stroke-width="12"/><path d="M186.30 191.23A86 86 0 0 1 141.94 212.86" fill="none" stroke="#6A6A6A" stroke-width="12"/><path d="M114.06 212.86A86 86 0 0 1 61.48 182.50" fill="none" stroke="#6A6A6A" stroke-width="12"/><path d="M47.54 158.36A86 86 0 0 1 47.54 97.64" fill="none" stroke="#6A6A6A" stroke-width="12"/><path d="M61.48 73.50A86 86 0 0 1 114.06 43.14" fill="none" stroke="#6A6A6A" stroke-width="12"/><path d="M128 128L202.48 171.00" stroke="#FF4A2B" stroke-width="11" stroke-linecap="round"/><g fill="#FFFFFF"><circle cx="128.00" cy="42.00" r="15"/><circle cx="202.48" cy="85.00" r="15"/><circle cx="128.00" cy="214.00" r="15"/><circle cx="53.52" cy="171.00" r="15"/><circle cx="53.52" cy="85.00" r="15"/></g><g fill="#FF4A2B"><circle cx="128" cy="128" r="13"/><circle cx="202.48" cy="171.00" r="27"/></g></svg>HDRI Bracket · <span id="build">2026-10-24 · 440133</span></p>
+    <p class="vers num" id="vers"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true" class="vlogo"><rect width="256" height="256" rx="58" fill="#1C1815"/><path d="M141.94 43.14A86 86 0 0 1 194.52 73.50" fill="none" stroke="#FF4A2B" stroke-width="12"/><path d="M208.46 97.64A86 86 0 0 1 211.90 146.87" fill="none" stroke="#FF4A2B" stroke-width="12"/><path d="M186.30 191.23A86 86 0 0 1 141.94 212.86" fill="none" stroke="#6A6A6A" stroke-width="12"/><path d="M114.06 212.86A86 86 0 0 1 61.48 182.50" fill="none" stroke="#6A6A6A" stroke-width="12"/><path d="M47.54 158.36A86 86 0 0 1 47.54 97.64" fill="none" stroke="#6A6A6A" stroke-width="12"/><path d="M61.48 73.50A86 86 0 0 1 114.06 43.14" fill="none" stroke="#6A6A6A" stroke-width="12"/><path d="M128 128L202.48 171.00" stroke="#FF4A2B" stroke-width="11" stroke-linecap="round"/><g fill="#FFFFFF"><circle cx="128.00" cy="42.00" r="15"/><circle cx="202.48" cy="85.00" r="15"/><circle cx="128.00" cy="214.00" r="15"/><circle cx="53.52" cy="171.00" r="15"/><circle cx="53.52" cy="85.00" r="15"/></g><g fill="#FF4A2B"><circle cx="128" cy="128" r="13"/><circle cx="202.48" cy="171.00" r="27"/></g></svg>HDRI Bracket · <span id="build">2026-10-24 · 855058</span></p>
   </section>
 
   <!-- LOG -->
@@ -2952,7 +2954,19 @@ body.sun .toast button.strong{background:#fff;color:#000}
       s[selKey()]=p.name; s.camSet=true; s.done=[]; render();
     });
   }
-  var presetNaming=false, editP=null, eInc={}, replP=null, replInc={};   // replP: an existing preset picked under "Or replace"   // editP: the preset being edited (rename, drop groups)
+  var presetNaming=false, editP=null, eInc={}, replP=null, replInc={}, replAll=false;   // replP: an existing preset picked under "Or replace"   // editP: the preset being edited (rename, drop groups)
+  function drawRepl(){
+    if(replP && (s.presets.indexOf(replP)<0 || presetNm()!==replP.name || pMode(replP)!==curMode())) replP=null;   // typed another name: a new preset again
+    // Save current setup: tap an existing preset to replace it with the current setup (its parts are preselected)
+    var rp=$("presetRepl"), same=s.presets.filter(function(p){ return pMode(p)===curMode(); }), sp0=selPreset();
+    if(sp0 && same.indexOf(sp0)>0){ same.splice(same.indexOf(sp0),1); same.unshift(sp0); }   // the preset you use first
+    var q=presetNm().toLowerCase(), list=(q && !replP)?same.filter(function(p){ return p.name.toLowerCase().indexOf(q)>=0; }):same, CAP=6, more=replAll?0:Math.max(0,list.length-CAP);
+    rp.hidden=!!editP || !presetNaming || !list.length; [].slice.call(rp.querySelectorAll("button")).forEach(function(x){ x.remove(); });
+    if(!rp.hidden) list.slice(0,list.length-more).forEach(function(p){ var c=document.createElement("button"); c.type="button"; c.className="chip"; c.textContent=p.name; c.setAttribute("aria-pressed",p===replP);
+      c.onclick=function(){ if(replP===p){ replP=null; $("presetName").value=""; } else { replP=p; replInc={}; pGroups(pMode(p)).forEach(function(g){ replInc[g[0]]=g[2][0] in p; }); $("presetName").value=p.name; } drawPresets(); drawSaveLbl(); };
+      rp.appendChild(c); });
+    if(!rp.hidden && more){ var mb=document.createElement("button"); mb.type="button"; mb.className="chip pmore"; mb.textContent="+"+more+" more"; mb.onclick=function(){ replAll=true; drawRepl(); }; rp.appendChild(mb); }
+  }
   function drawPresets(){
     if(typeof drawSaveLbl==="function") drawSaveLbl();   // presets added, deleted or undone while naming
     var has=s.presets.length>0, cur=curPreset(), mine=s.presets.filter(function(p){ return pMode(p)===curMode(); });
@@ -2984,20 +2998,15 @@ body.sun .toast button.strong{background:#fff;color:#000}
       if(p===editP) li.appendChild(pf);
     });
     $("presetNew").hidden=!presetNaming;
+    $("presetSave").textContent=presetNaming&&!editP?"Cancel":"+ Save current setup";
     var inc=$("presetInc"); inc.innerHTML="";
-    if(replP && (s.presets.indexOf(replP)<0 || presetNm()!==replP.name || pMode(replP)!==curMode())) replP=null;   // typed another name: a new preset again
-    // Save current setup: tap an existing preset to replace it with the current setup (its parts are preselected)
-    var rp=$("presetRepl"), same=s.presets.filter(function(p){ return pMode(p)===curMode(); });
-    rp.hidden=!!editP || !presetNaming || !same.length; [].slice.call(rp.querySelectorAll("button")).forEach(function(x){ x.remove(); });
-    if(!rp.hidden) same.forEach(function(p){ var c=document.createElement("button"); c.type="button"; c.className="chip"; c.textContent=p.name; c.setAttribute("aria-pressed",p===replP);
-      c.onclick=function(){ if(replP===p){ replP=null; $("presetName").value=""; } else { replP=p; replInc={}; pGroups(pMode(p)).forEach(function(g){ replInc[g[0]]=g[2][0] in p; }); $("presetName").value=p.name; } drawPresets(); drawSaveLbl(); };
-      rp.appendChild(c); });
+    drawRepl();
     var IN=editP?eInc:replP?replInc:incNow();   // editing: ticked = what the preset holds; untick to drop a part, tick one to add it (current value)
     pGroups(editP?pMode(editP):curMode()).forEach(function(g){ var b=document.createElement("button"); b.type="button"; b.className="chip"; b.textContent=g[1]; b.setAttribute("aria-pressed",!!IN[g[0]]);
       b.onclick=function(){ IN[g[0]]=!IN[g[0]]; b.setAttribute("aria-pressed",!!IN[g[0]]); }; inc.appendChild(b); });
     $("presetEdX").hidden=!editP; $("presetToS").hidden=!editP || pMode(editP)!=="hdri"; $("presetIncL").textContent=editP?"Parts in this preset":"What goes in";
   }
-  $("presetSave").onclick=function(){ presetNaming=editP?true:!presetNaming; editP=null; replP=null; render(); if(presetNaming){ var i=$("presetName"); i.value=s.lensTxt.trim().slice(0,40); i.focus(); i.select(); drawSaveLbl(); } };   // a typed lens name is the likely preset name
+  $("presetSave").onclick=function(){ presetNaming=editP?true:!presetNaming; editP=null; replP=null; replAll=false; if(!presetNaming) $("presetName").value=""; render(); if(presetNaming){ var i=$("presetName"); i.value=s.lensTxt.trim().slice(0,40); i.focus(); i.select(); drawSaveLbl(); } };   // a typed lens name is the likely preset name
   // same name test as presetSaveGo: the button says Update exactly when saving would replace a preset
   function presetNm(){ return $("presetName").value.trim().slice(0,40); }
   function saveLbl(){ var nm=presetNm(); return nm && s.presets.some(function(x){ return x.name===nm; })?"Update":"Save"; }
@@ -3034,7 +3043,7 @@ body.sun .toast button.strong{background:#fff;color:#000}
   }
   $("presetSaveGo").onclick=presetSaveGo;
   $("presetFold").onclick=function(){ s.fold.presetsOpen=!s.fold.presetsOpen; save(); render(); };
-  $("presetName").addEventListener("input",function(){ if(replP && presetNm()!==replP.name){ replP=null; drawPresets(); } drawSaveLbl(); });
+  $("presetName").addEventListener("input",function(){ var had=replP; if(replP && presetNm()!==replP.name) replP=null; if(had && !replP){ var i=$("presetName"), c=i.selectionStart; drawPresets(); if(document.activeElement!==i){ i.focus(); try{ i.setSelectionRange(c,c); }catch(e){} } } else drawRepl(); drawSaveLbl(); });   // typing narrows the Or replace list
   $("presetName").addEventListener("keydown",function(e){ if(e.key==="Enter"){ e.preventDefault(); presetSaveGo(); } });
   $("presetImport").onclick=function(){ $("presetFile").value=""; $("presetFile").click(); };
   $("presetFile").onchange=function(){
