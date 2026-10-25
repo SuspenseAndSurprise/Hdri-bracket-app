@@ -1,6 +1,8 @@
-HDRI Bracket · 2026-10-24 · 855058
+HDRI Bracket · 2026-10-24 · 0d9a69
 
 New
+- Presets help folds to one line that follows what you're doing (applying, saving, editing, or a changed preset to update). Tap More for the full list. In Save current setup, "What goes in" is one line too (e.g. Shutter · AEB · Lens · ISO · WB); tap Change for the chips, which only show the parts of the mode you're in.
+- Presets: Export all, next to Import .json at the bottom of Presets. One file with every preset (HDRI and Single) that Import reads straight back. Edit still exports a single preset.
 - Single shot: choose Bracket (your HDRI range at one angle, as before) or One frame, with its own shutter dial in Exposure. The choice sits in Angles, right under HDRI | Single shot, and the Angles card stays in place on screen when you switch. The HDRI range stays untouched, and Done logs the one frame you shot.
 - Presets follow the mode: saved in Single shot they hold aperture, ISO, white balance and Bracket/One frame with its shutter (no AEB, lens or exposure range). The Camera card shows only presets for the current mode; Settings lists all, Single ones tagged. Existing presets stay HDRI presets.
 - How to shoot: now also covers a head that can't tilt fully up or down (angles per tilt limit), the tripod and ground (when to paint out, when to bracket), and a short good-to-remember list.
@@ -34,4 +36,4 @@ Files
 - hdri-bracket-app.zip: the installable version to host yourself (any https host)
 - hdri-bracket-walkthrough.mp4: the walkthrough video
 
-Already using it? Open the app online once and it updates itself. Check the version in Settings: 2026-10-24 · 855058.
+Already using it? Open the app online once and it updates itself. Check the version in Settings: 2026-10-24 · 0d9a69.
