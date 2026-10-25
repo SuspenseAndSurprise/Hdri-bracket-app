@@ -1,4 +1,4 @@
-HDRI Bracket · 2026-10-24 · f4626a
+HDRI Bracket · 2026-10-24 · 4472cb
 
 New
 - How to shoot: now also covers a head that can't tilt fully up or down (angles per tilt limit), the tripod and ground (when to paint out, when to bracket), and a short good-to-remember list.
@@ -11,7 +11,9 @@ New
 - New app icon and logo: an exposure dial. The angle ring picks up the same idea: a red sweep runs from 0° round to the current angle, with a gap around any angle you skipped. Reinstall from the home screen if your phone keeps showing the old icon.
 
 Fixes
-- Autobracket: the darkest frame now sits on your darkest and the sets build toward bright from there. Moving Brightest only moves the marker until it passes the last frame (a spare frame becomes a used one); the sets don't shift and no extra overlapping set appears. Without autobracket nothing changes.
+- Autobracket: spare frames in a set now go to the slow end while the slowest frame stays at 1 s or shorter (cleaner shadows, nearly free), and to the fast end beyond that, so no long exposure is wasted (e.g. 1/15 → 5s at 3 × 3 EV now ends at 5s instead of 30s, 1/1250 → 4s at 4s instead of 25s). No extra overlapping set when your range is just past a whole step. Also applies when your range fits in one set. Without autobracket nothing changes.
+- Shutter and aperture dials: every full stop has a small dot under it, like a camera dial, so one stop is "the next dot".
+- Brightest: hint to go one dot (one stop) slower when unsure, for cleaner shadows.
 - Font now ships with the app instead of loading from Google Fonts. Nothing leaves your phone, and offline the big numbers keep their narrow Archivo shape instead of falling back to a wider system font.
 - Night mode: the lens over the Darkest and Brightest dials had a white rim; it's red now like the rest.
 
@@ -23,4 +25,4 @@ Files
 - hdri-bracket-app.zip: the installable version to host yourself (any https host)
 - hdri-bracket-walkthrough.mp4: the walkthrough video
 
-Already using it? Open the app online once and it updates itself. Check the version in Settings: 2026-10-24 · f4626a.
+Already using it? Open the app online once and it updates itself. Check the version in Settings: 2026-10-24 · 4472cb.

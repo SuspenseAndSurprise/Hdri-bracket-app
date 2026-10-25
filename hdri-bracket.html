@@ -127,10 +127,12 @@ body.arranging .blk > :not(.arrbar){display:none}
 .strip::-webkit-scrollbar{display:none}
 .item{flex:0 0 88px;scroll-snap-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;
   font-size:17px;color:var(--muted);cursor:pointer;user-select:none;white-space:nowrap;gap:3px}
-.item::after{content:"";width:1px;height:8px;background:var(--muted);opacity:.6}
-.item.stop::after{height:12px;width:2px}
+/* full stops get a small dot under the number (like a camera dial): "one stop" = the next dot */
+.item{position:relative}
+.item::after{content:none}
+.item.stop::after{content:"";position:absolute;left:50%;bottom:11px;width:4px;height:4px;margin-left:-2px;border-radius:50%;background:var(--muted);opacity:.6}
 .item.on{font-size:26px;color:var(--fg)}
-.item.on::after{opacity:0}
+.item.on.stop::after{opacity:.35}
 
 /* Guides */
 details.guide{border-top:1px dashed var(--line)}
@@ -680,7 +682,7 @@ body.lgfx .loupe{display:block;position:absolute;left:50%;top:5px;bottom:5px;wid
 body.lgfx .item.on{font-size:22px;letter-spacing:-.01em}
 /* the loupe sits behind the numbers: the value stays sharp on a frosted pane */
 body.lgfx .strip{position:relative;z-index:1}
-body.lgfx .item::after{display:none}
+
 body.lgfx .item{gap:0}
 body.lgfx .loupe{box-shadow:inset 0 1px 0 rgba(255,255,255,.30),inset 0 -1px 0 rgba(255,255,255,.06),inset 0 0 0 1px rgba(255,255,255,.10),0 4px 14px rgba(0,0,0,.18);
   background:linear-gradient(180deg,rgba(255,255,255,.12),rgba(255,255,255,.04))}
@@ -1147,7 +1149,7 @@ body.sun .toast button.strong{background:#fff;color:#000}
           <div class="wheel"><div class="strip num" id="lWheel" aria-label="Brightest frame" tabindex="0"></div></div>
           <button type="button" class="arrow" id="lUp" aria-label="Brighter">›</button>
         </div>
-        <p class="xhint">Make the darkest important areas clearly visible, not black. Lamps and windows will clip here, that is fine: the faster frames cover them.</p>
+        <p class="xhint">Make the darkest important areas clearly visible, not black. Lamps and windows will clip here, that is fine: the faster frames cover them. Not sure? Go one dot slower (one stop): cleaner shadows for a little more time.</p>
       </div>
       <div class="xviz">
         <div class="midline"><span id="midK">Middle · 0 EV</span><span class="mshift"><button type="button" class="mbtn" id="mDn" aria-label="Middle darker (faster shutter)">‹</button><b class="num" id="midVal"></b><button type="button" class="mbtn" id="mUp" aria-label="Middle brighter (slower shutter)">›</button></span></div>
@@ -1308,7 +1310,7 @@ body.sun .toast button.strong{background:#fff;color:#000}
       </details>
     </section>
     <button type="button" class="ghost" id="setReset" style="display:block;margin:4px auto 0">Reset all settings</button>
-    <p class="vers num" id="vers"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true" class="vlogo"><rect width="256" height="256" rx="58" fill="#1C1815"/><path d="M141.94 43.14A86 86 0 0 1 194.52 73.50" fill="none" stroke="#FF4A2B" stroke-width="12"/><path d="M208.46 97.64A86 86 0 0 1 211.90 146.87" fill="none" stroke="#FF4A2B" stroke-width="12"/><path d="M186.30 191.23A86 86 0 0 1 141.94 212.86" fill="none" stroke="#6A6A6A" stroke-width="12"/><path d="M114.06 212.86A86 86 0 0 1 61.48 182.50" fill="none" stroke="#6A6A6A" stroke-width="12"/><path d="M47.54 158.36A86 86 0 0 1 47.54 97.64" fill="none" stroke="#6A6A6A" stroke-width="12"/><path d="M61.48 73.50A86 86 0 0 1 114.06 43.14" fill="none" stroke="#6A6A6A" stroke-width="12"/><path d="M128 128L202.48 171.00" stroke="#FF4A2B" stroke-width="11" stroke-linecap="round"/><g fill="#FFFFFF"><circle cx="128.00" cy="42.00" r="15"/><circle cx="202.48" cy="85.00" r="15"/><circle cx="128.00" cy="214.00" r="15"/><circle cx="53.52" cy="171.00" r="15"/><circle cx="53.52" cy="85.00" r="15"/></g><g fill="#FF4A2B"><circle cx="128" cy="128" r="13"/><circle cx="202.48" cy="171.00" r="27"/></g></svg>HDRI Bracket · <span id="build">2026-10-24 · f4626a</span></p>
+    <p class="vers num" id="vers"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true" class="vlogo"><rect width="256" height="256" rx="58" fill="#1C1815"/><path d="M141.94 43.14A86 86 0 0 1 194.52 73.50" fill="none" stroke="#FF4A2B" stroke-width="12"/><path d="M208.46 97.64A86 86 0 0 1 211.90 146.87" fill="none" stroke="#FF4A2B" stroke-width="12"/><path d="M186.30 191.23A86 86 0 0 1 141.94 212.86" fill="none" stroke="#6A6A6A" stroke-width="12"/><path d="M114.06 212.86A86 86 0 0 1 61.48 182.50" fill="none" stroke="#6A6A6A" stroke-width="12"/><path d="M47.54 158.36A86 86 0 0 1 47.54 97.64" fill="none" stroke="#6A6A6A" stroke-width="12"/><path d="M61.48 73.50A86 86 0 0 1 114.06 43.14" fill="none" stroke="#6A6A6A" stroke-width="12"/><path d="M128 128L202.48 171.00" stroke="#FF4A2B" stroke-width="11" stroke-linecap="round"/><g fill="#FFFFFF"><circle cx="128.00" cy="42.00" r="15"/><circle cx="202.48" cy="85.00" r="15"/><circle cx="128.00" cy="214.00" r="15"/><circle cx="53.52" cy="171.00" r="15"/><circle cx="53.52" cy="85.00" r="15"/></g><g fill="#FF4A2B"><circle cx="128" cy="128" r="13"/><circle cx="202.48" cy="171.00" r="27"/></g></svg>HDRI Bracket · <span id="build">2026-10-24 · 4472cb</span></p>
   </section>
 
   <!-- LOG -->
@@ -1502,23 +1504,30 @@ body.sun .toast button.strong{background:#fff;color:#000}
   function buzz(p){ if(!s.vibe) return; try{ navigator.vibrate && navigator.vibrate(p); }catch(e){} }
 
   // ---------- exposure ----------
+  // Autobracket placement: full sets of N. Spare frames go to the slow side while the slowest frame stays at 1 s or
+  // shorter (cleaner shadows, nearly free); beyond that they go to the fast side, so no long exposure is wasted.
+  // Past the camera's fastest shutter the ladder slides slower, just enough. null when full sets don't fit at all.
+  var I1S=T.indexOf("1s");
+  function aebFit(){
+    var N=s.aeb, st=3*s.step; if(!N) return null;
+    var m=Math.max(1,Math.ceil((s.dark-s.light)/st)+1), F=Math.ceil(m/N)*N, kB=0;
+    while(kB<F-m && s.light-(kB+1)*st>=I1S) kB++;
+    var lo=Math.min(s.light-kB*st, lim()-(F-1)*st);
+    if(lo<0) return null;
+    var qb=Math.floor((s.light-lo)/st), qt=Math.ceil((s.dark-lo)/st);
+    return {N:N, F:F, lo:lo, hi:lo+(F-1)*st, qb:qb, qt:qt};
+  }
   function bracket(){
     var st=3*s.step, half=Math.ceil((s.dark-s.light)/2/st), ext=half*st, mid=Math.round((s.dark+s.light)/2);
     if(mid+ext>lim()) mid=lim()-ext;
     if(mid-ext>s.light) mid=s.light+ext;
     var f=[]; for(var k=half;k>=-half;k--) f.push({i:mid+k*st, ev:-k*s.step});
-    // Autobracket: the darkest frame sits on your darkest and the frames step toward bright from there, as few as
-    // cover your range. Moving Brightest then only moves the marker until it passes the last frame; nothing shifts.
-    var N=s.aeb, R=s.dark-s.light, m=Math.max(2,Math.ceil(R/st)+1);
-    if(N && m>N){
-      var hi=s.dark, lo=hi-(m-1)*st;
-      if(lo<0){ hi-=lo; lo=0; }   // would run past 30s: the slowest frame sits on 30s instead, the darkest goes a bit faster
-      if(hi<=lim()){
-        var c=Math.round((s.dark+s.light)/2), mk=clamp(Math.round((hi-c)/st),0,m-1), M0=hi-mk*st, g=[];
-        for(var q=0;q<m;q++){ var i=hi-q*st; g.push({i:i, ev:(M0-i)/st*s.step}); }
-        return {mid:M0, frames:g};
-      }
-    }
+    // Autobracket: the frames you need, as placed by aebFit (slowest frame on your brightest, spares on the fast side)
+    var A=aebFit();
+    if(A){ var c=Math.round((s.dark+s.light)/2), g=[], q;
+      for(q=A.qt;q>=A.qb;q--) g.push(A.lo+q*st);
+      var M0=g.reduce(function(p,i){ return Math.abs(i-c)<Math.abs(p-c)?i:p; },g[0]);
+      return {mid:M0, frames:g.map(function(i){ return {i:i, ev:(M0-i)/st*s.step}; })}; }
     return {mid:mid, frames:f};
   }
 
@@ -1527,6 +1536,12 @@ body.sun .toast button.strong{background:#fff;color:#000}
   function plan(b){
     var f=b.frames.map(function(o){ return {i:o.i, ev:o.ev}; }), N=s.aeb;
     if(!N) return {frames:f, sets:null};
+    var A=aebFit();
+    if(A){ var st0=3*s.step, M0=b.mid, g=[], sets0=[], j, q;
+      for(q=A.F-1;q>=0;q--){ var i=A.lo+q*st0; g.push({i:i, ev:(M0-i)/st0*s.step}); if(q>A.qt||q<A.qb) g[g.length-1].x=1; }
+      for(j=0;j<A.F;j+=N){ var ids=[]; for(q=j;q<j+N;q++){ g[q].set=sets0.length; ids.push(q); } g[j+(N-1)/2].c=1; sets0.push({c:j+(N-1)/2, ids:ids}); }
+      return {frames:g, sets:sets0, eD:A.F-1-A.qt, eB:A.qb, ov:0, big:false};
+    }
     var st=3*s.step, n=f.length, tot=Math.ceil(n/N)*N, ex=tot-n, dRoom=Math.floor((lim()-f[0].i)/st), eD=Math.min(ex,dRoom), eB=ex-eD, k, sets=[];
     if(n<=N){   // one burst: centre it on your middle, moved only as far as the camera's limits and your measured range require
       var h=(N-1)/2*st, cLo=Math.max(s.dark-h,h), cHi=Math.min(s.light+h,lim()-h);
